@@ -439,7 +439,7 @@ export default {
                 .then(response => {
 
                     const toast = useToast()
-                    this.$emit('income-submitted', this.income);
+            this.$emit('income-submitted', this.income);
 
 
                     this.$emit('form-submitted', response.data);

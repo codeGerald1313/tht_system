@@ -438,7 +438,7 @@
       </div>
 
       <vue-good-table :columns="columnsComprobantes"
-        styleClass=" vgt-table  table-head   v-middle striped lesspadding2 listview" :rows="this.movimientosInfo"
+        styleClass=" vgt-table  table-head   v-middle striped  listview" :rows="this.movimientosInfo"
         :pagination-options="{
           enabled: false,
         }" :sort-options="{
