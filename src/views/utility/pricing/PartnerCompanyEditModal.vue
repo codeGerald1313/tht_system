@@ -1,0 +1,191 @@
+<template>
+  <Modal :activeModal="props.activeModal" @close="closeEditModal" title="Acualizar Registro de Empresa Socia"
+    sizeClass="max-w-3xl" centered>
+    <form @submit.prevent="saveCompany" class="space-y-4">
+      <!-- Primera fila -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div>
+          <FromGroup label="N° RUC">
+            <InputGroup type="text" placeholder="Ingrese el número de RUC" v-model.trim="formData.document">
+              <template v-slot:append>
+                <Button text="Sunat" btnClass="btn-outline-dark " @click.prevent="extractRuc" />
+              </template>
+            </InputGroup>
+
+            <span v-if="!isValidField('document')" class="text-red-500">Por favor ingresa un RUC valido</span>
+
+          </FromGroup>
+
+
+
+        </div>
+        <div>
+          <FromGroup label="Razón social">
+            <Textinput type="text" placeholder="Ingrese la razón social" name="client_fullname"
+              v-model.trim="formData.fullname" />
+          </FromGroup>
+        </div>
+      </div>
+
+      <!-- Segunda fila -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div>
+          <FromGroup label="Nombre de la empresa">
+            <Textinput type="text" placeholder="Ingrese el nombre de la empresa" name="client_tradename"
+              v-model.trim="formData.tradename" />
+            <span v-if="!isValidField('tradename')" class="text-red-500">Por favor ingresa un nombre valido</span>
+
+          </FromGroup>
+        </div>
+        <div>
+          <FromGroup label="Celular">
+            <Textinput type="text" placeholder="Ingrese el número de celular" v-model.trim="formData.cellphone" />
+            <span v-if="!isValidField('cellphone')" class="text-red-500">Por favor ingresa un número valido</span>
+          </FromGroup>
+        </div>
+        <div>
+          <FromGroup label="Teléfono fijo">
+            <Textinput type="text" placeholder="Ingrese el número de teléfono fijo" name="client_telephone"
+              v-model.trim="formData.telephone" />
+
+          </FromGroup>
+        </div>
+      </div>
+
+      <!-- Tercera fila -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div>
+          <FromGroup label="Correo electrónico">
+            <Textinput type="email" placeholder="Ingrese el correo electrónico" name="client_email"
+              v-model.trim="formData.email" />
+          </FromGroup>
+        </div>
+        <div>
+          <FromGroup label="Dirección">
+            <Textinput type="text" placeholder="Dirección Completa" name="client_address"
+              v-model.trim="formData.address" />
+          </FromGroup>
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="form-group col-lg-12 form__footerBtn">
+        <div class="text-right">
+          <Button text="Cancelar" btnClass="btn-light mr-2" @click.prevent="closeEditModal" />
+          <Button type="submit" text="Guardar" btnClass="btn-dark" />
+        </div>
+      </div>
+    </form>
+
+
+  </Modal>
+</template>
+
+<script setup>
+import Button from "@/components/Button";
+import FromGroup from "@/components/FromGroup";
+import Modal from "@/components/Modal";
+import Textarea from "@/components/Textarea";
+import Textinput from "@/components/Textinput";
+import InputGroup from "@/components/InputGroup";
+import { ref, watch } from "vue";
+import { useProjectStore } from "../../../store/project";
+import axios from "axios";
+import { useToast } from "vue-toastification";
+import { useAuth } from "../../../store/auth";
+
+const store = useProjectStore();
+const toast = useToast();
+const headers = useAuth().headers(); // Obtiene los encabezados de autenticación
+
+const props = defineProps({
+  activeModal: Boolean,
+  empresaSociaData: Object // Se espera que la data del empleado venga como objeto
+})
+
+const emits = defineEmits(['close', 'updateEmpresaSociaList']);
+
+const closeEditModal = () => {
+  emits('close') // Emitir evento para cerrar el modal
+}
+
+
+const formData = ref({
+  id: '',
+  tradename: "",
+  document: "",
+  fullname: "",
+  cellphone: "",
+  telephone: "",
+  email: "",
+  address: "",
+});
+
+
+const saveCompany = () => {
+  axios.post(`${import.meta.env.VITE_API_URL}/partnercompanies/edit/${formData.value.id}`, formData.value, {
+    ...headers
+  })
+    .then(response => {
+      console.log('Datos guardados exitosamente:', response.data);
+      emits('updateEmpresaSociaList'); // Emitir el evento personalizado al componente padre
+      closeEditModal();
+      toast.success(response.data.message);
+    })
+    .catch(error => {
+      console.error('Error al guardar los datos:', error);
+      // Aquí podrías mostrar un mensaje de error al usuario
+    });
+};
+
+// Método para validar un campo específico
+const validateField = (fieldName) => {
+  return !!formData.value[fieldName];
+};
+
+// Método para verificar si un campo específico es válido
+const isValidField = (fieldName) => {
+  return validateField(fieldName);
+};
+
+
+const cancel = () => {
+  store.closeModal();
+};
+
+const formIsValid = ref(false); // Lógica para validar el formulario
+
+const extractRuc = () => {
+  axios.get(`${import.meta.env.VITE_API_URL}/apiruc/${formData.value.document}`)
+    .then(response => {
+      console.log('Respuesta de la API RUC:', response.data);
+      // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
+      formData.value.fullname = response.data.razonSocial;
+      formData.value.address = response.data.direccion;
+    })
+    .catch(error => {
+      console.error('Error al obtener datos del DNI:', error);
+      // Aquí puedes manejar errores, como mostrar un mensaje al usuario
+    });
+};
+
+
+
+watch(() => props.empresaSociaData, (newData) => {
+  if (newData) {
+    formData.value.id = newData.id;
+    formData.value.tradename = newData.tradename;
+    formData.value.document = newData.document;
+    formData.value.fullname = newData.fullname;
+    formData.value.cellphone = newData.cellphone;
+    formData.value.telephone = newData.telephone;
+    formData.value.email = newData.email;
+    formData.value.address = newData.address;
+  }
+});
+
+</script>
+
+<style>
+/* Estilos personalizados si es necesario */
+</style>
