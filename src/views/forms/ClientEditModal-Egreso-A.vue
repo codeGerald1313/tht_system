@@ -1034,35 +1034,37 @@ const handleProvinceChange = async () => {
 
 const fetchRucData = () => {
 
-
-  axios.get(`${import.meta.env.VITE_API_URL}/apiruc/${provider.value.document}`)
-    .then(response => {
-      console.log('Respuesta de la API RUC:', response.data);
-      // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
-      provider.value.fullname = response.data.razonSocial;
-
-    })
-    .catch(error => {
-      console.error('Error al obtener datos del RUC:', error);
-      // Aquí puedes manejar errores, como mostrar un mensaje al usuario
-    });
+axios.post(`${import.meta.env.VITE_API_URL}/getRucData`, {
+    ruc: provider.value.document
+  })
+  .then(response => {
+    console.log('Respuesta de la API RUC:', response.data);
+    
+    provider.value.fullname = response.data.data.nombre_o_razon_social;
+    provider.value.address = response.data.data.direccion;
+  })
+  .catch(error => {
+    console.error('Error al obtener datos del RUC:', error);
+    // Aquí puedes manejar errores, como mostrar un mensaje al usuario
+  });
 };
 
 
-const fetchDniData = () => {
 
-  axios.get(`${import.meta.env.VITE_API_URL}/apidni/${client.value.document}`)
+const fetchDniData = () => {
+  axios.post(`${import.meta.env.VITE_API_URL}/getDniData`, {
+      dni: client.value.document
+    })
     .then(response => {
-      console.log('Respuesta de la API DNI:', response.data);
+      console.log('Respuesta de la API DNI:', response.data.nombre_completo);
       // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
-      client.value.fullname = `${response.data.nombres} ${response.data.apellidoPaterno} ${response.data.apellidoMaterno}`;
+      client.value.fullname = response.data.data.nombre_completo;
     })
     .catch(error => {
       console.error('Error al obtener datos del DNI:', error);
       // Aquí puedes manejar errores, como mostrar un mensaje al usuario
     });
 };
-
 
 
 

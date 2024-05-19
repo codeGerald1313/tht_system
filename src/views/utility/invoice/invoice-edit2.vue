@@ -2,12 +2,12 @@
   <div>
 
 
-    <Card title="Datos Generales Gaaaaaaaaa">
+    <Card title="Datos Generales">
 
 
       <div class="grid grid-cols-1 lg:grid-cols-1 gap-5">
         <!-- Primera fila -->
-        <div class="grid grid-cols-3 gap-5">
+        <div class="grid grid-cols-4 gap-5">
           <div class="flex items-center">
             <FromGroup label="Clientes" class="flex-1">
               <Select :options="limitedCustomerOptions" v-model="booking.clients" class="client-select" />
@@ -15,6 +15,9 @@
             <button @click="openModal" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
           </div>
           <Textinput label="Número teléfono" type="text" placeholder="Tel 1" v-model="booking.phoneNumber" />
+          <FromGroup label="Agencia" class="flex-1">
+            <Select :options="branchOptions" v-model="selectedBranch" class="client-select" />
+          </FromGroup>
           <FromGroup label="Origen de Reserva" class="flex-1">
             <Select :options="originsbooking" v-model="booking.originReserve" class="client-select" />
           </FromGroup>
@@ -409,6 +412,8 @@ export default {
       commissionIds: [],
       moneyIds: [],
       searchTerm: '',
+      
+      branchOptions: [],
       showEditModal: false,  // Nueva propiedad para controlar el modal de edición
       showReserveModal: false,  // Nueva propiedad para controlar el modal de edición
       selectedTour: null,
@@ -435,6 +440,7 @@ export default {
         { value: 5, label: 'Instagram' },
         { value: 6, label: 'Página web' }
       ],
+      selectedBranch: null,
 
       originsReserve: [
         { value: 5, label: 'Sin Asignar' },
@@ -843,7 +849,9 @@ export default {
 
         const otherData = JSON.parse(to.query.otherData); // Convertir la cadena JSON a objeto
 
-        console.log(otherData);
+        console.log(otherData.agency.id);
+
+        this.selectedBranch = otherData.agency.id;
 
         // Asignar los valores correspondientes del objeto otherData al objeto booking
         this.booking.clients = otherData.client_id;
@@ -1111,6 +1119,20 @@ export default {
         // Maneja otros tipos de acciones aquí
       }
     },
+    fetchAgencies() {
+      axios.get(`${import.meta.env.VITE_API_URL}/agencies/list`, headers)
+        .then(response => {
+          this.branchOptions = response.data.data.map(agency => ({
+            value: agency.id,
+            label: agency.tradename // Asume que la agencia tiene un campo 'name' que se utilizará como etiqueta
+          }));
+
+          console.log(response);
+        })
+        .catch(error => {
+          console.error('Error al obtener las agencias:', error);
+        });
+    },
 
     saveReserva() {
 
@@ -1122,7 +1144,7 @@ export default {
       const dataToSend = {
         bookingorigin_id: this.booking.originReserve,
         client_id: this.booking.clients,
-        agency_id: this.booking.agency_id,
+        agency_id: this.selectedBranch,
         arrivalplace_id: this.booking.arrivalBy,
         arrival_place: this.booking.placeArrivalReference,
         date_arrival: this.booking.dateArrival !== "null" ? this.booking.dateArrival : null,
@@ -1297,6 +1319,7 @@ export default {
     this.fetchClients();
     this.fetchTours();
 
+    this.fetchAgencies();
 
     // console.log("Datos recibidos:", this.otherData);
 

@@ -365,10 +365,10 @@ export default {
         });
         if (response.data && response.data.data && response.data.data.length > 0) {
           this.projects = response.data.data;
-          this.bookingTourIds = this.projects.map(project => project.booking_tour_id);
+          // this.bookingTourIds = this.projects.map(project => project.booking_tour_id);
           toast.info('Tours Pendientes encontrados con éxito');
 
-          console.log(this.bookingTourIds);
+          // console.log(this.bookingTourIds);
         } else {
           toast.info('Este Tour no tiene Reservas Pendientes');
           this.projects = [];
@@ -415,17 +415,29 @@ export default {
       this.$router.push({ name: 'reserve-preview', params: { id: reservaId } });
     },
     updateCapacitySelected(row) {
-      if (row.booking_is_grouped) {
-        // Si está marcado, añadir el valor de nro_pax
-        this.group.capacity_selected += row.booking_nro_pax;
-      } else {
-        // Si está desmarcado, restar el valor de nro_pax
-        this.group.capacity_selected -= row.booking_nro_pax;
-      }
+  console.log(row);
 
-      // Calcular la cantidad disponible restando la capacidad total del vehículo menos la cantidad seleccionada
-      this.group.capacity_available = this.group.capacity_vehicle - this.group.capacity_selected;
-    },
+  if (row.booking_is_grouped) {
+    // Si está marcado, añadir el valor de nro_pax y el booking_id al array
+    this.group.capacity_selected += row.booking_nro_pax;
+    this.bookingTourIds.push(row.booking_tour_id);
+
+    console.log(this.bookingTourIds);
+  } else {
+    // Si está desmarcado, restar el valor de nro_pax y eliminar el booking_id del array
+    this.group.capacity_selected -= row.booking_nro_pax;
+    const index = this.bookingTourIds.indexOf(row.booking_tour_id);
+    if (index !== -1) {
+      this.bookingTourIds.splice(index, 1);
+    }
+    console.log(this.bookingTourIds);
+
+  }
+
+  // Calcular la cantidad disponible restando la capacidad total del vehículo menos la cantidad seleccionada
+  this.group.capacity_available = this.group.capacity_vehicle - this.group.capacity_selected;
+},
+
 
     async storeGroup() {
       const toast = useToast();

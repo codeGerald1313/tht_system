@@ -873,9 +873,10 @@ export default {
       } else {
         console.error("Invalid response data format");
       }
-    }, handleFormSubmitted22(responseData) {
+    }, 
+    handleFormSubmitted22(responseData) {
 
-       this.booking.totalPagado = responseData.amount;
+      this.booking.totalPagado = responseData.amount;
 
       console.log("totalPagar data", this.totalPagado);
 

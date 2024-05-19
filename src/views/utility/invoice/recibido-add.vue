@@ -897,7 +897,7 @@ export default {
 
     handleCommissionProcessed(response) {
       // Capturar el ID de la comisión
-      const commissionId = response.data.data.id;
+      const commissionId = response.data.commission.id;
 
       // Formatear el ID como un array
       const formattedId = [commissionId];
@@ -908,15 +908,23 @@ export default {
     },
 
     handleFormSubmitted(responseData) {
-      const moneyId = responseData.data.id;
+      console.log("Response data", responseData);
 
-      // Formatear el ID como un array
-      const formattedId = [moneyId];
-      this.moneyIds = formattedId;
+      // Asegúrate de que responseData y responseData.data no sean nulos o indefinidos
+      if (responseData && responseData.data) {
+        // Extrae los IDs de cada objeto en el array data
+        const moneyIds = responseData.data.map(item => item.id);
 
-      // Hacer algo con el ID, por ejemplo, imprimir en la consola
-      console.log('ID del ingreso amortización:', this.moneyIds);
-    },
+        // Ahora tienes un array de IDs
+        console.log("Money IDs:", moneyIds);
+
+        // Puedes realizar más acciones aquí con los IDs extraídos
+        // Por ejemplo, asignarlo a una propiedad de tu componente o estado de la tienda
+        this.moneyIds = moneyIds;
+      } else {
+        console.error("Invalid response data format");
+      }
+    }, 
 
     deleteProject(index) {
       // Eliminar el proyecto del índice proporcionado

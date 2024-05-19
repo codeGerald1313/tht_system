@@ -65,7 +65,7 @@
 
           <span v-if="props.column.field == 'abierto'">
             <div class="flex space-x-3 items-center text-left rtl:space-x-reverse">
-              <Checkbox :checked="props.row.booking_tour.group_assigned !== null"
+              <Checkbox :checked="props.row.group_assigned !== null"
                 @change="updateCapacitySelected(props.row)" />
             </div>
           </span>
@@ -75,10 +75,10 @@
           </span>
           <span v-if="props.column.field == 'vehiculo'" class="block min-w-[108px]">
             <span
-              :class="{ 'font-bold': true, 'text-blue-500': props.row.booking_tour.vehicle_tour === 1, 'text-yellow-500': props.row.booking_tour_vehicle_tour === 2 }"
+              :class="{ 'font-bold': true, 'text-blue-500': props.row.vehicle_tour === 1, 'text-yellow-500': props.row.vehicle_tour === 2 }"
               class="border rounded-full px-2 py-1"
-              :style="{ backgroundColor: props.row.booking_tour.vehicle_tour === 1 ? '#90cdf4' : '#fff9db', borderColor: 'transparent' }">
-              {{ props.row.booking_tour.vehicle_tour === 1 ? 'Compartido' : 'Privado' }}
+              :style="{ backgroundColor: props.row.vehicle_tour === 1 ? '#90cdf4' : '#fff9db', borderColor: 'transparent' }">
+              {{ props.row.vehicle_tour === 1 ? 'Compartido' : 'Privado' }}
             </span>
           </span>
 
@@ -94,7 +94,11 @@
           </span>
           <span v-if="props.column.field == 'responsablecode'" class="block min-w-[208px]">
             <div class="flex flex-col">
-              <div>{{ props.row.booking_tour.client?.fullname }}</div>
+              <div>     {{ 
+        props.row.booking_tour.client?.fullname || 
+        props.row.booking_tour.booking?.client?.fullname || 
+        'Nombre no disponible' 
+      }}</div>
               <div class="text-blue-900 dark:text-blue-300 font-bold underline cursor-pointer"
                 @click.prevent="capturarValor(props.row.booking_id)">
                 {{ props.row.booking_tour.booking.code }}
@@ -104,14 +108,21 @@
           <span v-if="props.column.field == 'hotelubi'">
             {{ props.row.booking_tour.booking.reference_location }}
           </span>
-
           <span v-if="props.column.field == 'telephone'">
-            <div class="flex flex-col">
-              <div>{{ props.row.booking_tour.client?.telephone }}</div>
-              <div>{{ props.row.booking_tour.client?.cellphone }}</div>
-            </div>
+  <div class="flex flex-col">
+    <div>
+      {{
+        (props.row.booking_tour.client?.telephone || props.row.booking_tour.booking?.client?.telephone) || 'Teléfono no disponible'
+      }}
+    </div>
+    <div>
+      {{
+        (props.row.booking_tour.client?.cellphone || props.row.booking_tour.booking?.client?.cellphone) || 'Celular no disponible'
+      }}
+    </div>
+  </div>
+</span>
 
-          </span>
 
           <span v-if="props.column.field == 'observaciones'">
             <div class="font-bold">{{ props.row.observation?.toUpperCase() }}</div>
@@ -590,7 +601,7 @@ export default {
           }));
 
           this.projects = mappedData;
-          this.bookingTourIds = this.projects.map(project => project.booking_tour.id);
+          // this.bookingTourIds = this.projects.map(project => project.booking_tour.id);
 
 
           console.log("Gaaaaaaaaaaa", this.bookingTourIds);
@@ -751,7 +762,7 @@ export default {
           .filter(project => project.booking_tour && project.booking_tour.group_assigned !== null)
           .map(project => project.id);
 
-        console.log("Ids Ga", this.bookingTourIds);
+        console.log("Ids Ga", this.projects );
 
       } catch (error) {
         console.error('Error fetching departments:', error);

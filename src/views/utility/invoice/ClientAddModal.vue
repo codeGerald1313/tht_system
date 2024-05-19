@@ -329,21 +329,19 @@ const onFileSelected = (file) => {
   // Lógica para manejar la selección de archivos
 };
 
-// Método para realizar la solicitud GET
 const fetchDniData = () => {
-
-  axios.get(`${import.meta.env.VITE_API_URL}/apidni/${client.value.document}`)
+  axios.post(`${import.meta.env.VITE_API_URL}/getDniData`, {
+      dni: client.value.document
+    })
     .then(response => {
-      console.log('Respuesta de la API DNI:', response.data);
       // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
-      client.value.fullname = `${response.data.nombres} ${response.data.apellidoPaterno} ${response.data.apellidoMaterno}`;
+      client.value.fullname = response.data.data.nombre_completo;
     })
     .catch(error => {
       console.error('Error al obtener datos del DNI:', error);
       // Aquí puedes manejar errores, como mostrar un mensaje al usuario
     });
 };
-
 
 
 const handleDepartmentChange = async () => {

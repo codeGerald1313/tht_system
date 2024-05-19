@@ -181,11 +181,13 @@ const fetchDniData = () => {
     return;
   }
 
-  axios.get(`${import.meta.env.VITE_API_URL}/apidni/${formData.value.inputValue}`)
+  axios.post(`${import.meta.env.VITE_API_URL}/getDniData`, {
+      dni: formData.value.inputValue
+    })
     .then(response => {
-      console.log('Respuesta de la API DNI:', response.data);
+      console.log('Respuesta de la API DNI:', response.data.nombre_completo);
       // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
-      formData.value.clientFullname = `${response.data.nombres} ${response.data.apellidoPaterno} ${response.data.apellidoMaterno}`;
+      formData.value.inputValue = response.data.data.nombre_completo;
     })
     .catch(error => {
       console.error('Error al obtener datos del DNI:', error);

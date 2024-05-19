@@ -156,17 +156,19 @@ const cancel = () => {
 const formIsValid = ref(false); // Lógica para validar el formulario
 
 const extractRuc = () => {
-  axios.get(`${import.meta.env.VITE_API_URL}/apiruc/${formData.value.document}`)
-    .then(response => {
-      console.log('Respuesta de la API RUC:', response.data);
-      // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
-      formData.value.fullname = response.data.razonSocial;
-      formData.value.address = response.data.direccion;
-    })
-    .catch(error => {
-      console.error('Error al obtener datos del DNI:', error);
-      // Aquí puedes manejar errores, como mostrar un mensaje al usuario
-    });
+  axios.post(`${import.meta.env.VITE_API_URL}/getRucData`, {
+    ruc: formData.value.document
+  })
+  .then(response => {
+    console.log('Respuesta de la API RUC:', response.data);
+    
+    formData.value.fullname = response.data.data.nombre_o_razon_social;
+    formData.value.address = response.data.data.direccion;
+  })
+  .catch(error => {
+    console.error('Error al obtener datos del RUC:', error);
+    // Aquí puedes manejar errores, como mostrar un mensaje al usuario
+  });
 };
 
 

@@ -227,14 +227,14 @@ const cancel = () => {
 
 const fetchDniData = () => {
 
-
-  axios.get(`${import.meta.env.VITE_API_URL}/apiruc/${form.value.document}`)
+  axios.post(`${import.meta.env.VITE_API_URL}/getRucData`, {
+      ruc: form.value.document
+    })
     .then(response => {
       console.log('Respuesta de la API RUC:', response.data);
-      // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
-      form.value.fullname = response.data.razonSocial;
-      form.value.address = response.data.direccion;
-
+      
+      form.value.fullname = response.data.data.nombre_o_razon_social;
+      form.value.address = response.data.data.direccion;
     })
     .catch(error => {
       console.error('Error al obtener datos del RUC:', error);

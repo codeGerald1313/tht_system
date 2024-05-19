@@ -216,19 +216,18 @@ const partnercompanies = [
 
 // Método para realizar la solicitud GET
 const fetchDniData = () => {
-
-  axios.get(`${import.meta.env.VITE_API_URL}/apidni/${formData.value.document}`)
+  axios.post(`${import.meta.env.VITE_API_URL}/getDniData`, {
+      dni: formData.value.document
+    })
     .then(response => {
-      console.log('Respuesta de la API DNI:', response.data);
       // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
-      formData.value.fullname = `${response.data.nombres} ${response.data.apellidoPaterno} ${response.data.apellidoMaterno}`;
+      formData.value.fullname = response.data.data.nombre_completo;
     })
     .catch(error => {
       console.error('Error al obtener datos del DNI:', error);
       // Aquí puedes manejar errores, como mostrar un mensaje al usuario
     });
 };
-
 
 
 
