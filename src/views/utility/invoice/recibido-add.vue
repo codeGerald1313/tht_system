@@ -350,7 +350,7 @@
 
 
     <AmortizarModal :activeModal="showAmortizar" title="Actualizar Registro de Colaborador"
-      @form-submitted="handleFormSubmitted" :idCliente="idCliente" :totalBooking="booking.total"
+      @form-submitted="handleFormSubmitted" @income-submitted="handleFormSubmitted22" :idCliente="idCliente" :totalBooking="booking.total"
       @close="showAmortizar = false">
     </AmortizarModal>
 
@@ -516,6 +516,8 @@ export default {
         startDate: null,
         endDate: null,
         total: null,
+        totalPagado: null
+
       }
       ,
       perpage: 3,
@@ -925,6 +927,15 @@ export default {
         console.error("Invalid response data format");
       }
     }, 
+    handleFormSubmitted22(responseData) {
+
+this.booking.totalPagado = responseData.amount;
+
+console.log("totalPagar data", this.totalPagado);
+
+},
+
+
 
     deleteProject(index) {
       // Eliminar el proyecto del índice proporcionado
@@ -1024,6 +1035,8 @@ export default {
         subtotal_tour: this.tour.totalTour,
         subtotal_hotel: this.totalHotelValue,
         total: this.booking.total,
+        total_paid: this.booking.totalPagado,
+
         is_favorite: this.booking.isFavorite,
         is_breakfast: this.booking.includeBreakfast,
         nro_breakfast: this.booking.numBreakfasts,
