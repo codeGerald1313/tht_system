@@ -639,7 +639,7 @@ const customerOptions = ref([]);
 
 
 const boxesOptions = [
-  { value: 1, label: "Caja Principal" },
+  { value: 2, label: "Caja General" },
   // Agregar más opciones según sea necesario
 ];
 
@@ -704,6 +704,7 @@ const openModaalBanckAccount = () => {
 const limitedCustomerOptions = computed(() => customerOptions.value.slice(0, 6));
 
 const saveIngreso = () => {
+
 
   const selectElement = document.querySelector('.cajonci-select select');
 

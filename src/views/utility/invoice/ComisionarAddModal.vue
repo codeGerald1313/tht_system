@@ -12,7 +12,7 @@
                                 class="client-select" placeholder="Colaborador a comisionar" />
                         </FromGroup>
 
-                        <button @click="openModalColaborador" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
+                        <button @click.prevent="openModalColaborador" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
                     </div>
                     <div>
                         <FromGroup label="Caja aperturada">
@@ -183,7 +183,7 @@
                 </Modal>
             </Modal>
 
-            <EditProject2 :activeModal="showColabardorModal" title="Actualizar Registro de Colaborador"
+            <EditProject2 :activeModal="showColabardorModal" title="Registrar nuevo Colaborador"
                 @updateColaboradorList="listarColaboradores" @close="showColabardorModal = false"></EditProject2>
         </Modal>
 

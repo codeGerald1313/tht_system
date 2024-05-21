@@ -707,7 +707,7 @@ const saveIngreso = () => {
 
   const selectElement = document.querySelector('.cajonci-select select');
 
-  if (selectElement) {
+  /*if (selectElement) {
     // Obtiene el índice del option seleccionado
     const selectedIndex = selectElement.selectedIndex;
 
@@ -721,7 +721,7 @@ const saveIngreso = () => {
     console.log('Label seleccionado:', selectedIndex, selectedLabel);
   } else {
     console.log('No se ha seleccionado ninguna opción.');
-  }
+  }*/
 
   const selectElement2 = document.querySelector('.pago-select select');
 

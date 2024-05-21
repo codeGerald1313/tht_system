@@ -1118,11 +1118,11 @@ export const MultipleRadialbarsDark = {
 export const basicArea2 = {
   series: [
     {
-      name: "Incomes",
+      name: "Ingresos",
       data: [],
     },
     {
-      name: "Expenses",
+      name: "Egresos",
       data: [],
     },
   ],
@@ -1214,11 +1214,11 @@ export const basicArea2 = {
 export const basicArea2Dark = {
   series: [
     {
-      name: "Incomes",
+      name: "Ingresos",
       data: [],
     },
     {
-      name: "Expenses",
+      name: "Egresos",
       data: [],
     },
   ],

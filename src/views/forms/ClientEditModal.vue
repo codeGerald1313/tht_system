@@ -806,7 +806,7 @@ const saveIngreso = () => {
 
   console.log(income.value)
 
-  axios.post(`${import.meta.env.VITE_API_URL}/moneys/edit/${income.value.id}`, income.value, {
+  axios.post(`${import.meta.env.VITE_API_URL}/moneys-akemy/edit/${income.value.id}`, income.value, {
     ...headers
   })
     .then(response => {

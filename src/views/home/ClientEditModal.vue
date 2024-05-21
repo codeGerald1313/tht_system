@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal :activeModal="props.activeModal" @close="closeEditModal" title="Actualizar Datos del Clientesss"
+    <Modal :activeModal="props.activeModal" @close="closeEditModal" title="Actualizar Datos del Cliente"
       sizeClass="max-w-6xl" centered>
       <form name="client_form" id="client_form" autocomplete="off" class="mx-auto space-y-4">
         <!-- Nombre ó Razón Social -->
@@ -134,7 +134,7 @@
           <div class="lg:col-span-1"></div> <!-- Columna vacía para mantener la alineación -->
           <div class="lg:col-span-3 flex justify-end">
             <!-- Botones -->
-            <Button text="Cancelar" btnClass="btn-light mr-2" @click.prevent="cancel" />
+            <Button text="Cancelar" btnClass="btn-light mr-2" @click.prevent="closeEditModal" />
             <Button type="submit" text="Guardar Cambios" btnClass="btn-dark" @click.prevent="save" />
           </div>
         </div>

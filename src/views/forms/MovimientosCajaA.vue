@@ -2,7 +2,7 @@
   <div>
     <Card noborder>
       <div class="md:flex pb-6 items-center">
-        <h6 class="flex-1 md:mb-0 mb-3">Movimientos de Caja General.A</h6>
+        <h6 class="flex-1 md:mb-0 mb-3">Movimientos de Caja General</h6>
         <div class="md:flex md:space-x-3 items-center flex-none rtl:space-x-reverse">
 
           <Button icon="heroicons-outline:arrow-path"

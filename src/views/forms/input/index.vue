@@ -300,7 +300,7 @@ export default {
 
       boxesOptions: [
         { value: 1, label: "Caja Principal" },
-        { value: 2, label: "Caja General.A" },
+        { value: 2, label: "Caja General" },
 
         // Agregar más opciones según sea necesario
       ],

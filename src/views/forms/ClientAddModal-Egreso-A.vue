@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal :activeModal="store.addmodal3" @close="store.closeModal3" title="Registrar Nuevo Egreso - Caja General.A" centered>
+    <Modal :activeModal="store.addmodal3" @close="store.closeModal3" title="Registrar Nuevo Egreso - Caja General" centered>
       <form @submit.prevent="addProject" class="space-y-4">
         <div class="grid lg:grid-cols-2 gap-4 grid-cols-1">
           <FromGroup name="d1" :error="boxSelectedError">
@@ -678,7 +678,7 @@ const customerOptions = ref([]);
 
 
 const boxesOptions = [
-  { value: 1, label: "Caja Principal" },
+  { value: 2, label: "Caja General" },
   // Agregar más opciones según sea necesario
 ];
 
@@ -749,6 +749,7 @@ const saveIngreso = () => {
 
   const selectElement = document.querySelector('.cajonci-select select');
 
+  /*
   if (selectElement) {
     // Obtiene el índice del option seleccionado
     const selectedIndex = selectElement.selectedIndex;
@@ -763,7 +764,7 @@ const saveIngreso = () => {
     console.log('Label seleccionado:', selectedIndex, selectedLabel);
   } else {
     console.log('No se ha seleccionado ninguna opción.');
-  }
+  }*/
 
   const selectElement2 = document.querySelector('.pago-select select');
 

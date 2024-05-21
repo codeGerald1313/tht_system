@@ -2,7 +2,7 @@
   <div>
     <Card noborder>
       <div class="md:flex justify-between pb-6 md:space-y-0 space-y-3 items-center">
-        <h5>Ingresos Caja General.A</h5>
+        <h5>Ingresos Caja General</h5>
 
         <div class="flex items-center"> <!-- Nuevo contenedor para los elementos alineados horizontalmente -->
           <Button icon="heroicons-outline:arrow-path"

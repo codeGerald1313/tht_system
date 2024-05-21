@@ -465,7 +465,9 @@ import { useAuth } from "../../../store/auth";
 import axios from "axios";
 import Pagination from "@/components/Pagination";
 import Switch from '@/components/Switch';
+import { useToast } from "vue-toastification";
 
+import { mapState } from "pinia";
 
 const headers = useAuth().headers(); // Obtiene los encabezados de autenticación
 
@@ -513,6 +515,7 @@ export default {
 
       branchOptions: [
         { value: 1, label: 'Caja  Principal' },
+        { value: 2, label: 'Caja  General' },
 
       ],
       // Opciones de Concepto de ingreso
@@ -527,6 +530,8 @@ export default {
       ],
       // Selecciones actuales
       selectedBranch: 1,
+      previousBranch: null,
+
       selectedConcept: '',
       selectedPaymentMethod: '',
       selectedDocumentType: 1,
@@ -1036,7 +1041,22 @@ export default {
       }
     }
     ,
+    handleBranchChange(newBranch) {
+           // Convert newBranch to a number if it's a string
+           const branchValue = parseInt(newBranch, 10);
 
+      console.log(this.user.id, branchValue);
+      if (branchValue === 2 &&  ![6, 10].includes(this.user.id)) {
+        // Usuario no tiene permiso para seleccionar 'Caja General'
+        const toast = useToast();
+
+        console.log(newBranch);
+        toast.error('No tienes permiso para seleccionar esta sucursal.');
+        this.selectedBranch = this.previousBranch; // Revertir a la selección anterior
+      } else {
+        this.previousBranch = branchValue; // Actualizar la selección anterior
+      }
+    },
 
   },
 
@@ -1059,8 +1079,15 @@ export default {
         // Llamar a métodos u otras funciones aquí
       }
     }
-  }
-
+  },
+  watch: {
+    selectedBranch(newBranch) {
+      this.handleBranchChange(newBranch);
+    },
+  },
+  computed: {
+    ...mapState(useAuth, ['user']),
+  },
 
 };
 </script>

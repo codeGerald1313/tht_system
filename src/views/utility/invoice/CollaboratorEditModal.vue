@@ -93,7 +93,7 @@
       <!-- Botones -->
       <div class="form-group col-lg-12 form__footerBtn ">
         <div class="text-right mt-6">
-          <Button text="Cancelar" btnClass="btn-light mr-2" @click="cancel" />
+          <Button text="Cancelar" btnClass="btn-light mr-2" @click="closeEditModal" />
           <Button type="submit" text="Guardar Cambios" btnClass="btn-dark" @click="saveCollaborator" />
           <!-- Botón Submit -->
         </div>
@@ -177,7 +177,7 @@ const vehicletypes = [
 ];
 
 const cancel = () => {
-  store.closeModal(); // Cierra el modal al hacer clic en el botón "Cancelar"
+  store.closeEditModal(); // Cierra el modal al hacer clic en el botón "Cancelar"
 };
 
 // Método para validar un campo específico

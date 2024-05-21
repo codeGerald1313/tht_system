@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal :activeModal="props.activeModal" @close="closeEditModal" title="Actualizar Registro de Egreso" centered>
+    <Modal :activeModal="props.activeModal" @close="closeEditModal" title="Actualizar Registro de Egreso - Caja General" centered>
       <form @submit.prevent="addProject" class="space-y-4">
         <div class="grid lg:grid-cols-2 gap-4 grid-cols-1">
           <FromGroup name="d1" :error="boxSelectedError">
@@ -698,7 +698,7 @@ const customerOptions = ref([]);
 
 
 const boxesOptions = [
-  { value: 1, label: "Caja Principal" },
+  { value: 2, label: "Caja General" },
   // Agregar más opciones según sea necesario
 ];
 
@@ -848,7 +848,7 @@ const saveIngreso = () => {
 
   console.log(income.value)
 
-  axios.post(`${import.meta.env.VITE_API_URL}/moneys/edit/${income.value.id}`, income.value, {
+  axios.post(`${import.meta.env.VITE_API_URL}/moneys-akemy/edit/${income.value.id}`, income.value, {
     ...headers
   })
     .then(response => {

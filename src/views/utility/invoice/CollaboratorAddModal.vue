@@ -93,7 +93,7 @@
       <!-- Botones -->
       <div class="form-group col-lg-12 form__footerBtn ">
         <div class="text-right mt-6">
-          <Button text="Cancelar" btnClass="btn-light mr-2" @click="cancel" />
+          <Button text="Cancelar" btnClass="btn-light mr-2" @click.prevent="cancel" />
           <Button type="submit" text="Guardar Cambios" btnClass="btn-dark" @click="saveCollaborator" />
           <!-- Botón Submit -->
         </div>

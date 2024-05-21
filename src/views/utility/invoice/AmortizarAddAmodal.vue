@@ -13,17 +13,17 @@
                                 <Select :options="limitedCustomerOptions" v-model="income.client_id"
                                     class="client-select" placeholder="Cliente Reponsable" />
                             </FromGroup>
-                            <button @click="openModal" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
+                            <button @click.prevent="openModal" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
                         </div>
                         <span v-if="!income.client_id" class="text-red-600">¡Selecciona un cliente!</span>
 
                     </div>
                     <div>
                         <FromGroup label="Caja aperturada">
-                            <Select v-model="income.branchoffice_id" :options="boxesOptions" disabled
+                            <Select v-model="branchoffice_id" :options="boxesOptions" disabled
                                 placeholder="Seleccionar caja" />
                         </FromGroup>
-                        <span v-if="!income.branchoffice_id" class="text-red-600">¡Selecciona una caja!</span>
+                        <span v-if="!branchoffice_id" class="text-red-600">¡Selecciona una caja!</span>
 
                     </div>
                 </div>
@@ -232,6 +232,7 @@ export default {
             show3: false,
             show4: false,
             showEditModal: false,
+            branchoffice_id: 1, // Inicializado con el valor predeterminado
             income: {
                 totalAPagar: 0.00, // Valor inicial de TOTAL A PAGAR
                 totalRestante: 0.00, // Valor inicial de TOTAL RESTANTE
@@ -241,7 +242,6 @@ export default {
                 is_paycredit: null,
                 available_edit: null,
                 user_id: null,
-                branchoffice_id: 1, // Inicializado con el valor predeterminado
                 concept_id: null,
                 paymentmethod_id: null,
                 currency_id: null,

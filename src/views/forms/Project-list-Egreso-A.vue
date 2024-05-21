@@ -2,7 +2,7 @@
   <div>
     <Card noborder>
       <div class="md:flex justify-between pb-6 md:space-y-0 space-y-3 items-center">
-        <h5>Egresos Caja General.A</h5>
+        <h5>Egresos Caja General</h5>
 
         <div class="flex items-center"> <!-- Nuevo contenedor para los elementos alineados horizontalmente -->
           <Button icon="heroicons-outline:arrow-path"
@@ -151,7 +151,7 @@ import Pagination from "@/components/Pagination";
 import ProgressBar from "@/components/ProgressBar";
 import Tooltip from "@/components/Tooltip";
 
-import EditProject from "./ClientEditModal.vue";
+import EditProject from "./ClientEditModal-Egreso-A.vue";
 
 import { MenuItem } from "@headlessui/vue";
 import { mapState, mapActions } from "pinia";

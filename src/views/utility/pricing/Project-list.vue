@@ -108,7 +108,6 @@ export default {
       showEditModal: false,  // Nueva propiedad para controlar el modal de edición
       advancedTable,
       current: 1,
-      perpage: 6,
       pageRange: 10,
       actions: [
         {
