@@ -465,7 +465,7 @@ handleGuardadoExitosoTransfer() {
     selected(newValue, oldValue) {
       const toast = useToast(); // Obtiene el objeto toast utilizando useToast
 
-      if (this.authenticatedUser && this.authenticatedUser.id === 6) {
+      if (this.authenticatedUser && (this.authenticatedUser.id === 6 || this.authenticatedUser.id === 10)) {
         // Si el usuario tiene el ID 1 (autorizado)
         console.log('Usuario autorizado para acceder a esta opción.');
 
