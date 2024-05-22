@@ -121,7 +121,7 @@ const save = () => {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       cancel();
       toast.success(response.data.message);
     })
@@ -165,9 +165,9 @@ watch(() => selectedCity.value, (newValue, oldValue) => {
     object.value.tourismcitie_id = selectedIndex;
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', object.value.tourismcitie_id);
+    // console.log('Label seleccionado:', object.value.tourismcitie_id);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 });
@@ -190,9 +190,9 @@ watch(() => shiftTourSelected.value, (newValue, oldValue) => {
     object.value.shiftour = selectedLabel;
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', object.value.shift, object.value.shiftour);
+    // console.log('Label seleccionado:', object.value.shift, object.value.shiftour);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 });

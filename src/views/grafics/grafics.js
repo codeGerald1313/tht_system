@@ -240,7 +240,7 @@ async function updateColumnChartDataFromBackend() {
       columnChart.series = newSeries;
       columnChart.chartOptions.xaxis.categories = dates;
 
-      console.log('Objeto columnChart actualizado:', columnChart);
+      // console.log('Objeto columnChart actualizado:', columnChart);
 
       // Aquí deberías llamar a la función o método que utiliza el objeto columnChart
       // para renderizar el gráfico en la interfaz de usuario
@@ -277,7 +277,7 @@ async function updateColumnChartDarkFromBackend() {
       columnChartDark.series = newSeries;
       columnChartDark.chartOptions.xaxis.categories = dates;
 
-      console.log('Gráfico de columnas actualizado:', columnChartDark);
+      // console.log('Gráfico de columnas actualizado:', columnChartDark);
 
       // Aquí deberías llamar a la función o método que renderiza el gráfico
       // renderColumnChart(columnChartDark); // Suponiendo que tienes una función renderColumnChart para mostrar el gráfico
@@ -415,7 +415,7 @@ actualizarGraficoDesdeBackend('basicBar')
   .then((updatedBasicBar) => {
     if (updatedBasicBar) {
       // Aquí puedes usar `updatedBasicBar` para mostrar el gráfico actualizado en tu aplicación
-      console.log('Gráfico básico actualizado:', updatedBasicBar);
+      // console.log('Gráfico básico actualizado:', updatedBasicBar);
 
       // Por ejemplo, si estás usando una librería de gráficos como ApexCharts, puedes llamar a un método para mostrar el gráfico
       // chart.render(updatedBasicBar);
@@ -432,7 +432,7 @@ actualizarGraficoDesdeBackend('basicBarDark')
   .then((updatedBasicBarDark) => {
     if (updatedBasicBarDark) {
       // Aquí puedes usar `updatedBasicBarDark` para mostrar el gráfico con tema oscuro actualizado en tu aplicación
-      console.log('Gráfico con tema oscuro actualizado:', updatedBasicBarDark);
+      // console.log('Gráfico con tema oscuro actualizado:', updatedBasicBarDark);
 
       // Por ejemplo, si estás usando una librería de gráficos como ApexCharts, puedes llamar a un método para mostrar el gráfico
       // chart.render(updatedBasicBarDark);
@@ -461,7 +461,7 @@ async function updateMultipleRadialbarsFromBackend() {
       MultipleRadialbars.chartOptions.labels = labels;
       MultipleRadialbars.chartOptions.colors = colors;
 
-      console.log('Gráfico actualizado:', MultipleRadialbars);
+      // console.log('Gráfico actualizado:', MultipleRadialbars);
     } else {
       console.error('Respuesta vacía o datos faltantes en la respuesta del backend.');
     }
@@ -489,7 +489,7 @@ async function updateMultipleRadialbarsDarkFromBackend() {
       MultipleRadialbarsDark.chartOptions.labels = labels;
       MultipleRadialbarsDark.chartOptions.colors = colors;
 
-      console.log('Gráfico oscuro actualizado:', MultipleRadialbarsDark);
+      // console.log('Gráfico oscuro actualizado:', MultipleRadialbarsDark);
     } else {
       console.error('Respuesta vacía o datos faltantes en la respuesta del backend para gráfico oscuro.');
     }
@@ -977,7 +977,7 @@ async function updateStackChartDataFromBackend() {
       const numSeries = newSeries.length;
       stackChart.chartOptions.colors = ['#4669FA', '#0CE7FA', '#FA916B', '#3AAFA9'].slice(0, numSeries);
 
-      console.log('Objeto stackChart actualizado:', stackChart);
+      // console.log('Objeto stackChart actualizado:', stackChart);
 
       // Aquí puedes llamar a una función o método que utilice el objeto stackChart
       // para renderizar el gráfico en la interfaz de usuario
@@ -1019,7 +1019,7 @@ async function updateStackChartDarkDataFromBackend() {
       const numSeries = newSeries.length;
       stackChartDark.chartOptions.colors = ['#4669FA', '#0CE7FA', '#FA916B', '#3AAFA9'].slice(0, numSeries);
 
-      console.log('Objeto stackChartDark actualizado:', stackChartDark);
+      // console.log('Objeto stackChartDark actualizado:', stackChartDark);
 
       // Aquí puedes llamar a una función o método que utilice el objeto stackChartDark
       // para renderizar el gráfico en la interfaz de usuario
@@ -1325,7 +1325,7 @@ async function updateBasicArea2FromBackend() {
       });
       basicArea2.chartOptions.xaxis.categories = categories;
 
-      console.log('Gráfico básico de área actualizado:', basicArea2);
+      // console.log('Gráfico básico de área actualizado:', basicArea2);
     } else {
       console.error('Respuesta vacía o datos faltantes en la respuesta del backend.');
     }
@@ -1356,7 +1356,7 @@ async function updateBasicArea2DarkFromBackend() {
       });
       basicArea2Dark.chartOptions.xaxis.categories = categories;
 
-      console.log('Gráfico de área básico oscuro actualizado:', basicArea2Dark);
+      // console.log('Gráfico de área básico oscuro actualizado:', basicArea2Dark);
     } else {
       console.error('Respuesta vacía o datos faltantes en la respuesta del backend para gráfico de área básico oscuro.');
     }
@@ -1565,7 +1565,7 @@ async function updatePieChartFromBackend() {
 
       
 
-      console.log('Objeto pieChartBedrooms actualizado con datos del backend:', pieChartBedrooms);
+      // console.log('Objeto pieChartBedrooms actualizado con datos del backend:', pieChartBedrooms);
 
       // Aquí puedes llamar a una función o método que utilice el objeto pieChartDark
       // para renderizar el gráfico en la interfaz de usuario
@@ -1600,7 +1600,7 @@ async function updatePieDarkChartFromBackend() {
 
       
 
-      console.log('Objeto pieChartDarkBedrooms actualizado con datos del backend:', pieChartDarkBedrooms);
+      // console.log('Objeto pieChartDarkBedrooms actualizado con datos del backend:', pieChartDarkBedrooms);
 
       // Aquí puedes llamar a una función o método que utilice el objeto pieChartDark
       // para renderizar el gráfico en la interfaz de usuario
@@ -1635,7 +1635,7 @@ async function updateDonutChartFromBackend() {
 
       
 
-      console.log('Objeto pieChart actualizado con datos del backend:', pieChart);
+      // console.log('Objeto pieChart actualizado con datos del backend:', pieChart);
 
       // Aquí puedes llamar a una función o método que utilice el objeto pieChartDark
       // para renderizar el gráfico en la interfaz de usuario
@@ -1669,7 +1669,7 @@ async function updatePieChartDarkFromBackend() {
       // Actualiza las etiquetas del gráfico con los datos de labels del backend
       pieChartDark.chartOptions.labels = labels;
 
-      console.log('Objeto pieChartDark actualizado con datos del backend:', pieChartDark);
+      // console.log('Objeto pieChartDark actualizado con datos del backend:', pieChartDark);
 
       // Aquí puedes llamar a una función o método que utilice el objeto pieChartDark
       // para renderizar el gráfico en la interfaz de usuario

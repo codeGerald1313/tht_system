@@ -159,9 +159,9 @@ const save = () => {
     object.value.shiftour = selectedLabel;
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', object.value.shift, object.value.shiftour);
+    // console.log('Label seleccionado:', object.value.shift, object.value.shiftour);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 
@@ -178,9 +178,9 @@ const save = () => {
     object.value.tourismcitie_id = selectedIndex;
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', object.value.tourismcitie_id);
+    // console.log('Label seleccionado:', object.value.tourismcitie_id);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 
@@ -192,7 +192,7 @@ const save = () => {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       emits('updateToursList'); // Emitir el evento personalizado al componente padre
       closeEditModal();
       toast.success(response.data.message);
@@ -222,7 +222,7 @@ watch(() => selectedCity.value, (newValue, oldValue) => {
 
 watch(() => props.tourData, (newData) => {
 
-  console.log(newData.description);
+  // console.log(newData.description);
   if (newData) {
     object.value.id = newData.id;
     selectedCity.value = newData.tourismcitie_id;
@@ -233,7 +233,7 @@ watch(() => props.tourData, (newData) => {
     object.value.price_corporate = newData.price_corporate;
     object.value.comment = newData.comment;
 
-    console.log(object.value.id)
+    // console.log(object.value.id)
   }
 });
 

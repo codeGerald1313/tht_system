@@ -756,7 +756,7 @@ export default {
       // console.log(this.idCliente);
       axios.get(`${import.meta.env.VITE_API_URL}/clients/cellphone&telephone/${newValue}`, headers)
         .then(response => {
-          console.log(response);
+          // console.log(response);
 
           this.booking.phoneNumber = response.data.contact_numbers;
         })
@@ -807,13 +807,13 @@ export default {
 
         const otherData = JSON.parse(to.query.otherData); // Convertir la cadena JSON a objeto
 
-        console.log(otherData);
+        // console.log(otherData);
 
         // Asignar los valores correspondientes del objeto otherData al objeto booking
         this.booking.clients = otherData.client_id;
 
 
-        console.log("Id Cliente", this.booking.clients );
+       //  console.log("Id Cliente", this.booking.clients );
         this.booking.originReserve = otherData.bookingorigin_id;
         this.booking.numPassengers = otherData.nro_pax;
         this.booking.referenciar = otherData.is_reference_pax === 1 ? true : false;
@@ -900,7 +900,7 @@ export default {
 
       this.booking.total = totalReserva;
 
-      console.log(this.booking.total);
+      // console.log(this.booking.total);
 
       // Formatear la suma total como 'S/.0.00'
       return 'S/.' + sumaTotal.toFixed(2);
@@ -915,7 +915,7 @@ export default {
   methods: {
     capturarDatos() {
       // Imprimir la lista de proyectos en la consola
-      console.log(this.projects);
+      // console.log(this.projects);
 
       // O cualquier otra acción que desees realizar con la lista de proyectos
     },
@@ -929,7 +929,7 @@ export default {
       this.commissionIds = formattedId;
 
       // Hacer algo con el ID, por ejemplo, imprimir en la consola
-      console.log('ID de la comisión:', this.commissionIds);
+      // console.log('ID de la comisión:', this.commissionIds);
     },
 
     handleFormSubmitted(responseData) {
@@ -940,13 +940,13 @@ export default {
       this.moneyIds = formattedId;
 
       // Hacer algo con el ID, por ejemplo, imprimir en la consola
-      console.log('ID del ingreso amortización:', this.moneyIds);
+      // console.log('ID del ingreso amortización:', this.moneyIds);
     },
 
     deleteProject(index) {
       // Eliminar el proyecto del índice proporcionado
       this.projects.splice(index, 1);
-      console.log(this.projects);
+      // console.log(this.projects);
     },
     deleteItem(id, index) {
       // Mostrar un cuadro de diálogo de confirmación nativo del navegador
@@ -957,7 +957,7 @@ export default {
         axios.delete(`${import.meta.env.VITE_API_URL}/hotelsbookings/destroy/${id}`, headers)
           .then(response => {
             // El elemento se ha eliminado correctamente en el backend
-            console.log("El elemento con ID:", id, "se ha eliminado correctamente en el backend");
+            // console.log("El elemento con ID:", id, "se ha eliminado correctamente en el backend");
 
             // Eliminar el elemento del array this.reservasHotel
             this.reservasHotel.splice(index, 1);
@@ -983,7 +983,7 @@ export default {
           });
       } else {
         // El usuario ha cancelado la eliminación
-        console.log("El usuario ha cancelado la eliminación del elemento con ID:", id);
+        // console.log("El usuario ha cancelado la eliminación del elemento con ID:", id);
       }
     },
 
@@ -1024,7 +1024,7 @@ export default {
       let nuevaSuma = parseFloat(totalSum);
       this.totalHotelValue = parseFloat(this.totalHotelValue) + nuevaSuma;
 
-      console.log(this.totalHotelValue);
+      // console.log(this.totalHotelValue);
     },
 
     calcularTotalHotelValue() {
@@ -1040,7 +1040,7 @@ export default {
       // Asignar el total calculado a totalHotelValue
       this.totalHotelValue = total;
 
-      console.log(this.totalHotelValue);
+      // console.log(this.totalHotelValue);
     },
 
     formatReserva(reserva) {
@@ -1123,7 +1123,7 @@ export default {
         money_ids: this.moneyIds
       };
 
-      console.log(dataToSend);
+      // console.log(dataToSend);
 
       // Realiza la solicitud HTTP POST al backend
       axios.post(`${import.meta.env.VITE_API_URL}/bookings/edit/${this.idBooking}`, dataToSend, {
@@ -1133,7 +1133,7 @@ export default {
           const toast = useToast();
 
           // Maneja la respuesta del backend según sea necesario
-          console.log(response.data);
+          // console.log(response.data);
 
           toast.success(response.data.message, { duration: 3000 });
 
@@ -1168,12 +1168,12 @@ export default {
       this.idCliente = this.idCliente;
       this.totalBooking = this.booking.total;
       this.showAmortizar = true;
-      console.log(this.idCliente);
+      // console.log(this.idCliente);
     },
 
     handleComisionEnviada(comisionData) {
       // Recibir los datos de la comisión y mostrarlos en la consola
-      console.log('Datos de la comisión recibidos en el componente padre:', comisionData);
+      // console.log('Datos de la comisión recibidos en el componente padre:', comisionData);
     },
 
     openModalReservaHotel() {
@@ -1195,7 +1195,7 @@ export default {
     },
 
     async fetchHotelsBooking() {
-      console.log("Fetching HotelsBooking...");
+      // console.log("Fetching HotelsBooking...");
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/clients/list`, headers);
         this.customerOptions = response.data.data.map(customer => ({
@@ -1226,10 +1226,10 @@ export default {
     },
 
     async fetchTours() {
-      console.log("Fetching tours...");
+      // console.log("Fetching tours...");
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/tours/list`, headers);
-        console.log(response);
+        // console.log(response);
 
         // this.projects = response.data.data;
 

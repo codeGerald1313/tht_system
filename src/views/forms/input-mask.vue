@@ -395,7 +395,7 @@ export default {
 
 
       this.monto = this.monto;
-      console.log(this.monto)
+      // console.log(this.monto)
       // Abre el modal
       this.showModalCierre = true;
     },
@@ -420,7 +420,7 @@ export default {
 
         this.summary_paymethods = response.data.summary_paymethods;
 
-        console.log(this.moneybox);
+        // console.log(this.moneybox);
       } catch (error) {
         console.error("Error fetching summary_paymethods:", error);
       }
@@ -456,14 +456,14 @@ export default {
 },
 
     handleGuardadoExitoso(data) {
-      console.log('Datos guardados exitosamente en el componente padre:', data);
+      // console.log('Datos guardados exitosamente en el componente padre:', data);
       const id = data.data.moneybox_id;
       this.id = id;
 
 
       this.fetchSummaryPaymethods(this.id);
 
-      console.log('ID capturado:', id);
+      // console.log('ID capturado:', id);
       // Aquí puedes realizar cualquier lógica adicional con el ID capturado
     },
     openProject() {
@@ -488,7 +488,7 @@ axios.get(`${import.meta.env.VITE_API_URL}/moneyboxes-akemy/last-id-with-socia-o
     // Asignar el último ID obtenido del backend a this.id
     this.id = last_id;
 
-    console.log(this.id);
+    // console.log(this.id);
 
     // Activar el método correspondiente según el estado de has_null_date_closing
     if (has_null_date_closing) {
@@ -514,7 +514,7 @@ axios.get(`${import.meta.env.VITE_API_URL}/moneyboxes-akemy/last-id-with-socia-o
   watch: {
     id(newValue, oldValue) {
       // Aquí puedes ejecutar acciones cuando la variable idBoxed cambia
-      console.log('Nuevo valor de idBoxed:', newValue);
+      // console.log('Nuevo valor de idBoxed:', newValue);
       // También puedes realizar alguna acción adicional, como cargar datos o llamar a métodos
     },
 

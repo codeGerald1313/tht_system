@@ -599,7 +599,7 @@ export default {
 
     /*handlePostComplete(data) {
 
-      console.log(data);
+      // console.log(data);
       // Obtener los datos de la reserva de hotel
       const hotelBookingData = data.data;
 
@@ -619,7 +619,7 @@ export default {
 
       this.idsReservesHotels = ids;
 
-      console.log(this.idsReservesHotels);
+      // console.log(this.idsReservesHotels);
     },*/
 
     handleCommissionProcessed(response) {
@@ -631,7 +631,7 @@ export default {
       this.commissionIds = formattedId;
 
       // Hacer algo con el ID, por ejemplo, imprimir en la consola
-      console.log('ID de la comisión:', this.commissionIds);
+      // console.log('ID de la comisión:', this.commissionIds);
     },
 
     handleFormSubmitted(responseData) {
@@ -642,13 +642,13 @@ export default {
       this.moneyIds = formattedId;
 
       // Hacer algo con el ID, por ejemplo, imprimir en la consola
-      console.log('ID del ingreso amortización:', this.moneyIds);
+      // console.log('ID del ingreso amortización:', this.moneyIds);
     },
     editar() {
 
       let routeName = 'invoice-edit'; // Ruta por defecto
 
-     console.log(this.booking.type_booking); 
+     // console.log(this.booking.type_booking); 
 
 if (this.booking.type_booking === 2) {
   routeName = 'invoice-edit2'; // Cambiar la ruta si booking es igual a 2
@@ -704,7 +704,7 @@ if (this.booking.type_booking === 2) {
         this.deleteItem(itemId);
       } else {
         // Si el usuario cancela, no hacer nada o mostrar un mensaje opcional
-        console.log('Eliminación cancelada');
+        // console.log('Eliminación cancelada');
       }
     },
     async deleteItem(id) {
@@ -712,7 +712,7 @@ if (this.booking.type_booking === 2) {
 
       try {
         const response = await axios.delete(`${import.meta.env.VITE_API_URL}/hotelsbookings/destroy/${id}`, headers);
-        console.log(response.data.message); // Mensaje de éxito desde el backend
+        // console.log(response.data.message); // Mensaje de éxito desde el backend
         toast.success(response.data.message); // Mostrar mensaje de éxito
 
         this.fetchData();
@@ -737,7 +737,7 @@ if (this.booking.type_booking === 2) {
       axios.get(`${import.meta.env.VITE_API_URL}/bookings/record/${id}`, headers)
         .then(response => {
           // Aquí manejas la respuesta del servidor
-          console.log(response);
+          // console.log(response);
           const data = response.data.data;
 
           this.booking.id = data.book.id;
@@ -816,7 +816,7 @@ if (this.booking.type_booking === 2) {
                 });
 
 
-              console.log(this.booking.typearrival)
+              // console.log(this.booking.typearrival)
             }
           });
 
@@ -833,7 +833,7 @@ if (this.booking.type_booking === 2) {
           this.commisionInfo = data.commissions;
           this.booking.dateArrivalFormatted = data.created_at; // Formatea la fecha de llegada
 
-          console.log(this.projects);
+          // console.log(this.projects);
         })
         .catch(error => {
           // Aquí manejas errores si la solicitud falla
@@ -851,7 +851,7 @@ if (this.booking.type_booking === 2) {
         .then(response => {
 
           this.otherData = response.data.data;
-          console.log(this.otherData);
+          // console.log(this.otherData);
 
         })
         .catch(error => {
@@ -1303,7 +1303,7 @@ if (this.booking.type_booking === 2) {
 
   mounted() {
     this.fetchData();
-    console.log(this.booking.id);
+    // console.log(this.booking.id);
     this.fetchEditData();
   }
 };

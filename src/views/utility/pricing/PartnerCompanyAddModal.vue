@@ -117,7 +117,7 @@ const saveCompany = () => {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       cancel();
       toast.success(response.data.message);
     })
@@ -149,7 +149,7 @@ const extractRuc = () => {
       ruc: formData.value.document
     })
     .then(response => {
-      console.log('Respuesta de la API RUC:', response.data);
+      // console.log('Respuesta de la API RUC:', response.data);
    
       formData.value.fullname = response.data.data.nombre_o_razon_social;
       formData.value.address = response.data.data.direccion;

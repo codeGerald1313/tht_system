@@ -279,10 +279,10 @@ const save = () => {
     client.value.type_client = selectedIndexString;
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', client.value.type_client);
-    console.log('Índice seleccionado como cadena:', selectedIndexString);
+    // console.log('Label seleccionado:', client.value.type_client);
+    // console.log('Índice seleccionado como cadena:', selectedIndexString);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
   // Encuentra el elemento del select en el DOM
@@ -299,9 +299,9 @@ const save = () => {
 
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', client.value.status);
+    // console.log('Label seleccionado:', client.value.status);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
   // Encuentra el elemento del select en el DOM
@@ -318,9 +318,9 @@ const save = () => {
 
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', client.value.sex);
+    // console.log('Label seleccionado:', client.value.sex);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 
@@ -341,22 +341,22 @@ const save = () => {
 
 
     // Imprime el label seleccionado
-    console.log('Id & Label seleccionado:', client.value.type_client);
+    // console.log('Id & Label seleccionado:', client.value.type_client);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 
   client.value.type_client = customerTypeSelected.value;
 
 
-  console.log(client.value);
+  // console.log(client.value);
 
   axios.post(`${import.meta.env.VITE_API_URL}/clients/edit/${client.value.id}`, client.value, {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       emits('updateClientList'); // Emitir el evento personalizado al componente padre
       closeEditModal();
       toast.success(response.data.message);
@@ -445,7 +445,7 @@ watch(() => props.clientData, (newData) => {
     districtSelected.value = (newData.district_id ?? '').toString().padStart(6, '0');
 
 
-    console.log(client.value.id);
+    // console.log(client.value.id);
   }
 });
 

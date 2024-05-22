@@ -350,7 +350,7 @@ export default {
     async reloadCrmTable() {
       axios.get(`${import.meta.env.VITE_API_URL}/bookings/list?start_date=${this.dateValue.startDate}&end_date=${this.dateValue.endDate}`, headers)
         .then(response => {
-          console.log(response.data);
+          // console.log(response.data);
 
           this.advancedTable = response.data.data.map(item => ({
             ...item,
@@ -359,7 +359,7 @@ export default {
 
           const toast = useToast();
           toast.success(response.data.message);
-          console.log(response);
+          // console.log(response);
         })
         .catch(error => {
           console.error(error);
@@ -397,7 +397,7 @@ export default {
 
         axios.get(`${import.meta.env.VITE_API_URL}/bookings/list?start_date=${startDateOnly}&end_date=${endDateOnly}`, headers)
           .then(response => {
-            console.log(response.data);
+            // console.log(response.data);
             // Si la respuesta es exitosa, establecer la tabla avanzada con los datos recibidos
             const toast = useToast();
             toast.success(response.data.message);
@@ -431,7 +431,7 @@ export default {
   mounted() {
     axios.get(`${import.meta.env.VITE_API_URL}/bookings/list?start_date=${this.dateValue.startDate}&end_date=${this.dateValue.endDate}`, headers)
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
 
         const toast = useToast();
         toast.success(response.data.message);
@@ -441,7 +441,7 @@ export default {
           formatted_created_at: dayjs(item.created_at).locale('es').format('DD MMM. YYYY')
         }));
 
-        console.log(this.advancedTable);
+        // console.log(this.advancedTable);
       })
       .catch(error => {
         console.error(error);

@@ -183,7 +183,7 @@ const save = () => {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       emits('updateTransportList'); // Emitir el evento personalizado al componente padre
       closeEditModal();
       toast.success(response.data.message);
@@ -210,7 +210,7 @@ watch(() => props.transportData, (newData) => {
     transport.value.telephone = newData.telephone;
     transport.value.characteristic = newData.address;
     transport.value.address = newData.address;
-    console.log(transport.value.id)
+    // console.log(transport.value.id)
   }
 });
 

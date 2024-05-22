@@ -178,7 +178,7 @@ async function submitForm() {
       headers
     );
 
-    console.log(response.data);
+    // console.log(response.data);
     // Resto de la lógica de manejo de la respuesta
   } catch (error) {
     console.error("Error al enviar el formulario:", error);
@@ -194,7 +194,7 @@ const list = async () => {
       headers
     );
 
-    console.log(response);
+    // console.log(response);
 
     // Verificar si se recibió un mensaje del servidor y mostrarlo en un toast
     if (response.data.message) {
@@ -225,12 +225,12 @@ const list = async () => {
         { responseType: 'blob', ...headers } // Indicar que esperamos una respuesta de tipo blob
       );
 
-      console.log(response2);
+      // console.log(response2);
 
 
       imageUrl2.value = URL.createObjectURL(response2.data);
 
-      console.log(imageUrl2.value);
+      // console.log(imageUrl2.value);
       //getImage();
     }
 
@@ -256,7 +256,7 @@ const { getRootProps, getInputProps, ...rest } = useDropzone({ onDrop });
 
 const cancel = () => {
   // Lógica para cancelar la acción actual
-  console.log('Acción cancelada');
+  // console.log('Acción cancelada');
 };
 
 onMounted(async() => {

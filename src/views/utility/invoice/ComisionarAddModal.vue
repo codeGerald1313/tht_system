@@ -327,7 +327,7 @@ export default {
         idBooking: function (newValueIdBooking, oldValueIdBooking) {
 
             this.commission_data.booking_id = newValueIdBooking;
-            console.log('El valor idBooking es', newValueIdBooking);
+            // console.log('El valor idBooking es', newValueIdBooking);
         },
 
         'commission_data.paymentmethod_id': function (newVal, oldVal) {
@@ -373,7 +373,7 @@ export default {
                 this.fetchAccountBanks();
                 this.closeModalEditAccountBank();
                 toast.success('¡Cambios guardados en la cuenta bancaria exitosamente!');
-                console.log('Respuesta de la solicitud POST para guardar cambios en la cuenta bancaria:', response.data);
+                // console.log('Respuesta de la solicitud POST para guardar cambios en la cuenta bancaria:', response.data);
             } catch (error) {
                 toast.error('Error al guardar cambios en la cuenta bancaria. Por favor, intenta nuevamente.');
                 console.error('Error al enviar la solicitud POST para guardar cambios en la cuenta bancaria:', error);
@@ -389,7 +389,7 @@ export default {
                 this.closeEditModalBank();
 
                 toast.success('¡Cambios guardados en el banco exitosamente!');
-                console.log('Respuesta de la solicitud POST para guardar cambios en el banco:', response.data);
+                // console.log('Respuesta de la solicitud POST para guardar cambios en el banco:', response.data);
             } catch (error) {
                 toast.error('Error al guardar cambios en el banco. Por favor, intenta nuevamente.');
                 console.error('Error al enviar la solicitud POST para guardar cambios en el banco:', error);
@@ -418,7 +418,7 @@ export default {
 
             this.commission_data.paymentmethod_id = parseInt(this.commission_data.paymentmethod_id);
 
-            console.log(this.commission_data);
+            // console.log(this.commission_data);
 
             // Realizar la solicitud POST utilizando Axios
             axios.post(`${import.meta.env.VITE_API_URL}/commisions/create`, this.commission_data, { ...headers })

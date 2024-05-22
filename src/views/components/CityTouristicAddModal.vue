@@ -56,7 +56,7 @@ const save = () => {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       cancel(); // Cierra el modal al guardar exitosamente
       toast.success(response.data.message);
 

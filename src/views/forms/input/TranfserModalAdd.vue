@@ -70,7 +70,7 @@ const saveTransfer = () => {
     ...headers
   })
     .then(response => {
-      console.log('Datos de transferencia guardados exitosamente:', response.data);
+      // console.log('Datos de transferencia guardados exitosamente:', response.data);
       cancel();
       toast.success(response.data.message);
 

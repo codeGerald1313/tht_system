@@ -309,7 +309,7 @@ export default {
           if (response.data && response.data && response.data.length > 0) {
             // Actualiza los datos en el componente
             this.advancedTable = response.data;
-            console.log(this.advancedTable);
+            // console.log(this.advancedTable);
             this.showSuccessToast('¡Registros de dinero obtenidos correctamente!');
           } else {
             // Si la respuesta está vacía o nula, mostrar mensaje informativo
@@ -337,7 +337,7 @@ export default {
           }
         );
 
-        console.log(response);
+        // console.log(response);
 
         // Obtener la URL de respuesta
         const responseURL = response.request.responseURL;
@@ -360,7 +360,7 @@ export default {
         // Eliminar el enlace del documento después de la descarga
         document.body.removeChild(link);
 
-        console.log('Descarga iniciada automáticamente.');
+        // console.log('Descarga iniciada automáticamente.');
 
       } catch (error) {
         console.error('Error al descargar el archivo:', error);
@@ -375,7 +375,7 @@ export default {
   watch: {
     dateDefault(newValue, oldValue) {
       // Acciones que deseas realizar cuando cambia el valor de dateDefault
-      console.log('Nuevo valor de dateDefault:', newValue);
+      // console.log('Nuevo valor de dateDefault:', newValue);
       this.fetchMoneyRecords(newValue);
 
       // Por ejemplo, podrías llamar a una función o realizar otra lógica aquí

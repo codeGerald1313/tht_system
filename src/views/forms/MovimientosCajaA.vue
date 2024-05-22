@@ -305,25 +305,25 @@ export default {
       axios.get(`${import.meta.env.VITE_API_URL}/moneys-akemy/list-movements/`, {
         ...headers,
         params: {
-          start_date : this.dateValue.startDate,
-          end_date : this.dateValue.endDate
+          start_date: this.dateValue.startDate,
+          end_date: this.dateValue.endDate
 
         },
       })
         .then(response => {
 
-          console.log(response);
+          // console.log(response);
           if (response.data && response.data.data && response.data.data.length > 0) {
-    // Actualiza los datos en el componente
-    this.advancedTable = response.data.data;
-    console.log(this.advancedTable); // Para depuración: muestra los datos actualizados
+            // Actualiza los datos en el componente
+            this.advancedTable = response.data.data;
+            // console.log(this.advancedTable); // Para depuración: muestra los datos actualizados
 
-    this.showSuccessToast('¡Registros de dinero obtenidos correctamente!');
-  } else {
-    // Si la respuesta está vacía o nula, mostrar mensaje informativo
-    this.advancedTable = []; // Asegurar que advancedTable esté vacío
-    this.showInfoToast('No se registraron movimientos de dinero para este día o aún no hay registros.');
-  }
+            this.showSuccessToast('¡Registros de dinero obtenidos correctamente!');
+          } else {
+            // Si la respuesta está vacía o nula, mostrar mensaje informativo
+            this.advancedTable = []; // Asegurar que advancedTable esté vacío
+            this.showInfoToast('No se registraron movimientos de dinero para este día o aún no hay registros.');
+          }
         })
         .catch(error => {
           console.error('Error al obtener los registros de dinero:', error);
@@ -345,7 +345,7 @@ export default {
           }
         );
 
-        console.log(response);
+        // console.log(response);
 
         // Obtener la URL de respuesta
         const responseURL = response.request.responseURL;
@@ -368,7 +368,7 @@ export default {
         // Eliminar el enlace del documento después de la descarga
         document.body.removeChild(link);
 
-        console.log('Descarga iniciada automáticamente.');
+        // console.log('Descarga iniciada automáticamente.');
 
       } catch (error) {
         console.error('Error al descargar el archivo:', error);
@@ -383,7 +383,7 @@ export default {
   watch: {
     dateDefault(newValue, oldValue) {
       // Acciones que deseas realizar cuando cambia el valor de dateDefault
-      console.log('Nuevo valor de dateDefault:', newValue);
+      // console.log('Nuevo valor de dateDefault:', newValue);
       this.fetchMoneyRecords(newValue);
 
       // Por ejemplo, podrías llamar a una función o realizar otra lógica aquí

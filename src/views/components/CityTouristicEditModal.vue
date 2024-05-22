@@ -71,7 +71,7 @@ const save = () => {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       emits('updateCityTouristicList'); // Emitir el evento personalizado al componente padre
       closeEditModal(); // Cierra el modal al guardar exitosamente
       toast.success(response.data.message);
@@ -94,7 +94,7 @@ watch(() => props.CityTouristicData, (newData) => {
 
     object.value.id = newData.id
     object.value.description = newData.description
-    console.log(object.value.id);
+    // console.log(object.value.id);
 
   }
 });

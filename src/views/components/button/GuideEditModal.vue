@@ -178,7 +178,7 @@ const save = () => {
 
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', selectedIndex, selectedLabel);
+    // console.log('Label seleccionado:', selectedIndex, selectedLabel);
   } else {
     console.log('No se ha seleccionado ninguna opción.');
   }
@@ -196,9 +196,9 @@ const save = () => {
     client.value.status = selectedLabel;
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', selectedIndex, selectedLabel);
+    // console.log('Label seleccionado:', selectedIndex, selectedLabel);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 
@@ -208,7 +208,7 @@ const save = () => {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       emits('updateGuideList'); // Emitir el evento personalizado al componente padre
       closeEditModal();
       toast.success(response.data.message);
@@ -230,7 +230,7 @@ const fetchDniData = () => {
       dni: client.value.document
     })
     .then(response => {
-      console.log('Respuesta de la API DNI:', response.data.nombre_completo);
+      // console.log('Respuesta de la API DNI:', response.data.nombre_completo);
       // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
       client.value.fullname = response.data.data.nombre_completo;
     })
@@ -254,7 +254,7 @@ watch(() => props.guideData, (newData) => {
     client.value.date_birthday = newData.date_birthday;
     client.value.address = newData.address;
 
-    console.log(client.value.id)
+    // console.log(client.value.id)
   }
 });
 

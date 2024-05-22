@@ -178,13 +178,13 @@ const saveHotel = () => {
     if (selectedCityOption) {
       selectedCity.value = selectedCityOption.value;
       form.value.tourismcitie_id = selectedCityOption.value;
-      console.log('Ciudad seleccionada - Valor:', selectedCity.value);
-      console.log('Ciudad seleccionada - Etiqueta:', selectedCityOption.label);
+      // console.log('Ciudad seleccionada - Valor:', selectedCity.value);
+      // console.log('Ciudad seleccionada - Etiqueta:', selectedCityOption.label);
     } else {
-      console.log('No se ha seleccionado ninguna ciudad.');
+      // console.log('No se ha seleccionado ninguna ciudad.');
     }
   } else {
-    console.log('No se ha seleccionado ninguna ciudad.');
+    // console.log('No se ha seleccionado ninguna ciudad.');
   }
 
   // Captura el valor seleccionado de la categoría
@@ -195,9 +195,9 @@ const saveHotel = () => {
 
     form.value.category = selectedCategory.value;
 
-    console.log('Categoría seleccionada:', form.value.category);
+    // console.log('Categoría seleccionada:', form.value.category);
   } else {
-    console.log('No se ha seleccionado ninguna categoría.');
+    // console.log('No se ha seleccionado ninguna categoría.');
   }
 
   form.value.hotelprices.forEach(room => {
@@ -205,8 +205,8 @@ const saveHotel = () => {
     const priceCorporate = room.price_corporate;
 
     // Aquí puedes hacer lo que necesites con los valores capturados
-    console.log("Precio normal:", priceSale);
-    console.log("Precio corporativo:", priceCorporate);
+    // console.log("Precio normal:", priceSale);
+    // console.log("Precio corporativo:", priceCorporate);
 
     // Por ejemplo, podrías enviar estos valores a través de una solicitud HTTP para guardarlos en el servidor
     // axios.post(`${import.meta.env.VITE_API_URL}/guardar-precios`, { price_sale, price_corporate })
@@ -223,7 +223,7 @@ const saveHotel = () => {
     ...headers
   })
     .then(response => {
-      console.log('Hotel guardado exitosamente:', response.data);
+      // console.log('Hotel guardado exitosamente:', response.data);
       emits('updateHotelList'); // Emitir el evento personalizado al componente padre
       closeEditModal();
       toast.success(response.data.message);
@@ -244,7 +244,7 @@ axios.post(`${import.meta.env.VITE_API_URL}/getRucData`, {
     ruc: form.value.document
   })
   .then(response => {
-    console.log('Respuesta de la API RUC:', response.data);
+    // console.log('Respuesta de la API RUC:', response.data);
     
     form.value.fullname = response.data.data.nombre_o_razon_social;
     form.value.address = response.data.data.direccion;
@@ -316,8 +316,8 @@ const updateRoomType = (event) => {
   if (selectedOption) {
     roomType.value = selectedOption.label;
     roomId.value = selectedOption.id;
-    console.log("Valor seleccionado:", roomType.value);
-    console.log("ID seleccionado:", roomId.value);
+    // console.log("Valor seleccionado:", roomType.value);
+    // console.log("ID seleccionado:", roomId.value);
     showInputs.value = true;
     showError.value = false; // Ocultar el mensaje de error cuando se selecciona un hotel
   } else {
@@ -352,7 +352,7 @@ const addRoom = () => {
   roomType.value = '';
   roomId.value = null;
 
-  console.log('Hotel prices:', form.value.hotelprices);
+  // console.log('Hotel prices:', form.value.hotelprices);
 };
 
 
@@ -384,7 +384,7 @@ watch(() => selectedCity.value, (newValue, oldValue) => {
 
 
   form.value.tourismcitie_id = selectedCity.value;
-  console.log(form.value.tourismcitie_id);
+  // console.log(form.value.tourismcitie_id);
 
 
 });
@@ -433,7 +433,7 @@ watch(() => props.hotelData, (newData) => {
       showInputs.value = false;
     }
 
-    console.log(form.value.id);
+    // console.log(form.value.id);
   }
 });
 

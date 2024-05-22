@@ -154,7 +154,7 @@ const save = () => {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       close();
       toast.success(response.data.message);
     })
@@ -175,7 +175,7 @@ const fetchDniData = () => {
       dni: client.value.document
     })
     .then(response => {
-      console.log('Respuesta de la API DNI:', response.data.nombre_completo);
+      // console.log('Respuesta de la API DNI:', response.data.nombre_completo);
       // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
       client.value.fullname = response.data.data.nombre_completo;
     })
@@ -203,9 +203,9 @@ watch(() => sexSelected.value, (newValue, oldValue) => {
 
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', selectedIndex, selectedLabel);
+    // console.log('Label seleccionado:', selectedIndex, selectedLabel);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 });
@@ -227,9 +227,9 @@ watch(() => statusSelected.value, (newValue, oldValue) => {
     client.value.status = selectedLabel;
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', selectedIndex, selectedLabel);
+    // console.log('Label seleccionado:', selectedIndex, selectedLabel);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 });

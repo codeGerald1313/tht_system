@@ -748,7 +748,7 @@ export default {
                 totalTour: null
               };
               this.projects.push(newProject);
-              console.log(this.projects);
+              // console.log(this.projects);
             })
             .catch(error => {
               console.error('Error al obtener la descripción del tour:', error);
@@ -762,10 +762,10 @@ export default {
     'booking.clients': function (newValue, oldValue) {
       this.idCliente = newValue;
 
-      console.log(this.idCliente);
+      // console.log(this.idCliente);
       axios.get(`${import.meta.env.VITE_API_URL}/clients/cellphone&telephone/${newValue}`, headers)
         .then(response => {
-          console.log(response);
+          // console.log(response);
 
           this.booking.phoneNumber = response.data.contact_numbers;
         })
@@ -782,8 +782,8 @@ export default {
         this.booking.dateArrival = datePart;
         this.booking.timeArrival = timePart;
 
-        console.log(this.booking.dateArrival);
-        console.log(this.booking.timeArrival);
+        // console.log(this.booking.dateArrival);
+        // console.log(this.booking.timeArrival);
       } else {
         // Si el valor es nulo, establecer las propiedades en nulo también
         this.booking.dateArrival = null;
@@ -825,7 +825,7 @@ export default {
 
       this.booking.total = totalReserva;
 
-      console.log(this.booking.total);
+      // console.log(this.booking.total);
 
       // Formatear la suma total como 'S/.0.00'
       return 'S/.' + sumaTotal.toFixed(2);
@@ -839,7 +839,7 @@ export default {
   methods: {
     capturarDatos() {
       // Imprimir la lista de proyectos en la consola
-      console.log(this.projects);
+      // console.log(this.projects);
 
       // O cualquier otra acción que desees realizar con la lista de proyectos
     },
@@ -853,11 +853,11 @@ export default {
       this.commissionIds = formattedId;
 
       // Hacer algo con el ID, por ejemplo, imprimir en la consola
-      console.log('ID de la comisión:', this.commissionIds);
+      // console.log('ID de la comisión:', this.commissionIds);
     },
 
     handleFormSubmitted(responseData) {
-      console.log("Response data", responseData);
+      // console.log("Response data", responseData);
 
       // Asegúrate de que responseData y responseData.data no sean nulos o indefinidos
       if (responseData && responseData.data) {
@@ -865,7 +865,7 @@ export default {
         const moneyIds = responseData.data.map(item => item.id);
 
         // Ahora tienes un array de IDs
-        console.log("Money IDs:", moneyIds);
+        // console.log("Money IDs:", moneyIds);
 
         // Puedes realizar más acciones aquí con los IDs extraídos
         // Por ejemplo, asignarlo a una propiedad de tu componente o estado de la tienda
@@ -878,7 +878,7 @@ export default {
 
       this.booking.totalPagado = responseData.amount;
 
-      console.log("totalPagar data", this.totalPagado);
+      // console.log("totalPagar data", this.totalPagado);
 
     },
 
@@ -887,7 +887,7 @@ export default {
     deleteProject(index) {
       // Eliminar el proyecto del índice proporcionado
       this.projects.splice(index, 1);
-      console.log(this.projects);
+      // console.log(this.projects);
     },
     deleteItem(id, index) {
       // Mostrar un cuadro de diálogo de confirmación nativo del navegador
@@ -898,7 +898,7 @@ export default {
         axios.delete(`${import.meta.env.VITE_API_URL}/hotelsbookings/destroy/${id}`, headers)
           .then(response => {
             // El elemento se ha eliminado correctamente en el backend
-            console.log("El elemento con ID:", id, "se ha eliminado correctamente en el backend");
+            // console.log("El elemento con ID:", id, "se ha eliminado correctamente en el backend");
 
             this.reservasHotel.splice(index, 1); // Elimina 1 elemento en la posición 'index'
 
@@ -922,7 +922,7 @@ export default {
           });
       } else {
         // El usuario ha cancelado la eliminación
-        console.log("El usuario ha cancelado la eliminación del elemento con ID:", id);
+        // console.log("El usuario ha cancelado la eliminación del elemento con ID:", id);
       }
     },
     handlePostComplete(data) {
@@ -949,7 +949,7 @@ export default {
 
       this.idsReservesHotels = ids;
 
-      console.log(this.idsReservesHotels);
+      // console.log(this.idsReservesHotels);
     }
 
     ,
@@ -1014,7 +1014,7 @@ export default {
         money_ids: this.moneyIds
       };
 
-      console.log(dataToSend);
+      // console.log(dataToSend);
 
       // Realiza la solicitud HTTP POST al backend
       axios.post(`${import.meta.env.VITE_API_URL}/bookings/create`, dataToSend, {
@@ -1024,7 +1024,7 @@ export default {
           const toast = useToast();
 
           // Maneja la respuesta del backend según sea necesario
-          console.log(response.data);
+          // console.log(response.data);
 
           toast.success(response.data.message, { duration: 3000 });
 
@@ -1059,12 +1059,12 @@ export default {
       this.idCliente = this.idCliente;
       this.totalBooking = this.booking.total;
       this.showAmortizar = true;
-      console.log(this.idCliente);
+      // console.log(this.idCliente);
     },
 
     handleComisionEnviada(comisionData) {
       // Recibir los datos de la comisión y mostrarlos en la consola
-      console.log('Datos de la comisión recibidos en el componente padre:', comisionData);
+      // console.log('Datos de la comisión recibidos en el componente padre:', comisionData);
     },
 
     openModalReservaHotel() {
@@ -1072,7 +1072,7 @@ export default {
     },
 
     async fetchClients() {
-      console.log("Fetching clients...");
+      // console.log("Fetching clients...");
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/clients/list`, headers);
         this.customerOptions = response.data.data.map(customer => ({
@@ -1085,7 +1085,7 @@ export default {
     },
 
     async fetchHotelsBooking() {
-      console.log("Fetching HotelsBooking...");
+      // console.log("Fetching HotelsBooking...");
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/clients/list`, headers);
         this.customerOptions = response.data.data.map(customer => ({
@@ -1098,10 +1098,10 @@ export default {
     },
 
     async fetchTours() {
-      console.log("Fetching tours...");
+      // console.log("Fetching tours...");
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/tours/list`, headers);
-        console.log(response);
+        // console.log(response);
 
         // this.projects = response.data.data;
 
@@ -1110,7 +1110,7 @@ export default {
           label: customer.description
         }));
 
-        console.log(this.projects)
+        // console.log(this.projects)
       } catch (error) {
         console.error('Error fetching tours:', error);
       }

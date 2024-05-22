@@ -420,7 +420,7 @@ export default {
           if (this.groups && this.groups.length > 0) {
             const toast = useToast();
             toast.success('Grupos recuperados exitosamente');
-            console.log(response);
+            // console.log(response);
           } else {
             const toast = useToast();
             toast.info('Para este día no hay grupos registrados');
@@ -437,11 +437,11 @@ export default {
     },
 
     searchValue(newValue) {
-      console.log(newValue);
+      // console.log(newValue);
       // Filtrar this.projects por group_code o tour_description que coincidan con searchValue
 
 
-      console.log(this.filteredProjects);
+      // console.log(this.filteredProjects);
     },
   },
 
@@ -460,7 +460,7 @@ export default {
             toast.info('Para el día de actual no exiten registraros de grupos');
           }
 
-          console.log('Grupos recuperados exitosamente:', this.groups);
+          // console.log('Grupos recuperados exitosamente:', this.groups);
         })
         .catch(error => {
           // Manejar el error
@@ -508,7 +508,7 @@ export default {
           axios.delete(`${import.meta.env.VITE_API_URL}/groups/delete/${group_id}`, headers)
             .then(response => {
               // El elemento se ha eliminado correctamente en el backend
-              console.log("El elemento con ID:", group_id, "se ha eliminado correctamente en el backend");
+              // console.log("El elemento con ID:", group_id, "se ha eliminado correctamente en el backend");
 
               this.groups.splice(index, 1); // Elimina 1 elemento en la posición 'index'
 
@@ -526,7 +526,7 @@ export default {
             });
         } else {
           // El usuario ha cancelado la eliminación
-          console.log("El usuario ha cancelado la eliminación del elemento con ID:", group_id);
+          // console.log("El usuario ha cancelado la eliminación del elemento con ID:", group_id);
         }
 
 

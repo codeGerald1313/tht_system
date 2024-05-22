@@ -343,7 +343,7 @@ export default {
     
       const selectedHotelValue = this.selectedHotel ? this.selectedHotel.label : null;
 
-      console.log(selectedHotelValue);
+      // console.log(selectedHotelValue);
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/exports-hotelsbooking/filters-reservas-hotel`, {
           params: {
@@ -359,7 +359,7 @@ export default {
         // Actualizar los datos en el componente con la respuesta recibida
         this.ingresos = Object.values(response.data);
 
-        console.log(response);
+        // (response);
       } catch (error) {
         console.error('Error al obtener datos:', error);
       }
@@ -384,7 +384,7 @@ export default {
           }
         );
 
-        console.log(response);
+        // console.log(response);
 
         // Obtener la URL de respuesta
         const responseURL = response.request.responseURL;
@@ -407,7 +407,7 @@ export default {
         // Eliminar el enlace del documento después de la descarga
         document.body.removeChild(link);
 
-        console.log('Descarga iniciada automáticamente.');
+        // console.log('Descarga iniciada automáticamente.');
 
       } catch (error) {
         console.error('Error al descargar el archivo:', error);
@@ -434,7 +434,7 @@ export default {
           }
         );
 
-        console.log(response);
+        // console.log(response);
 
         // Obtener la URL de respuesta
         const responseURL = response.request.responseURL;
@@ -457,7 +457,7 @@ export default {
         // Eliminar el enlace del documento después de la descarga
         document.body.removeChild(link);
 
-        console.log('Descarga iniciada automáticamente.');
+        // console.log('Descarga iniciada automáticamente.');
 
       } catch (error) {
         console.error('Error al descargar el archivo:', error);
@@ -466,7 +466,7 @@ export default {
     ,
     toggleVoucher() {
       this.isVoucherChecked = !this.isVoucherChecked;
-      console.log(this.isVoucherChecked);
+      // console.log(this.isVoucherChecked);
     },
     async fetchTypeBedroms() {
       try {
@@ -478,7 +478,7 @@ export default {
           value: concept.id,
           label: concept.description
         }));
-        console.log(formattedData);
+        // console.log(formattedData);
         // Actualizar el estado o la variable de conceptOptions con los datos formateados
         this.typeBedromsOptions = formattedData;
       } catch (error) {
@@ -496,7 +496,7 @@ export default {
           value: concept.hotelsbooking_id,
           label: concept.tradename
         }));
-        console.log(response);
+        // console.log(response);
         // Actualizar el estado o la variable de conceptOptions con los datos formateados
         this.hotelsOptions = formattedData;
       } catch (error) {
@@ -517,7 +517,7 @@ export default {
   watch: {
     selectedHotel(newHotel, oldHotel) {
       // Watcher para la propiedad selectedHotel
-      console.log("Hotel seleccionado:", newHotel);
+      // console.log("Hotel seleccionado:", newHotel);
       
       // Aquí puedes realizar acciones adicionales según el cambio de selectedHotel
       // Por ejemplo, puedes realizar una llamada a una función o método

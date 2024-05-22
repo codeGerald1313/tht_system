@@ -88,8 +88,8 @@ export default {
     },
     async openBox() {
   // Implementa la lógica para abrir la caja
-  console.log("id", this.id);
-  console.log("monto", this.monto);
+  // console.log("id", this.id);
+  // console.log("monto", this.monto);
 
   try {
 
@@ -110,7 +110,7 @@ export default {
     window.location.reload();
 
 
-    console.log(response.data.message); // Mensaje de respuesta del servidor
+    // console.log(response.data.message); // Mensaje de respuesta del servidor
   } catch (error) {
     console.error('Error al actualizar la MoneyBox:', error);
   }
@@ -124,8 +124,8 @@ export default {
 
   watch: {
     id(newValue, oldValue) {
-      console.log('Nuevo valor de message:', newValue);
-      console.log('Valor anterior de message:', oldValue);
+      // console.log('Nuevo valor de message:', newValue);
+      // console.log('Valor anterior de message:', oldValue);
       // Puedes realizar acciones aquí cuando message cambie
     }
   }

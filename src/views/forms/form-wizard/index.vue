@@ -283,7 +283,7 @@ async reloadCrmTable() {
         .then(response => {
           // Una vez que se reciban los datos del servidor, actualiza los datos en el componente
           this.advancedTable = response.data.data;
-          console.log(this.advancedTable);
+          // console.log(this.advancedTable);
           this.showSuccessToast('Historial de caja recuperado correctamente!');
         })
         .catch(error => {

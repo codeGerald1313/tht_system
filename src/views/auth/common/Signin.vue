@@ -34,7 +34,7 @@ export default {
     const handleSubmit = async () => {
   const { email, password } = state;
 
-  console.log(email, password);
+  // console.log(email, password);
   if (!email || !password) {
     toast.warning('Ingrese sus credenciales');
     return;
@@ -43,7 +43,7 @@ export default {
     await login(email, password);
     router.push("/app/home"); // Redirige solo si el inicio de sesión es exitoso
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     // Aquí podrías mostrar un mensaje de error específico para el inicio de sesión fallido
   }
 };

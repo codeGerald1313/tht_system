@@ -263,7 +263,7 @@ const close = () => {
 const save = () => {
 
 
-  console.log(client.value);
+  // console.log(client.value);
 
   const selectElement = document.querySelector('.typecliente-select select');
 
@@ -280,10 +280,10 @@ const save = () => {
     client.value.type_client = selectedIndexString;
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', client.value.type_client);
-    console.log('Índice seleccionado como cadena:', selectedIndexString);
+    // console.log('Label seleccionado:', client.value.type_client);
+    // console.log('Índice seleccionado como cadena:', selectedIndexString);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 
@@ -302,9 +302,9 @@ const save = () => {
 
 
     // Imprime el label seleccionado
-    console.log('Id & Label seleccionado:', client.value.type_client);
+    // console.log('Id & Label seleccionado:', client.value.type_client);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 
@@ -314,7 +314,7 @@ const save = () => {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       emits('updateClientList'); // Emitir el evento personalizado al componente padre
       closeEditModal();
       toast.success(response.data.message);
@@ -390,9 +390,9 @@ watch(() => sexSelected.value, (newValue, oldValue) => {
 
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', client.value.sex);
+    // console.log('Label seleccionado:', client.value.sex);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 });
@@ -414,9 +414,9 @@ watch(() => statusSelected.value, (newValue, oldValue) => {
 
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', client.value.status);
+    // console.log('Label seleccionado:', client.value.status);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 });
@@ -430,12 +430,12 @@ watch(() => districtSelected.value, (newValue, oldValue) => {
     const selectedValue = newValue.toString().padStart(6, '0'); // Asegura que tenga seis dígitos
 
     // Imprime el valor seleccionado
-    console.log('Id seleccionado:', selectedValue);
+    // console.log('Id seleccionado:', selectedValue);
 
     // Asigna el valor seleccionado al cliente
     client.value.district_id = selectedValue;
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 });
 
@@ -449,12 +449,12 @@ watch(() => provinceSelected.value, (newValue, oldValue) => {
     const selectedValue = newValue.toString().padStart(4, '0'); // Asegura que tenga cuatro dígitos
 
     // Imprime el valor seleccionado
-    console.log('Id seleccionado:', selectedValue);
+    // console.log('Id seleccionado:', selectedValue);
 
     // Asigna el valor seleccionado al cliente
     client.value.province_id = selectedValue;
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 });
 
@@ -468,12 +468,12 @@ watch(() => departmentSelected.value, (newValue, oldValue) => {
     const selectedValue = newValue.toString().padStart(2, '0'); // Asegura que tenga dos dígitos
 
     // Imprime el valor seleccionado
-    console.log('Id seleccionado:', selectedValue);
+    // console.log('Id seleccionado:', selectedValue);
 
     // Asigna el valor seleccionado al cliente
     client.value.department_id = selectedValue;
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 });
 
@@ -495,9 +495,9 @@ watch(() => documentTypeSelected.value, (newValue) => {
     placeholderText.value = `N° ${selectedOption.textContent}`;
     buttonText.value = newValue === '1' ? 'RENIEC' : newValue === '2' ? 'SUNAT' : 'Validar';
 
-    console.log(client.value.typeDocument)
+    // console.log(client.value.typeDocument)
   } else {
-    console.log('No se ha encontrado el elemento del selector.');
+    // console.log('No se ha encontrado el elemento del selector.');
   }
 });
 
@@ -522,10 +522,10 @@ watch(() => customerTypeSelected.value, (newValue, oldValue) => {
     client.value.type_client = selectedIndexString;
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', client.value.type_client);
-    console.log('Índice seleccionado como cadena:', selectedIndexString);
+    // console.log('Label seleccionado:', client.value.type_client);
+    // console.log('Índice seleccionado como cadena:', selectedIndexString);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 });

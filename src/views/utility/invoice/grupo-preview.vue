@@ -558,7 +558,7 @@ export default {
     },
 
     openModal(bookingId) {
-      console.log('Booking ID:', bookingId);
+      // console.log('Booking ID:', bookingId);
       this.$router.push({ name: 'reserve-preview', params: { id: bookingId } });
     },
   editar() {
@@ -595,7 +595,7 @@ export default {
     // Obtener el group_id de los parámetros de la ruta
     const group_id = this.$route.params.group_id;
     this.idGrupo = group_id;
-    console.log('ID del grupo:', group_id);
+    // console.log('ID del grupo:', group_id);
 
 
     // Llamar al backend para obtener los datos del grupo
@@ -617,7 +617,7 @@ export default {
         this.group.capacityTransport = response.data.data.group.transport_capacity;
         this.group.observations = response.data.data.group.group_observations;
         this.group.group_is_confirmed = response.data.data.group.group_is_confirmed;
-        console.log('Datos para la tabla :', response);
+        // console.log('Datos para la tabla :', response);
         // Aquí puedes hacer lo que necesites con los datos del grupo
 
       });

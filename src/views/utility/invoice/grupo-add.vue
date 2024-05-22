@@ -6,7 +6,7 @@
         <div class="grid lg:grid-cols-5 grid-cols-1 gap-5">
           <FromGroup label="Transporte">
             <VueSelect>
-              <vSelect :options="trasnportOptions" v-model="group.transport_id"  />
+              <vSelect :options="trasnportOptions" v-model="group.transport_id" />
             </VueSelect>
             <span v-if="!group.transport_id" class="text-red-500">Seleccione un transporte</span>
           </FromGroup>
@@ -25,9 +25,9 @@
         <div class="grid lg:grid-cols-3 grid-cols-1 gap-5 my-6">
           <FromGroup label="Guía Turístico">
             <VueSelect>
-              <vSelect :options="guiaOptions" v-model="group.guide_id" placeholder="Seleccione Guía"/>
+              <vSelect :options="guiaOptions" v-model="group.guide_id" placeholder="Seleccione Guía" />
             </VueSelect>
-        
+
             <span v-if="!group.guide_id" class="text-red-500">Seleccione un guía de viaje</span>
 
           </FromGroup>
@@ -99,15 +99,15 @@
               </div>
             </div>
           </span>
-      
+
           <span v-if="props.column.field == 'hotelubi'">
             <!-- Verificar si hay información disponible para el hotel -->
-            <div >
+            <div>
               <!-- Mostrar los detalles del hotel -->
               <div>{{ props.row.booking_reference_location }}</div>
-             
+
             </div>
-       
+
           </span>
           <span v-if="props.column.field == 'telephone'">
             <div class="flex flex-col">
@@ -118,27 +118,27 @@
           </span>
 
           <span v-if="props.column.field == 'observaciones'" class=" uppercase">
-    <!-- Verificar si hay información del tour -->
-    <template v-if="hasTourInformation(props.row)">
-      <!-- Iterar sobre la lista de tours y encontrar el tour correspondiente al group_tour_id -->
-      <template v-for="tour in props.row.tours">
-        <template v-if="tour.id === groupTourIdFromPivot(props.row)">
-          <!-- Mostrar la observación del tour si está presente -->
-          <template v-if="tour.pivot.observation">
-            {{ tour.pivot.observation }}
-          </template>
-          <!-- Mostrar mensaje si no hay observación disponible para el tour -->
-          <template v-else>
-            - No hay información disponible
-          </template>
-        </template>
-      </template>
-    </template>
-    <!-- Mostrar mensaje si no hay información de tours -->
-    <template v-else>
-      - No hay información disponible
-    </template>
-  </span>
+            <!-- Verificar si hay información del tour -->
+            <template v-if="hasTourInformation(props.row)">
+              <!-- Iterar sobre la lista de tours y encontrar el tour correspondiente al group_tour_id -->
+              <template v-for="tour in props.row.tours">
+                <template v-if="tour.id === groupTourIdFromPivot(props.row)">
+                  <!-- Mostrar la observación del tour si está presente -->
+                  <template v-if="tour.pivot.observation">
+                    {{ tour.pivot.observation }}
+                  </template>
+                  <!-- Mostrar mensaje si no hay observación disponible para el tour -->
+                  <template v-else>
+                    - No hay información disponible
+                  </template>
+                </template>
+              </template>
+            </template>
+            <!-- Mostrar mensaje si no hay información de tours -->
+            <template v-else>
+              - No hay información disponible
+            </template>
+          </span>
           <span v-if="props.column.field == 'deuda'">
             S/ 0.00
 
@@ -299,12 +299,12 @@ export default {
   watch: {
     'group.transport_id': function (newVal, oldVal) {
       // Esta función se ejecutará cada vez que haya un cambio en group.transport_id
-      console.log('Nuevo valor de transport_id:', newVal);
+      // console.log('Nuevo valor de transport_id:', newVal);
 
       axios.get(`${import.meta.env.VITE_API_URL}/transports/record-capacity/${newVal.value}`, headers)
         .then(response => {
           // Manejar la respuesta del backend
-          console.log(response.data); // Aquí puedes ver la respuesta del backend
+          // console.log(response.data); // Aquí puedes ver la respuesta del backend
 
           this.group.capacity_vehicle = response.data.data.capacity;
           // Puedes hacer más cosas con los datos devueltos si lo necesitas
@@ -334,15 +334,15 @@ export default {
           label: customer.owner
         }));
 
-        console.log( this.trasnportOptions);
+        // console.log(this.trasnportOptions);
       } catch (error) {
         console.error('Error fetching departments:', error);
       }
     },
     hasHotelInfo(row) {
       return (
-        row.hotel_tradename || 
-        row.hotel_document || 
+        row.hotel_tradename ||
+        row.hotel_document ||
         row.hotel_address
       );
     },
@@ -411,32 +411,32 @@ export default {
     },
 
     capturarValor(reservaId) {
-      console.log("Valor capturado:", reservaId);
+      // console.log("Valor capturado:", reservaId);
       this.$router.push({ name: 'reserve-preview', params: { id: reservaId } });
     },
     updateCapacitySelected(row) {
-  console.log(row);
+      // console.log(row);
 
-  if (row.booking_is_grouped) {
-    // Si está marcado, añadir el valor de nro_pax y el booking_id al array
-    this.group.capacity_selected += row.booking_nro_pax;
-    this.bookingTourIds.push(row.booking_tour_id);
+      if (row.booking_is_grouped) {
+        // Si está marcado, añadir el valor de nro_pax y el booking_id al array
+        this.group.capacity_selected += row.booking_nro_pax;
+        this.bookingTourIds.push(row.booking_tour_id);
 
-    console.log(this.bookingTourIds);
-  } else {
-    // Si está desmarcado, restar el valor de nro_pax y eliminar el booking_id del array
-    this.group.capacity_selected -= row.booking_nro_pax;
-    const index = this.bookingTourIds.indexOf(row.booking_tour_id);
-    if (index !== -1) {
-      this.bookingTourIds.splice(index, 1);
-    }
-    console.log(this.bookingTourIds);
+        // console.log(this.bookingTourIds);
+      } else {
+        // Si está desmarcado, restar el valor de nro_pax y eliminar el booking_id del array
+        this.group.capacity_selected -= row.booking_nro_pax;
+        const index = this.bookingTourIds.indexOf(row.booking_tour_id);
+        if (index !== -1) {
+          this.bookingTourIds.splice(index, 1);
+        }
+        // console.log(this.bookingTourIds);
 
-  }
+      }
 
-  // Calcular la cantidad disponible restando la capacidad total del vehículo menos la cantidad seleccionada
-  this.group.capacity_available = this.group.capacity_vehicle - this.group.capacity_selected;
-},
+      // Calcular la cantidad disponible restando la capacidad total del vehículo menos la cantidad seleccionada
+      this.group.capacity_available = this.group.capacity_vehicle - this.group.capacity_selected;
+    },
 
 
     async storeGroup() {
@@ -456,13 +456,13 @@ export default {
           bookings: this.bookingTourIds // IDs de las reservas que deseas asignar al grupo
         };
 
-        console.log(data);
+        // console.log(data);
         const response = await axios.post(`${import.meta.env.VITE_API_URL}/groups/create`, data, headers);
 
 
 
         const groupId = response.data.data.id; // Captura el ID del grupo de la respuesta del backend
-        console.log(groupId);
+        // console.log(groupId);
         // Muestra un mensaje de éxito
         toast.success('El grupo se creó exitosamente', {
           position: 'top-right',
@@ -475,7 +475,7 @@ export default {
         }, 3000);
 
 
-        console.log(response.data); // Puedes manejar la respuesta del backend aquí si lo deseas
+        // console.log(response.data); // Puedes manejar la respuesta del backend aquí si lo deseas
         // Si el grupo se creó con éxito, puedes redirigir al usuario a otra página o realizar alguna acción adicional.
       } catch (error) {
         console.error('Error al almacenar el grupo:', error);
@@ -534,7 +534,7 @@ export default {
     this.fetchGuides();
     this.fetchTours();
 
-    console.log(this.currentDate);
+    // console.log(this.currentDate);
   }
 };
 </script>

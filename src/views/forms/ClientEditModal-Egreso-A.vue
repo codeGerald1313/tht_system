@@ -728,7 +728,7 @@ const branchSelected = ref(branchoffices[0].value);
 const selectedBox = ref(boxesOptions[0].value); // Asignando el primer elemento de boxesOptions como valor inicial
 
 const addProject = () => {
-  console.log()
+  // console.log()
 };
 
 const openModal = () => {
@@ -780,9 +780,9 @@ const saveIngreso = () => {
     income.value.branchbox = selectedLabel;
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', selectedIndex, selectedLabel);
+    // console.log('Label seleccionado:', selectedIndex, selectedLabel);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
   const selectElement2 = document.querySelector('.pago-select select');
@@ -798,9 +798,9 @@ const saveIngreso = () => {
     income.value.paymethod = selectedLabel;
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', selectedIndex, selectedLabel);
+    // console.log('Label seleccionado:', selectedIndex, selectedLabel);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
   // Accede al ID del concepto seleccionado desde conceptSelected
@@ -846,13 +846,13 @@ const saveIngreso = () => {
     income.value.voucher_external = null;
   }
 
-  console.log(income.value)
+  // console.log(income.value)
 
   axios.post(`${import.meta.env.VITE_API_URL}/moneys-akemy/edit/${income.value.id}`, income.value, {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       emits('updateEgresoList'); // Emitir el evento personalizado al componente padre
       closeEditModal();
       toast.success(response.data.message);
@@ -1038,7 +1038,7 @@ axios.post(`${import.meta.env.VITE_API_URL}/getRucData`, {
     ruc: provider.value.document
   })
   .then(response => {
-    console.log('Respuesta de la API RUC:', response.data);
+    // console.log('Respuesta de la API RUC:', response.data);
     
     provider.value.fullname = response.data.data.nombre_o_razon_social;
     provider.value.address = response.data.data.direccion;
@@ -1056,7 +1056,7 @@ const fetchDniData = () => {
       dni: client.value.document
     })
     .then(response => {
-      console.log('Respuesta de la API DNI:', response.data.nombre_completo);
+      // console.log('Respuesta de la API DNI:', response.data.nombre_completo);
       // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
       client.value.fullname = response.data.data.nombre_completo;
     })
@@ -1070,13 +1070,13 @@ const fetchDniData = () => {
 
 const saveBank = () => {
 
-  console.log(bank.value);
+  // console.log(bank.value);
 
   axios.post(`${import.meta.env.VITE_API_URL}/banks/create`, bank.value, {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       closeEditModalBank();
       fetchBanks();
       toast.success(response.data.message);
@@ -1094,7 +1094,7 @@ const saveProvider = () => {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       closeModalProvider();
       fetchProviders();
       toast.success(response.data.message);
@@ -1109,7 +1109,7 @@ const saveProvider = () => {
 const save = () => {
 
 
-  console.log(client.value);
+  // console.log(client.value);
 
   const selectElement = document.querySelector('.typecliente-select select');
 
@@ -1126,10 +1126,10 @@ const save = () => {
     client.value.type_client = selectedIndexString;
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', client.value.type_client);
-    console.log('Índice seleccionado como cadena:', selectedIndexString);
+    // console.log('Label seleccionado:', client.value.type_client);
+    // console.log('Índice seleccionado como cadena:', selectedIndexString);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 
@@ -1148,9 +1148,9 @@ const save = () => {
 
 
     // Imprime el label seleccionado
-    console.log('Id & Label seleccionado:', client.value.type_client);
+    // console.log('Id & Label seleccionado:', client.value.type_client);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 
@@ -1160,7 +1160,7 @@ const save = () => {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       closeModal();
       fetchClients();
       toast.success(response.data.message);
@@ -1186,9 +1186,9 @@ const saveAccountBank = () => {
     account.value.branchoffice_id = selectedIndex;
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', selectedIndex, selectedLabel);
+    // console.log('Label seleccionado:', selectedIndex, selectedLabel);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
   const selectElement2 = document.querySelector('.typeaccount-select select');
@@ -1204,9 +1204,9 @@ const saveAccountBank = () => {
 
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', selectedIndex, selectedLabel);
+    // console.log('Label seleccionado:', selectedIndex, selectedLabel);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 
@@ -1225,9 +1225,9 @@ const saveAccountBank = () => {
 
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', selectedIndex, selectedLabel);
+    // console.log('Label seleccionado:', selectedIndex, selectedLabel);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 
@@ -1244,22 +1244,22 @@ const saveAccountBank = () => {
 
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', selectedIndex, selectedLabel);
+    // console.log('Label seleccionado:', selectedIndex, selectedLabel);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 
 
 
-  console.log(account.value);
+  // console.log(account.value);
 
 
   axios.post(`${import.meta.env.VITE_API_URL}/accountbanks/create`, account.value, {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       closeModalEditAccountBank();
       fetchAccountBanks();
       toast.success(response.data.message);
@@ -1358,9 +1358,9 @@ watch(selected, (newValue, oldValue) => {
     const selectedLabel = selectElement.options[selectedIndex].text;
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', selectedIndex, selectedLabel);
+    // console.log('Label seleccionado:', selectedIndex, selectedLabel);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 });
@@ -1376,13 +1376,13 @@ watch(() => districtSelected.value, (newValue, oldValue) => {
     const selectedValue = newValue.toString().padStart(6, '0'); // Asegura que tenga seis dígitos
 
     // Imprime el valor seleccionado
-    console.log('Id seleccionado:', selectedValue);
+    // console.log('Id seleccionado:', selectedValue);
 
     // Asigna el valor seleccionado al cliente
     client.value.district_id = selectedValue;
     provider.value.district_id = selectedValue;
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 });
 
@@ -1396,14 +1396,14 @@ watch(() => provinceSelected.value, (newValue, oldValue) => {
     const selectedValue = newValue.toString().padStart(4, '0'); // Asegura que tenga cuatro dígitos
 
     // Imprime el valor seleccionado
-    console.log('Id seleccionado:', selectedValue);
+    // console.log('Id seleccionado:', selectedValue);
 
     // Asigna el valor seleccionado al cliente
     client.value.province_id = selectedValue;
     provider.value.province_id = selectedValue;
 
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 });
 
@@ -1417,14 +1417,14 @@ watch(() => departmentSelected.value, (newValue, oldValue) => {
     const selectedValue = newValue.toString().padStart(2, '0'); // Asegura que tenga dos dígitos
 
     // Imprime el valor seleccionado
-    console.log('Id seleccionado:', selectedValue);
+    // console.log('Id seleccionado:', selectedValue);
 
     // Asigna el valor seleccionado al cliente
     client.value.department_id = selectedValue;
     provider.value.department_id = selectedValue;
 
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 });
 
@@ -1447,9 +1447,9 @@ watch(() => documentTypeSelected.value, (newValue) => {
     placeholderText.value = `N° ${selectedOption.textContent}`;
     buttonText.value = newValue === '1' ? 'RENIEC' : newValue === '2' ? 'SUNAT' : 'Validar';
 
-    console.log(client.value.typeDocument)
+    // console.log(client.value.typeDocument)
   } else {
-    console.log('No se ha encontrado el elemento del selector.');
+    // console.log('No se ha encontrado el elemento del selector.');
   }
 });
 
@@ -1472,9 +1472,9 @@ watch(() => sexSelected.value, (newValue, oldValue) => {
 
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', client.value.sex);
+    // console.log('Label seleccionado:', client.value.sex);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 });
@@ -1496,9 +1496,9 @@ watch(() => statusSelected.value, (newValue, oldValue) => {
 
 
     // Imprime el label seleccionado
-    console.log('Label seleccionado:', client.value.status);
+    // console.log('Label seleccionado:', client.value.status);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 });
@@ -1553,7 +1553,7 @@ watch(() => props.egresoData, (newData) => {
     typeDocumentSelected.value = newData.voucher_external;
     showBlock.value = newData.paymentmethod_id === 4;
 
-    console.log(includeReceipt.value);
+    // console.log(includeReceipt.value);
   }
 });
 

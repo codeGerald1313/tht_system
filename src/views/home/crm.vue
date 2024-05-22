@@ -490,7 +490,7 @@ export default {
     this.basicBar;
     this.fetchBestSellingCustomers();
 
-    console.log(basicBar);
+    // console.log(basicBar);
   },
 
   methods: {
@@ -498,7 +498,7 @@ export default {
       axios.get(`${import.meta.env.VITE_API_URL}/reports/list-stadistics`, headers)
         .then(response => {
           this.statisticsLegal = response.data.statistics;
-          console.log(this.statisticsLegal);
+          // console.log(this.statisticsLegal);
 
           // Captura de la imagen del primer registro
           this.statisticsLegal[0].img = shade1;
@@ -520,7 +520,7 @@ export default {
           // Actualizar la lista de customers con los datos obtenidos del backend
           this.customers = response.data.customers;
 
-          console.log(this.customers);
+          // console.log(this.customers);
         } else {
           console.error('Datos incompletos en la respuesta del backend.');
         }
@@ -557,7 +557,7 @@ export default {
     moneysSelected(newValue, oldValue) {
       // Lógica para actualizar las opciones y series del gráfico según moneysSelected
 
-      console.log(newValue);
+      // console.log(newValue);
       // Puedes agregar más condiciones según sea necesario para otras opciones
     },
   },

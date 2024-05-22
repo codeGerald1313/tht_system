@@ -220,7 +220,7 @@ export default {
           icon: "heroicons-outline:trash",
           doit: (data) => {
 
-            console.log(data);
+            // console.log(data);
             // Realiza la solicitud HTTP POST al backend para eliminar el booking
             axios.post(`${import.meta.env.VITE_API_URL}/bookings/anular-traspase`, {
               booking_id: data.id  // Incluye el ID del booking en el cuerpo de la solicitud
@@ -295,13 +295,13 @@ export default {
     async reloadCrmTable() {
       axios.get(`${import.meta.env.VITE_API_URL}/bookings/list-traspase?start_date=${this.dateValue.startDate}&end_date=${this.dateValue.endDate}`, headers)
         .then(response => {
-          console.log(response.data);
+          // console.log(response.data);
 
       
 
           const toast = useToast();
           toast.success(response.data.message);
-          console.log(response);
+          // console.log(response);
           this.advancedTable = response.data.data;
 
         })
@@ -341,7 +341,7 @@ export default {
 
         axios.get(`${import.meta.env.VITE_API_URL}/bookings/list-traspase?start_date=${startDateOnly}&end_date=${endDateOnly}`, headers)
           .then(response => {
-            console.log(response.data);
+            // console.log(response.data);
 
 
             const toast = useToast();
@@ -374,7 +374,7 @@ export default {
   mounted() {
     axios.get(`${import.meta.env.VITE_API_URL}/bookings/list-traspase?start_date=${this.dateValue.startDate}&end_date=${this.dateValue.endDate}`, headers)
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
 
         const toast = useToast();
         toast.success(response.data.message);

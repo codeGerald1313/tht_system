@@ -164,7 +164,7 @@ export default {
           name: "edit",
           icon: "heroicons:pencil-square",
           doit: (data) => {
-            console.log(data);
+            // console.log(data);
             this.hotelData = data; // Asigna los datos del empleado
             this.showEditModal = true; // Mostrar el modal de edición
           }
@@ -246,7 +246,7 @@ export default {
           timeout: 1500, // Cierre automático después de 1.5 segundos
         });
 
-        console.log(this.projects);
+        // console.log(this.projects);
       } catch (error) {
         console.error('Error al obtener los datos de los empleados:', error);
       }

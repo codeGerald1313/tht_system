@@ -204,17 +204,17 @@
               </span>
 
               <!-- Input para la observación -->
-              <span v-if="props.column.field == 'precio_corporativo'" >
-                <Textinput type="text" placeholder="S/." v-model="projects[props.index].precio_corporate" /> 
+              <span v-if="props.column.field == 'precio_corporativo'">
+                <Textinput type="text" placeholder="S/." v-model="projects[props.index].precio_corporate" />
               </span>
 
               <span v-if="props.column.field == 'cobranza'">
-                <Textinput type="text" placeholder="S/."  v-model="projects[props.index].cobranza" />
+                <Textinput type="text" placeholder="S/." v-model="projects[props.index].cobranza" />
               </span>
 
               <!-- Input para el campo realizado -->
               <span v-if="props.column.field == 'realizado'">
-                <Textinput type="text" placeholder="-"  />
+                <Textinput type="text" placeholder="-" />
               </span>
 
               <!-- Botón de acción para eliminar -->
@@ -343,15 +343,15 @@
       @updateClientList="fetchClients"></EditProject>
 
     <EditProject2 :activeModal="showReserveModal" title="Actualizar Registro de Colaborador"
-      @postComplete="handlePostComplete" @close="showReserveModal = false"></EditProject2>
+      @postComplete="handlePostComplete" :idCliente="idCliente" @close="showReserveModal = false"></EditProject2>
 
     <ComisionarModal :activeModal="showComisionar" title="Actualizar Registro de Colaborador"
       @commissionProcessed="handleCommissionProcessed" @close="showComisionar = false"></ComisionarModal>
 
 
     <AmortizarModal :activeModal="showAmortizar" title="Actualizar Registro de Colaborador"
-      @form-submitted="handleFormSubmitted" @income-submitted="handleFormSubmitted22" :idCliente="idCliente" :totalBooking="booking.total"
-      @close="showAmortizar = false">
+      @form-submitted="handleFormSubmitted" @income-submitted="handleFormSubmitted22" :idCliente="idCliente"
+      :totalBooking="booking.total" @close="showAmortizar = false">
     </AmortizarModal>
 
 
@@ -600,7 +600,7 @@ export default {
         {
           label: "Precio Coorporativo",
           field: "precio_corporativo",
-        }, 
+        },
         {
           label: "Cobranza",
           field: "cobranza",
@@ -765,7 +765,7 @@ export default {
                 cobranza: null
               };
               this.projects.push(newProject);
-              console.log(this.projects);
+              // console.log(this.projects);
             })
             .catch(error => {
               console.error('Error al obtener la descripción del tour:', error);
@@ -777,30 +777,30 @@ export default {
       }
     },
     'projects': {
-        deep: true,
-        handler(newProjects, oldProjects) {
-            let totalCobranza = 0; // Variable para almacenar la suma total de cobranzas
-            for (let i = 0; i < newProjects.length; i++) {
-                const project = newProjects[i];
-                const nPasajeros = parseFloat(project.nPasajseros);
-                const precioCorporate = parseFloat(project.precio_corporate);
-                if (!isNaN(nPasajeros) && !isNaN(precioCorporate)) {
-                    this.projects[i].cobranza = nPasajeros * precioCorporate;
-                    totalCobranza += this.projects[i].cobranza; // Sumar la cobranza actual al total
-                }
+      deep: true,
+      handler(newProjects, oldProjects) {
+        let totalCobranza = 0; // Variable para almacenar la suma total de cobranzas
+        for (let i = 0; i < newProjects.length; i++) {
+          const project = newProjects[i];
+          const nPasajeros = parseFloat(project.nPasajseros);
+          const precioCorporate = parseFloat(project.precio_corporate);
+          if (!isNaN(nPasajeros) && !isNaN(precioCorporate)) {
+            this.projects[i].cobranza = nPasajeros * precioCorporate;
+            totalCobranza += this.projects[i].cobranza; // Sumar la cobranza actual al total
+          }
 
-                this.tour.totalTour = totalCobranza; // Actualizar el valor total del tour
+          this.tour.totalTour = totalCobranza; // Actualizar el valor total del tour
 
-            }
         }
+      }
     },
     'booking.clients': function (newValue, oldValue) {
       this.idCliente = newValue;
 
-      console.log(this.idCliente);
+      // console.log(this.idCliente);
       axios.get(`${import.meta.env.VITE_API_URL}/clients/cellphone&telephone/${newValue}`, headers)
         .then(response => {
-          console.log(response);
+          // console.log(response);
 
           this.booking.phoneNumber = response.data.contact_numbers;
         })
@@ -817,8 +817,8 @@ export default {
         this.booking.dateArrival = datePart;
         this.booking.timeArrival = timePart;
 
-        console.log(this.booking.dateArrival);
-        console.log(this.booking.timeArrival);
+        // console.log(this.booking.dateArrival);
+        // console.log(this.booking.timeArrival);
       } else {
         // Si el valor es nulo, establecer las propiedades en nulo también
         this.booking.dateArrival = null;
@@ -860,7 +860,7 @@ export default {
 
       this.booking.total = totalReserva;
 
-      console.log(this.booking.total);
+      // console.log(this.booking.total);
 
       // Formatear la suma total como 'S/.0.00'
       return 'S/.' + sumaTotal.toFixed(2);
@@ -877,7 +877,7 @@ export default {
   methods: {
     capturarDatos() {
       // Imprimir la lista de proyectos en la consola
-      console.log(this.projects);
+      // console.log(this.projects);
 
       // O cualquier otra acción que desees realizar con la lista de proyectos
     },
@@ -890,10 +890,10 @@ export default {
             label: agency.fullname // Asume que la agencia tiene un campo 'name' que se utilizará como etiqueta
           }));
 
-          console.log(response);
+          // console.log(response);
         })
         .catch(error => {
-          console.error('Error al obtener las agencias:', error);
+          // console.error('Error al obtener las agencias:', error);
         });
     },
 
@@ -906,11 +906,11 @@ export default {
       this.commissionIds = formattedId;
 
       // Hacer algo con el ID, por ejemplo, imprimir en la consola
-      console.log('ID de la comisión:', this.commissionIds);
+      // console.log('ID de la comisión:', this.commissionIds);
     },
 
     handleFormSubmitted(responseData) {
-      console.log("Response data", responseData);
+      // console.log("Response data", responseData);
 
       // Asegúrate de que responseData y responseData.data no sean nulos o indefinidos
       if (responseData && responseData.data) {
@@ -918,7 +918,7 @@ export default {
         const moneyIds = responseData.data.map(item => item.id);
 
         // Ahora tienes un array de IDs
-        console.log("Money IDs:", moneyIds);
+        // console.log("Money IDs:", moneyIds);
 
         // Puedes realizar más acciones aquí con los IDs extraídos
         // Por ejemplo, asignarlo a una propiedad de tu componente o estado de la tienda
@@ -926,25 +926,25 @@ export default {
       } else {
         console.error("Invalid response data format");
       }
-    }, 
+    },
     handleFormSubmitted22(responseData) {
 
-this.booking.totalPagado = responseData.amount;
+      this.booking.totalPagado = responseData.amount;
 
-console.log("totalPagar data", this.totalPagado);
+      // console.log("totalPagar data", this.totalPagado);
 
-},
+    },
 
 
 
     deleteProject(index) {
       // Eliminar el proyecto del índice proporcionado
       this.projects.splice(index, 1);
-      console.log(this.projects);
+      // console.log(this.projects);
 
-        if (this.projects.length === 0) {
-    this.tour.totalTour = 0;
-  }
+      if (this.projects.length === 0) {
+        this.tour.totalTour = 0;
+      }
     },
     deleteItem(id, index) {
       // Mostrar un cuadro de diálogo de confirmación nativo del navegador
@@ -955,7 +955,7 @@ console.log("totalPagar data", this.totalPagado);
         axios.delete(`${import.meta.env.VITE_API_URL}/hotelsbookings/destroy/${id}`, headers)
           .then(response => {
             // El elemento se ha eliminado correctamente en el backend
-            console.log("El elemento con ID:", id, "se ha eliminado correctamente en el backend");
+            // console.log("El elemento con ID:", id, "se ha eliminado correctamente en el backend");
 
             this.reservasHotel.splice(index, 1); // Elimina 1 elemento en la posición 'index'
 
@@ -965,7 +965,7 @@ console.log("totalPagar data", this.totalPagado);
           })
           .catch(error => {
             // Ocurrió un error al intentar eliminar el elemento en el backend
-            console.error("Error al eliminar el elemento:", error);
+            // console.error("Error al eliminar el elemento:", error);
 
             // Mostrar un toast de error
             const toast = useToast();
@@ -973,7 +973,7 @@ console.log("totalPagar data", this.totalPagado);
           });
       } else {
         // El usuario ha cancelado la eliminación
-        console.log("El usuario ha cancelado la eliminación del elemento con ID:", id);
+        // console.log("El usuario ha cancelado la eliminación del elemento con ID:", id);
       }
     },
     handlePostComplete(data) {
@@ -1000,7 +1000,7 @@ console.log("totalPagar data", this.totalPagado);
 
       this.idsReservesHotels = ids;
 
-      console.log(this.idsReservesHotels);
+      // console.log(this.idsReservesHotels);
     }
 
     ,
@@ -1061,7 +1061,7 @@ console.log("totalPagar data", this.totalPagado);
         money_ids: this.moneyIds
       };
 
-      console.log(dataToSend);
+      // console.log(dataToSend);
 
       // Realiza la solicitud HTTP POST al backend
       axios.post(`${import.meta.env.VITE_API_URL}/bookings/create-recivied`, dataToSend, {
@@ -1071,7 +1071,7 @@ console.log("totalPagar data", this.totalPagado);
           const toast = useToast();
 
           // Maneja la respuesta del backend según sea necesario
-          console.log(response.data);
+          // console.log(response.data);
 
           toast.success(response.data.message, { duration: 3000 });
 
@@ -1107,12 +1107,12 @@ console.log("totalPagar data", this.totalPagado);
       this.idCliente = this.idCliente;
       this.totalBooking = this.booking.total;
       this.showAmortizar = true;
-      console.log(this.idCliente);
+      // console.log(this.idCliente);
     },
 
     handleComisionEnviada(comisionData) {
       // Recibir los datos de la comisión y mostrarlos en la consola
-      console.log('Datos de la comisión recibidos en el componente padre:', comisionData);
+      // console.log('Datos de la comisión recibidos en el componente padre:', comisionData);
     },
 
     openModalReservaHotel() {
@@ -1120,7 +1120,7 @@ console.log("totalPagar data", this.totalPagado);
     },
 
     async fetchClients() {
-      console.log("Fetching clients...");
+      // console.log("Fetching clients...");
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/clients/list`, headers);
         this.customerOptions = response.data.data.map(customer => ({
@@ -1128,12 +1128,12 @@ console.log("totalPagar data", this.totalPagado);
           label: customer.fullname
         }));
       } catch (error) {
-        console.error('Error fetching departments:', error);
+        // console.error('Error fetching departments:', error);
       }
     },
 
     async fetchHotelsBooking() {
-      console.log("Fetching HotelsBooking...");
+      // console.log("Fetching HotelsBooking...");
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/clients/list`, headers);
         this.customerOptions = response.data.data.map(customer => ({
@@ -1141,15 +1141,15 @@ console.log("totalPagar data", this.totalPagado);
           label: customer.fullname
         }));
       } catch (error) {
-        console.error('Error fetching departments:', error);
+        // console.error('Error fetching departments:', error);
       }
     },
 
     async fetchTours() {
-      console.log("Fetching tours...");
+      // console.log("Fetching tours...");
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/tours/list`, headers);
-        console.log(response);
+        // console.log(response);
 
         // this.projects = response.data.data;
 
@@ -1158,9 +1158,9 @@ console.log("totalPagar data", this.totalPagado);
           label: customer.description
         }));
 
-        console.log(this.projects)
+        // console.log(this.projects)
       } catch (error) {
-        console.error('Error fetching tours:', error);
+        // console.error('Error fetching tours:', error);
       }
     },
 
@@ -1176,8 +1176,8 @@ console.log("totalPagar data", this.totalPagado);
     this.fullNameAgency = fullname;
 
     // Haz lo que necesites con 'id' y 'fullname' en este componente
-    console.log('ID:', this.idRecibied);
-    console.log('Fullname:', fullname);
+    // console.log('ID:', this.idRecibied);
+    // console.log('Fullname:', fullname);
   },
 
   mounted() {

@@ -366,7 +366,7 @@ const columnsPendenting = [
 ];
 
 const handleDateChange = (newValue) => {
-  console.log('Nuevo valor del calendario:', newValue);
+  // console.log('Nuevo valor del calendario:', newValue);
 };
 
 const formatDate = (dateString) => {
@@ -394,7 +394,7 @@ const openModal = async (id) => {
 
   const toast = useToast();
 
-  console.log(dateValue22222.value);
+  // console.log(dateValue22222.value);
   try {
     const response = await axios.get(
       `${import.meta.env.VITE_API_URL}/bookings/booking-tours/${id}`,
@@ -425,7 +425,7 @@ const openModal = async (id) => {
 
       toast.info('Tours Pendientes encontrados con éxito');
 
-      console.log(response);
+      // console.log(response);
     } else {
       toast.info('Este Tour no tiene Reservas Pendientes');
       this.projects = [];
@@ -437,7 +437,7 @@ const openModal = async (id) => {
     this.projects = [];
   }
 
-  console.log('ID del registro:', id);
+  // console.log('ID del registro:', id);
 };
 
 const modalTitle = ref('');
@@ -466,7 +466,7 @@ const openModalDos = async () => {
 
       toast.info('Tours Pendientes encontrados con éxito');
 
-      console.log(projectsOpen.value);
+      // console.log(projectsOpen.value);
     } else {
       toast.info('Este Tour no tiene Reservas Pendientes');
       this.projects = [];
@@ -478,7 +478,7 @@ const openModalDos = async () => {
   }
 
 
-  console.log("gaa");
+  // console.log("gaa");
 };
 
 
@@ -601,7 +601,7 @@ const cards = [
 ];
 
 watch(dateValue2, async (newValue) => {
-  console.log('Nuevo valor del calendario:', newValue);
+  // console.log('Nuevo valor del calendario:', newValue);
 
   dateValue22222.value = newValue;
   try {
@@ -641,7 +641,7 @@ watch(dateValue2, async (newValue) => {
       }
     }
 
-    console.log(statistics.value);
+    // console.log(statistics.value);
   } catch (error) {
     console.error('Error fetching data:', error);
   }

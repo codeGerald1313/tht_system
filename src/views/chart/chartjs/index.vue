@@ -591,7 +591,7 @@ export default {
         // Actualizar los datos en el componente con la respuesta recibida
         this.ingresos = response.data;
 
-        console.log(response);
+        // console.log(response);
       } catch (error) {
         console.error('Error al obtener datos:', error);
       }
@@ -611,7 +611,7 @@ export default {
         // Actualizar los datos en el componente con la respuesta recibida
         this.incomeexpense = response.data;
 
-        console.log(this.incomeexpense);
+        // console.log(this.incomeexpense);
       } catch (error) {
         console.error('Error al obtener datos:', error);
       }
@@ -630,7 +630,7 @@ export default {
         // Actualizar los datos en el componente con la respuesta recibida
         this.egresos = response.data;
 
-        console.log(response);
+        // console.log(response);
       } catch (error) {
         console.error('Error al obtener datos:', error);
       }
@@ -646,7 +646,7 @@ export default {
             label: agency.fullname // Asume que la agencia tiene un campo 'name' que se utilizará como etiqueta
           }));
 
-          console.log(response);
+          // console.log(response);
         })
         .catch(error => {
           console.error('Error al obtener las agencias:', error);
@@ -668,7 +668,7 @@ export default {
           }
         );
 
-        console.log(response);
+        // console.log(response);
 
         // Obtener la URL de respuesta
         const responseURL = response.request.responseURL;
@@ -691,7 +691,7 @@ export default {
         // Eliminar el enlace del documento después de la descarga
         document.body.removeChild(link);
 
-        console.log('Descarga iniciada automáticamente.');
+        // console.log('Descarga iniciada automáticamente.');
 
       } catch (error) {
         console.error('Error al descargar el archivo:', error);
@@ -714,7 +714,7 @@ export default {
           }
         );
 
-        console.log(response);
+        // console.log(response);
 
         // Obtener la URL de respuesta
         const responseURL = response.request.responseURL;
@@ -737,7 +737,7 @@ export default {
         // Eliminar el enlace del documento después de la descarga
         document.body.removeChild(link);
 
-        console.log('Descarga iniciada automáticamente.');
+        // console.log('Descarga iniciada automáticamente.');
 
       } catch (error) {
         console.error('Error al descargar el archivo:', error);
@@ -760,7 +760,7 @@ export default {
           }
         );
 
-        console.log(response);
+        // console.log(response);
 
         // Obtener la URL de respuesta
         const responseURL = response.request.responseURL;
@@ -783,7 +783,7 @@ export default {
         // Eliminar el enlace del documento después de la descarga
         document.body.removeChild(link);
 
-        console.log('Descarga iniciada automáticamente.');
+        // console.log('Descarga iniciada automáticamente.');
 
       } catch (error) {
         console.error('Error al descargar el archivo:', error);
@@ -791,7 +791,7 @@ export default {
     },
     toggleVoucher() {
       this.isVoucherChecked = !this.isVoucherChecked;
-      console.log(this.isVoucherChecked);
+      // console.log(this.isVoucherChecked);
     },
 
 

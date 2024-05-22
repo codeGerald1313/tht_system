@@ -208,7 +208,7 @@ export default {
           name: "edit",
           icon: "heroicons:pencil-square",
           doit: (data) => {
-            console.log(data);
+            // console.log(data);
             this.egresoData = data; // Asigna los datos del empleado
             this.showEditModal = true; // Mostrar el modal de edición
           }
@@ -304,7 +304,7 @@ export default {
         
         this.projects = response.data;
 
-        console.log(this.projects);
+        // console.log(this.projects);
 
         // Verificar si this.projects está vacío o no tiene elementos
         if (this.projects && this.projects.length > 0) {
@@ -344,7 +344,7 @@ export default {
           }
         );
 
-        console.log(response);
+        // console.log(response);
 
         // Obtener la URL de respuesta
         const responseURL = response.request.responseURL;
@@ -367,7 +367,7 @@ export default {
         // Eliminar el enlace del documento después de la descarga
         document.body.removeChild(link);
 
-        console.log('Descarga iniciada automáticamente.');
+        // console.log('Descarga iniciada automáticamente.');
 
       } catch (error) {
         console.error('Error al descargar el archivo:', error);
@@ -399,7 +399,7 @@ export default {
 
         this.projects = response.data;
 
-        console.log(newValue);
+        // console.log(newValue);
 
         // Verificar si this.projects está vacío o no tiene elementos
         if (this.projects && this.projects.length > 0) {

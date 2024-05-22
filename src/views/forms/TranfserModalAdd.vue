@@ -89,7 +89,7 @@ const showAmountInputs = ref(false);
 
 // Método para guardar los datos y realizar la solicitud POST
 const save = () => {
-  console.log(object.value);
+  // console.log(object.value);
   axios.post(`${import.meta.env.VITE_API_URL}/transfers-moneyboxes/transfer-caja-principal`, {
     amount: object.value.description,
     paymentmethod_id: selectedPaymentType.value
@@ -97,7 +97,7 @@ const save = () => {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       cancel();
       toast.success(response.data.message);
 
@@ -140,11 +140,11 @@ watch(selectedPaymentType, (newValue) => {
 
 // Observa cambios en selectedPaymentType y muestra u oculta los inputs en función del valor seleccionado
 watch(selectedPaymentType, (newValue, oldValue) => {
-  console.log('Valor seleccionado:', newValue);
+  // console.log('Valor seleccionado:', newValue);
   showAmountInputs.value = newValue !== null;
 
 
-  console.log(props.id)
+  // console.log(props.id)
 
   // Llamar al método para obtener el total del dinero en caja cada vez que se active el watcher
   if (newValue !== null) {
@@ -156,11 +156,11 @@ watch(selectedPaymentType, (newValue, oldValue) => {
       ...headers
     })
       .then(response => {
-        console.log('Total del dinero en caja:', response.data.total);
+        // console.log('Total del dinero en caja:', response.data.total);
         // Actualizar el valor de object.totalAcumlado con el total obtenido del backend
         object.value.totalAcumlado = response.data.total;
 
-        console.log(object.value.totalAcumlado);
+        // console.log(object.value.totalAcumlado);
       })
       .catch(error => {
         console.error('Error al obtener el total del dinero en caja:', error);

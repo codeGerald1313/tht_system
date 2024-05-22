@@ -394,7 +394,7 @@ export default {
                 this.fetchAccountBanks();
                 this.closeModalEditAccountBank();
                 toast.success('¡Cambios guardados en la cuenta bancaria exitosamente!');
-                console.log('Respuesta de la solicitud POST para guardar cambios en la cuenta bancaria:', response.data);
+                // console.log('Respuesta de la solicitud POST para guardar cambios en la cuenta bancaria:', response.data);
             } catch (error) {
                 toast.error('Error al guardar cambios en la cuenta bancaria. Por favor, intenta nuevamente.');
                 console.error('Error al enviar la solicitud POST para guardar cambios en la cuenta bancaria:', error);
@@ -409,7 +409,7 @@ export default {
                 this.fetchBanks();
                 this.closeEditModalBank();
                 toast.success('¡Cambios guardados en el banco exitosamente!');
-                console.log('Respuesta de la solicitud POST para guardar cambios en el banco:', response.data);
+                // console.log('Respuesta de la solicitud POST para guardar cambios en el banco:', response.data);
             } catch (error) {
                 toast.error('Error al guardar cambios en el banco. Por favor, intenta nuevamente.');
                 console.error('Error al enviar la solicitud POST para guardar cambios en el banco:', error);
@@ -432,7 +432,7 @@ export default {
 
             this.income.paymentmethod_id = parseInt(this.income.paymentmethod_id);
 
-            console.log(this.income);
+            // console.log(this.income);
 
             // Realiza la solicitud HTTP POST al backend
             axios.post(`${import.meta.env.VITE_API_URL}/moneys/create-booking-income`, this.income, { ...headers })
@@ -448,7 +448,7 @@ export default {
                     toast.success(response.data.message)
 
                     // Maneja la respuesta del backend según sea necesario
-                    console.log('Respuesta del servidor:', response.data);
+                    // console.log('Respuesta del servidor:', response.data);
 
                     // Opcional: Realiza otras acciones después del éxito
                 })
@@ -488,7 +488,7 @@ export default {
                     label: customer.fullname
                 }));
 
-                console.log("Chi");
+                // console.log("Chi");
             } catch (error) {
                 console.error('Error fetching departments:', error);
             }
@@ -505,7 +505,7 @@ export default {
     watch: {
         'income.amount': function (newAmount, oldAmount) {
 
-            console.log(newAmount);
+            // console.log(newAmount);
             // Calcular el valor de TOTAL RESTANTE
             this.income.totalRestante = this.income.totalAPagar - newAmount;
 
@@ -521,7 +521,7 @@ export default {
             const integerValue = parseInt(newValue.replace(',', ''), 10);
 
             // Hacer algo cuando 'idCliente' cambie, por ejemplo:
-            console.log(integerValue);
+            // console.log(integerValue);
             this.income.totalAPagar = integerValue;
         },
 
@@ -533,7 +533,7 @@ export default {
         idBooking: function (newValueIdBooking, oldValueIdBooking) {
 
             this.income.booking_id = newValueIdBooking;
-            console.log('El valor idBooking es', newValueIdBooking);
+            // console.log('El valor idBooking es', newValueIdBooking);
         },
         'income.paymentmethod_id': function (newVal, oldVal) {
             // Verifica si el nuevo valor es una cadena no vacía

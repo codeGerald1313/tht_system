@@ -193,9 +193,9 @@ const fetchDniData = () => {
       dni: formData.value.inputValue
     })
     .then(response => {
-      console.log('Respuesta de la API DNI:', response.data.nombre_completo);
+      // console.log('Respuesta de la API DNI:', response.data.nombre_completo);
       // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
-      formData.value.inputValue = response.data.data.nombre_completo;
+      formData.clientFullname = response.data.data.nombre_completo;
     })
     .catch(error => {
       console.error('Error al obtener datos del DNI:', error);
@@ -297,15 +297,15 @@ const saveEmployee = () => {
           selectedStatusLabel.value = selectedOption.label;
         }
         // Mostrar el valor seleccionado en la consola
-        console.log(`Valor seleccionado para ${formDataField}:`, selectedOption);
+        // console.log(`Valor seleccionado para ${formDataField}:`, selectedOption);
 
         // Agregar el valor al objeto formDataToSend
         formDataToSend.append(formDataField, selectedOption.id);
       } else {
-        console.log(`No se ha seleccionado ningún ${formDataField.toLowerCase()}.`);
+        // console.log(`No se ha seleccionado ningún ${formDataField.toLowerCase()}.`);
       }
     } else {
-      console.log(`No se ha encontrado ningún elemento para el ${formDataField.toLowerCase()}.`);
+      // console.log(`No se ha encontrado ningún elemento para el ${formDataField.toLowerCase()}.`);
     }
   };
 
@@ -332,7 +332,7 @@ const saveEmployee = () => {
   // formData.value.statusSelected = selectedStatusLabel.value;
 
 
-  console.log(formData.value.sexSelected);
+  // console.log(formData.value.sexSelected);
 
 
   let validationFailed = false;
@@ -374,12 +374,12 @@ const saveEmployee = () => {
   formDataToSend.append('sex', formData.value.sexSelected);
   formDataToSend.append('status', formData.value.statusSelected);
 
-  console.log(formData.value.dateBirthday);
+  // console.log(formData.value.dateBirthday);
 
   // Realizar la actualización (POST) al backend
   axios.post(`${import.meta.env.VITE_API_URL}/employees/edit/${formData.value.idEmploye}`, formDataToSend, headers)
     .then(response => {
-      console.log('Success:', response.data);
+      // console.log('Success:', response.data);
       emits('updateEmployeeList'); // Emitir el evento personalizado al componente padre
       closeEditModal();
       toast.success(response.data.message);
@@ -398,7 +398,7 @@ const saveJob = () => {
     ...headers
   })
     .then(response => {
-      console.log('Success:', response.data);
+      // console.log('Success:', response.data);
       toast.success(response.data.message);
 
       // Después de guardar el trabajo exitosamente, actualizar la lista de trabajos
@@ -460,9 +460,9 @@ const branchoffices = [
 
 
 onMounted(() => {
-  console.log(props);
+  // console.log(props);
   fetchJobs();
-  console.log(formData.value.typeDocumentSelected);
+  // console.log(formData.value.typeDocumentSelected);
 });
 
 
@@ -513,7 +513,7 @@ watch(() => formData.value.jobSelected, (newValue) => {
   if (selectedJobOption) {
     formData.value.jobSelectedId = selectedJobOption.id;
 
-    console.log(formData.value.jobSelectedId);
+    // console.log(formData.value.jobSelectedId);
   }
 });
 
@@ -523,7 +523,7 @@ watch(() => formData.value.sexSelected, (newValue) => {
   if (selectedJobOption) {
     formData.value.sexSelected = selectedJobOption.label;
 
-    console.log(formData.value.sexSelected);
+    // console.log(formData.value.sexSelected);
   }
 });
 
@@ -534,7 +534,7 @@ watch(() => formData.value.statusSelected, (newValue) => {
   if (selectedJobOption) {
     formData.value.statusSelected = selectedJobOption.label;
 
-    console.log(formData.value.statusSelected);
+    // console.log(formData.value.statusSelected);
   }
 });
 

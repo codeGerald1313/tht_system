@@ -204,7 +204,7 @@ export default {
           name: "edit",
           icon: "heroicons:pencil-square",
           doit: (data) => {
-            console.log(data);
+            // console.log(data);
             this.ingresoData = data; // Asigna los datos del empleado
             this.showEditModal = true; // Mostrar el modal de edición
           }
@@ -317,7 +317,7 @@ export default {
           }
         );
 
-        console.log(response);
+        // console.log(response);
 
         // Obtener la URL de respuesta
         const responseURL = response.request.responseURL;
@@ -340,7 +340,7 @@ export default {
         // Eliminar el enlace del documento después de la descarga
         document.body.removeChild(link);
 
-        console.log('Descarga iniciada automáticamente.');
+        // console.log('Descarga iniciada automáticamente.');
 
       } catch (error) {
         console.error('Error al descargar el archivo:', error);
@@ -357,7 +357,7 @@ export default {
 
         this.projects = response.data;
 
-        console.log(this.projects);
+        // console.log(this.projects);
 
         // Verificar si this.projects está vacío o no tiene elementos
         if (this.projects && this.projects.length > 0) {
@@ -390,13 +390,13 @@ export default {
     Promise.all([
       this.listarIngresos()
     ]).then(() => {
-      console.log("Todas las llamadas a la API han sido completadas.");
+      // console.log("Todas las llamadas a la API han sido completadas.");
     }).catch(error => {
       console.error("Error al realizar llamadas a la API:", error);
     });
 
 
-    console.log(this.dateDefault);
+    // console.log(this.dateDefault);
 
   },
   watch: {
@@ -412,7 +412,7 @@ export default {
 
         this.projects = response.data;
 
-        console.log(newValue);
+        // console.log(newValue);
 
         // Verificar si this.projects está vacío o no tiene elementos
         if (this.projects && this.projects.length > 0) {

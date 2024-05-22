@@ -340,7 +340,7 @@ export default {
 
 
       this.monto = this.monto;
-      console.log(this.monto)
+      // console.log(this.monto)
       // Abre el modal
       this.showModalCierre = true;
     },
@@ -362,7 +362,7 @@ export default {
 
         this.summary_paymethods = response.data.summary_paymethods;
 
-        console.log(this.moneybox);
+        // console.log(this.moneybox);
       } catch (error) {
         console.error("Error fetching summary_paymethods:", error);
       }
@@ -392,14 +392,14 @@ export default {
     },
 
     handleGuardadoExitoso(data) {
-      console.log('Datos guardados exitosamente en el componente padre:', data);
+      // console.log('Datos guardados exitosamente en el componente padre:', data);
       const id = data.data.moneybox_id;
       this.id = id;
 
 
       this.fetchSummaryPaymethods(this.id);
 
-      console.log('ID capturado:', id);
+      // console.log('ID capturado:', id);
       // Aquí puedes realizar cualquier lógica adicional con el ID capturado
     },
 
@@ -432,7 +432,7 @@ handleGuardadoExitosoTransfer() {
         // Asignar el último ID obtenido del backend a this.id
         this.id = last_id;
 
-        console.log(this.id);
+        // console.log(this.id);
 
         // Activar el método correspondiente según el estado de has_null_date_closing
         if (has_null_date_closing) {
@@ -459,7 +459,7 @@ handleGuardadoExitosoTransfer() {
   watch: {
     id(newValue, oldValue) {
       // Aquí puedes ejecutar acciones cuando la variable idBoxed cambia
-      console.log('Nuevo valor de idBoxed:', newValue);
+      // console.log('Nuevo valor de idBoxed:', newValue);
       // También puedes realizar alguna acción adicional, como cargar datos o llamar a métodos
     },
     selected(newValue, oldValue) {
@@ -467,13 +467,13 @@ handleGuardadoExitosoTransfer() {
 
       if (this.authenticatedUser && (this.authenticatedUser.id === 6 || this.authenticatedUser.id === 10)) {
         // Si el usuario tiene el ID 1 (autorizado)
-        console.log('Usuario autorizado para acceder a esta opción.');
+        // console.log('Usuario autorizado para acceder a esta opción.');
 
         // Ejemplo: Navegación a una nueva vista con el nombre de la caja seleccionada
         this.$router.push({ name: 'monexboxes', params: { label: 'caja-akemy' } });
       } else {
         // Si no es autorizado, mostrar mensaje de error
-        console.log('Usuario no autorizado.');
+        // console.log('Usuario no autorizado.');
 
         // Mostrar mensaje de error con toast
         toast.error('No estás autorizado para acceder a este módulo. Comunícate con el responsable.');

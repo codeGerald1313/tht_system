@@ -397,7 +397,7 @@ export default {
         'bookinghotel.client_id'(newClientId, oldClientId) {
             axios.get(`${import.meta.env.VITE_API_URL}/clients/cellphone&telephone/${newClientId}`, headers)
                 .then(response => {
-                    console.log(response);
+                    // console.log(response);
 
                     this.tellephonAndCellphone = response.data.contact_numbers;
                 })
@@ -420,18 +420,18 @@ export default {
 
             this.bookinghotel.booking_id = newValorCode;
 
-            console.log('El valor del code es', newValorCode);
+            // console.log('El valor del code es', newValorCode);
         },
         idCliente: function (newValueIdClient, oldValueIdClient) {
 
             this.fetchClients();
             this.bookinghotel.client_id = newValueIdClient;
-            console.log('El valor del idCliente es', newValueIdClient);
+            // console.log('El valor del idCliente es', newValueIdClient);
         },
         idBooking: function (newValueIdBooking, oldValueIdBooking) {
 
             this.idBookingg = newValueIdBooking;
-            console.log('El valor idBooking es', newValueIdBooking);
+            // console.log('El valor idBooking es', newValueIdBooking);
         },
     },
 
@@ -497,7 +497,7 @@ export default {
                 })
             };
 
-            console.log(dataToSend);
+            // console.log(dataToSend);
 
             // Realiza la solicitud HTTP POST al backend
             axios.post(`${import.meta.env.VITE_API_URL}/hotelsbookings/create`, dataToSend, {
@@ -523,13 +523,13 @@ export default {
         deleteProject(index) {
             // Eliminar el proyecto del índice proporcionado
             this.projects.splice(index, 1);
-            console.log(this.projects);
+            // console.log(this.projects);
         },
         async fetchHotels() {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_API_URL}/hotels/list`, headers);
 
-                console.log(response);
+                // console.log(response);
 
                 this.hotelOptions = response.data.data.map(customer => ({
                     value: customer.id,

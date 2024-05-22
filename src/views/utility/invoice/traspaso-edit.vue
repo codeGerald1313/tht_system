@@ -538,7 +538,7 @@ export default {
     const modelValue = ref(null);
 
     watch(() => modelValue.value, (newValue, oldValue) => {
-      console.log('El valor ha cambiado de', oldValue, 'a', newValue);
+      // console.log('El valor ha cambiado de', oldValue, 'a', newValue);
       // Aquí puedes realizar acciones adicionales cuando el valor cambie
     });
 
@@ -549,25 +549,25 @@ export default {
   methods: {
     handleSelectionChange(selectedValue) {
       // Realizar acciones con el valor seleccionado
-      console.log('Valor seleccionado:', selectedValue);
+      // console.log('Valor seleccionado:', selectedValue);
     },
 
     handleCheckboxChange(tourId) {
       // Manejar cambios en los checkboxes
-      console.log("Se seleccionó el tour con ID:", tourId);
+      // console.log("Se seleccionó el tour con ID:", tourId);
       // Agregar o eliminar el ID del tour seleccionado del array
       const index = this.selectedTours.indexOf(tourId);
       if (index !== -1) {
         this.selectedTours.splice(index, 1); // Eliminar el ID del tour deseleccionado
-        console.log(this.selectedTours);
+        // console.log(this.selectedTours);
       } else {
         this.selectedTours.push(tourId); // Agregar el ID del tour seleccionado
-        console.log(this.selectedTours);
+        // console.log(this.selectedTours);
       }
     },
     handleGuardarTraspaso() {
       // Acceder al valor de 'booking'
-      console.log('Valor de booking:', this.booking);
+      // console.log('Valor de booking:', this.booking);
 
       // Construir el objeto de datos a enviar
       const dataToSend = {
@@ -582,7 +582,7 @@ export default {
       axios.post(`${import.meta.env.VITE_API_URL}/bookings/update-traspase/${this.booking.id}`, dataToSend, headers)
         .then(response => {
           // Manejar la respuesta del backend si es necesario
-          console.log(response.data);
+          // console.log(response.data);
           const toast = useToast();
 
           toast.success(response.data.message);
@@ -609,18 +609,18 @@ export default {
         }
       });
 
-      console.log(filteredTourIds);
+      // console.log(filteredTourIds);
 
 
 
-      console.log("Jiji", this.tours);
+      // console.log("Jiji", this.tours);
 
 
-      console.log(dataToSend);
-      console.log(this.cobranzas);
+      // console.log(dataToSend);
+      // console.log(this.cobranzas);
 
-      console.log(this.tourIds);
-      console.log(this.tours);
+      // console.log(this.tourIds);
+      // console.log(this.tours);
 
 
       axios.post(`${import.meta.env.VITE_API_URL}/bookings/update-delegated-payments-transfer`, {
@@ -632,7 +632,7 @@ export default {
         .then(response => {
 
           // Manejar la respuesta del backend si es necesario
-          console.log(response.data);
+          // console.log(response.data);
           // toast.success("Pagos delegados actualizados correctamente");
         })
         .catch(error => {
@@ -650,7 +650,7 @@ export default {
       const searchTerm = this.searchTerm.toLowerCase();
       if (this.bookingsOptions) {
         this.filteredOptions = this.bookingsOptions.filter(option => option.label.toLowerCase().includes(searchTerm));
-        console.log(this.filteredOptions);
+      // console.log(this.filteredOptions);
       }
     },
 
@@ -665,12 +665,12 @@ export default {
 
   watch: {
     modelValue(newValue, oldValue) {
-      console.log('Valor seleccionado:', newValue);
+      // console.log('Valor seleccionado:', newValue);
     },
 
     // Observa los cambios en el valor de booking.tour_id
     'booking.tour_id': function (newValue, oldValue) {
-      console.log('ID:', newValue);
+      // console.log('ID:', newValue);
 
       // Realiza acciones en respuesta al cambio de valor
       axios.get(`${import.meta.env.VITE_API_URL}/bookings/record/${newValue}`, headers)
@@ -681,18 +681,18 @@ export default {
           this.cellClient = response.data.data.book.client.cellphone;
 
           this.fechas = response.data.data.tours;
-          console.log('Registro cargado:', response);
+          // console.log('Registro cargado:', response);
 
 
           // Almacena los valores de delegated_payment en un array
           // Almacena los valores de delegated_payment en un array, eliminando los valores null
           this.cobranzas = response.data.data.tours.map(tour => tour.delegated_payment).filter(payment => payment !== null);
 
-          console.log("Cobrii", this.cobranzas);
+          // console.log("Cobrii", this.cobranzas);
 
 
 
-          console.log("Cobrii", this.cobranzas);
+          // console.log("Cobrii", this.cobranzas);
 
           // Almacena los IDs de los tours en un array
           this.tourIds = response.data.data.tours.map(tour => {
@@ -723,14 +723,14 @@ export default {
         this.booking.reference_location = otherData.origintransfer.reference_location;
         this.totalCobranza = otherData.total;
         this.booking.agency_id = otherData.agency_id;
-        console.log(otherData);
+        // console.log(otherData);
 
       }
     },
     'tours': {
       deep: true,
       handler(newTours, oldTours) {
-        console.log(newTours);
+        // console.log(newTours);
         let totalCobranza = 0; // Variable para almacenar la suma total de cobranzas
         for (let i = 0; i < newTours.length; i++) {
           const tour = newTours[i];
@@ -752,7 +752,7 @@ export default {
   created() {
     this.store = useProjectStore();
 
-    console.log(this.booking.id);
+    // console.log(this.booking.id);
   },
   mounted() {
 

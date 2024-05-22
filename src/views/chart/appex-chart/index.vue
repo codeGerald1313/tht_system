@@ -666,7 +666,7 @@ export default {
         // Actualizar los datos en el componente con la respuesta recibida
         this.ingresos = response.data;
 
-        console.log(response);
+        // console.log(response);
       } catch (error) {
         console.error('Error al obtener datos:', error);
       }
@@ -684,7 +684,7 @@ export default {
         // Actualizar los datos en el componente con la respuesta recibida
         this.ingresos = response.data;
 
-        console.log(response);
+        // console.log(response);
       } catch (error) {
         console.error('Error al obtener datos:', error);
       }
@@ -706,7 +706,7 @@ export default {
         // Actualizar los datos en el componente con la respuesta recibida
         this.incomeexpense = response.data;
 
-        console.log( this.ingresos );
+        // console.log( this.ingresos );
       } catch (error) {
         console.error('Error al obtener datos:', error);
       }
@@ -728,7 +728,7 @@ export default {
         // Actualizar los datos en el componente con la respuesta recibida
         this.egresos = response.data;
 
-        console.log(response);
+        // console.log(response);
       } catch (error) {
         console.error('Error al obtener datos:', error);
       }
@@ -746,7 +746,7 @@ export default {
         // Actualizar los datos en el componente con la respuesta recibida
         this.egresos = response.data;
 
-        console.log(response);
+        // console.log(response);
       } catch (error) {
         console.error('Error al obtener datos:', error);
       }
@@ -771,7 +771,7 @@ export default {
           }
         );
 
-        console.log(response);
+        // console.log(response);
 
         // Obtener la URL de respuesta
         const responseURL = response.request.responseURL;
@@ -794,7 +794,7 @@ export default {
         // Eliminar el enlace del documento después de la descarga
         document.body.removeChild(link);
 
-        console.log('Descarga iniciada automáticamente.');
+        // console.log('Descarga iniciada automáticamente.');
 
       } catch (error) {
         console.error('Error al descargar el archivo:', error);
@@ -816,7 +816,7 @@ export default {
           }
         );
 
-        console.log(response);
+        // console.log(response);
 
         // Obtener la URL de respuesta
         const responseURL = response.request.responseURL;
@@ -839,7 +839,7 @@ export default {
         // Eliminar el enlace del documento después de la descarga
         document.body.removeChild(link);
 
-        console.log('Descarga iniciada automáticamente.');
+        // console.log('Descarga iniciada automáticamente.');
 
       } catch (error) {
         console.error('Error al descargar el archivo:', error);
@@ -865,7 +865,7 @@ export default {
           }
         );
 
-        console.log(response);
+        // console.log(response);
 
         // Obtener la URL de respuesta
         const responseURL = response.request.responseURL;
@@ -888,7 +888,7 @@ export default {
         // Eliminar el enlace del documento después de la descarga
         document.body.removeChild(link);
 
-        console.log('Descarga iniciada automáticamente.');
+        // console.log('Descarga iniciada automáticamente.');
 
       } catch (error) {
         console.error('Error al descargar el archivo:', error);
@@ -910,7 +910,7 @@ export default {
           }
         );
 
-        console.log(response);
+        // console.log(response);
 
         // Obtener la URL de respuesta
         const responseURL = response.request.responseURL;
@@ -933,7 +933,7 @@ export default {
         // Eliminar el enlace del documento después de la descarga
         document.body.removeChild(link);
 
-        console.log('Descarga iniciada automáticamente.');
+        // console.log('Descarga iniciada automáticamente.');
 
       } catch (error) {
         console.error('Error al descargar el archivo:', error);
@@ -957,7 +957,7 @@ export default {
           }
         );
 
-        console.log(response);
+        // console.log(response);
 
         // Obtener la URL de respuesta
         const responseURL = response.request.responseURL;
@@ -980,7 +980,7 @@ export default {
         // Eliminar el enlace del documento después de la descarga
         document.body.removeChild(link);
 
-        console.log('Descarga iniciada automáticamente.');
+        // console.log('Descarga iniciada automáticamente.');
 
       } catch (error) {
         console.error('Error al descargar el archivo:', error);
@@ -988,7 +988,7 @@ export default {
     },
     toggleVoucher() {
       this.isVoucherChecked = !this.isVoucherChecked;
-      console.log(this.isVoucherChecked);
+      // console.log(this.isVoucherChecked);
     },
     async fetchConceptsIncome() {
       try {
@@ -1000,7 +1000,7 @@ export default {
           value: concept.id,
           label: concept.description
         }));
-        console.log(formattedData);
+        // console.log(formattedData);
         // Actualizar el estado o la variable de conceptOptions con los datos formateados
         this.conceptOptions = formattedData;
       } catch (error) {
@@ -1018,7 +1018,7 @@ export default {
           value: concept.id,
           label: concept.description
         }));
-        console.log(formattedData);
+        // console.log(formattedData);
         // Actualizar el estado o la variable de conceptOptions con los datos formateados
         this.conceptExpenseOptions = formattedData;
       } catch (error) {
@@ -1033,7 +1033,7 @@ export default {
           value: paymentMethod.id,
           label: paymentMethod.description
         }));
-        console.log(formattedData);
+        // console.log(formattedData);
         // Actualizar el estado o la variable de documentTypeOptions con los datos formateados
         this.paymentOptions = formattedData;
       } catch (error) {
@@ -1045,12 +1045,12 @@ export default {
            // Convert newBranch to a number if it's a string
            const branchValue = parseInt(newBranch, 10);
 
-      console.log(this.user.id, branchValue);
+      // console.log(this.user.id, branchValue);
       if (branchValue === 2 &&  ![6, 10].includes(this.user.id)) {
         // Usuario no tiene permiso para seleccionar 'Caja General'
         const toast = useToast();
 
-        console.log(newBranch);
+        // console.log(newBranch);
         toast.error('No tienes permiso para seleccionar esta sucursal.');
         this.selectedBranch = this.previousBranch; // Revertir a la selección anterior
       } else {
@@ -1071,11 +1071,11 @@ export default {
     applyForEntireMonth(newValue) {
       if (newValue) {
         // Realizar acciones cuando applyForEntireMonth cambia a true
-        console.log('Aplicar para todos del Mes activado');
+        // console.log('Aplicar para todos del Mes activado');
         // Llamar a métodos u otras funciones aquí
       } else {
         // Realizar acciones cuando applyForEntireMonth cambia a false
-        console.log('Aplicar para todos del Mes desactivado');
+        // console.log('Aplicar para todos del Mes desactivado');
         // Llamar a métodos u otras funciones aquí
       }
     }

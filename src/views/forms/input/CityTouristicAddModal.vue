@@ -63,7 +63,7 @@ const object = ref({
 // Método para guardar los datos y realizar la solicitud POST
 const save = () => {
 
-  console.log(object.value);
+  // console.log(object.value);
   // Realiza la solicitud POST utilizando axios
   axios.post(`${import.meta.env.VITE_API_URL}/moneyboxes/create`, {
     amount_opening: object.value.description,
@@ -72,7 +72,7 @@ const save = () => {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       cancel(); // Cierra el modal al guardar exitosamente
       toast.success(response.data.message);
       emits('guardadoExitoso', response.data); // Emitir el evento personalizado al componente padre

@@ -185,9 +185,9 @@ const fetchDniData = () => {
       dni: formData.value.inputValue
     })
     .then(response => {
-      console.log('Respuesta de la API DNI:', response.data.nombre_completo);
+      // console.log('Respuesta de la API DNI:', response.data.nombre_completo);
       // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
-      formData.value.inputValue = response.data.data.nombre_completo;
+      formData.clientFullname = response.data.data.nombre_completo;
     })
     .catch(error => {
       console.error('Error al obtener datos del DNI:', error);
@@ -289,15 +289,15 @@ const saveEmployee = () => {
           selectedStatusLabel.value = selectedOption.label;
         }
         // Mostrar el valor seleccionado en la consola
-        console.log(`Valor seleccionado para ${formDataField}:`, selectedOption);
+        // console.log(`Valor seleccionado para ${formDataField}:`, selectedOption);
 
         // Agregar el valor al objeto formDataToSend
         formDataToSend.append(formDataField, selectedOption.id);
       } else {
-        console.log(`No se ha seleccionado ningún ${formDataField.toLowerCase()}.`);
+        // console.log(`No se ha seleccionado ningún ${formDataField.toLowerCase()}.`);
       }
     } else {
-      console.log(`No se ha encontrado ningún elemento para el ${formDataField.toLowerCase()}.`);
+      // console.log(`No se ha encontrado ningún elemento para el ${formDataField.toLowerCase()}.`);
     }
   };
 
@@ -330,7 +330,7 @@ if (selectedTypeDocumentOption) {
   formData.value.statusSelected = selectedStatusLabel.value;
 
 
-  console.log(formData.value.typeDocumentSelected);
+  // console.log(formData.value.typeDocumentSelected);
 
 
   let validationFailed = false;
@@ -355,7 +355,7 @@ if (selectedTypeDocumentOption) {
 
 
 
-  console.log(formData.value.typeDocumentSelected);
+  // console.log(formData.value.typeDocumentSelected);
 
   // Agregar otros datos del formulario al objeto FormData
   formDataToSend.append('companyjob_id', formData.value.jobSelected);
@@ -376,7 +376,7 @@ if (selectedTypeDocumentOption) {
     ...headers
   })
     .then(response => {
-      console.log('Success:', response.data);
+      // console.log('Success:', response.data);
       emits('createEmployeeList'); // Emitir el evento personalizado al componente padre
       cancel();
       toast.success(response.data.message); // Mostrar el mensaje de la respuesta del servidor en el toast
@@ -398,7 +398,7 @@ const saveJob = () => {
     ...headers
   })
     .then(response => {
-      console.log('Success:', response.data);
+      // console.log('Success:', response.data);
       toast.success(response.data.message);
 
       // Después de guardar el trabajo exitosamente, actualizar la lista de trabajos
@@ -458,7 +458,7 @@ const branchoffices = [
 
 onMounted(() => {
   fetchJobs();
-  console.log(formData.value.typeDocumentSelected);
+  // console.log(formData.value.typeDocumentSelected);
 });
 
 
@@ -466,7 +466,7 @@ onMounted(() => {
 
 watch(selected, (newValue, oldValue) => {
   // Realizar la lógica necesaria para actualizar la interfaz aquí
-  console.log('selected changed:', newValue);
+  // console.log('selected changed:', newValue);
 });
 
 </script>

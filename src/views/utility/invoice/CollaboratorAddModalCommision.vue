@@ -197,7 +197,7 @@ const saveCollaborator = () => {
     ...headers
   })
     .then(response => {
-      console.log('Datos guardados exitosamente:', response.data);
+      // console.log('Datos guardados exitosamente:', response.data);
       emits('updateColaboradorList'); // Emitir el evento personalizado al componente padre
       closeEditModal();
       toast.success(response.data.message);
@@ -242,9 +242,9 @@ watch(() => statusSelected.value, (newValue, oldValue) => {
 
     formData.value.status = selectedLabel;
 
-    console.log('Label seleccionado:', formData.value.status);
+    // console.log('Label seleccionado:', formData.value.status);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 });
@@ -260,9 +260,9 @@ watch(() => sexSelected.value, (newValue, oldValue) => {
 
     formData.value.sex = selectedLabel;
 
-    console.log('Label seleccionado:', formData.value.sex);
+    // console.log('Label seleccionado:', formData.value.sex);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 });
@@ -280,9 +280,9 @@ watch(() => parterCompanySelected.value, (newValue, oldValue) => {
     formData.value.partnercompany = selectedLabel;
 
 
-    console.log('Label seleccionado:', formData.value.partnercompany_id, formData.value.partnercompany);
+    // console.log('Label seleccionado:', formData.value.partnercompany_id, formData.value.partnercompany);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 });
@@ -299,9 +299,9 @@ watch(() => typeVeiSelected.value, (newValue, oldValue) => {
     formData.value.vehicletype_id = selectedIndex;
     formData.value.vehicletype = selectedLabel;
 
-    console.log('Label seleccionado:', formData.value.vehicletype_id, formData.value.vehicletype);
+    // console.log('Label seleccionado:', formData.value.vehicletype_id, formData.value.vehicletype);
   } else {
-    console.log('No se ha seleccionado ninguna opción.');
+    // console.log('No se ha seleccionado ninguna opción.');
   }
 
 });

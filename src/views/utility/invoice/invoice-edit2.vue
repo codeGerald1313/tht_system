@@ -26,9 +26,8 @@
         <div class="grid grid-cols-3 gap-5">
           <div style="display: flex; align-items: center;">
             <Textinput label="N° Pax" type="text" placeholder="N° pax" v-model="booking.numPassengers" />
-            <Checkbox label="¿Referenciar?"    :checked="booking.referenciar"
-
- @click="toggleReferences" v-model="booking.referenciar"  />
+            <Checkbox label="¿Referenciar?" :checked="booking.referenciar" @click="toggleReferences"
+              v-model="booking.referenciar" />
           </div>
           <div v-if="booking.referenciar">
             <FromGroup label="Referencia de pasajeros:" class="flex-1">
@@ -65,10 +64,11 @@
         <!-- Cuarta fila -->
         <div class="grid grid-cols-3 gap-5">
           <div>
-            <Checkbox label="¿Es favorito (reserva)?" :checked="booking.isFavorite" v-model="booking.isFavorite"  />
+            <Checkbox label="¿Es favorito (reserva)?" :checked="booking.isFavorite" v-model="booking.isFavorite" />
           </div>
           <div>
-            <Checkbox label="¿Incluye desayuno?" :checked="booking.includeBreakfast" v-model="booking.includeBreakfast" />
+            <Checkbox label="¿Incluye desayuno?" :checked="booking.includeBreakfast"
+              v-model="booking.includeBreakfast" />
           </div>
           <div v-if="booking.includeBreakfast" class="form-group col-lg-9">
             <div class="flex">
@@ -168,13 +168,13 @@
               </span>
 
 
-                     <!-- Input para la observación -->
-                     <span v-if="props.column.field == 'precio_corporativo'" >
-                <Textinput type="text" placeholder="S/." v-model="projects[props.index].precio_corporate" /> 
+              <!-- Input para la observación -->
+              <span v-if="props.column.field == 'precio_corporativo'">
+                <Textinput type="text" placeholder="S/." v-model="projects[props.index].precio_corporate" />
               </span>
 
               <span v-if="props.column.field == 'cobranza'">
-                <Textinput type="text" placeholder="S/."  v-model="projects[props.index].cobranza" />
+                <Textinput type="text" placeholder="S/." v-model="projects[props.index].cobranza" />
               </span>
 
               <!-- Input para el campo realizado -->
@@ -275,18 +275,18 @@
     <Card class="mt-4" noborder>
 
 
-<div class="grid grid-cols-1 lg:grid-cols-1 gap-5">
+      <div class="grid grid-cols-1 lg:grid-cols-1 gap-5">
 
-  <!-- Segunda fila -->
-  <div class="grid grid-cols-3 gap-5">
+        <!-- Segunda fila -->
+        <div class="grid grid-cols-3 gap-5">
 
-    <Textinput label="Ubicación y referencias para recojo del turista" type="text" placeholder="Referencia lugar llegada"
-      v-model="booking.reference_location" />
+          <Textinput label="Ubicación y referencias para recojo del turista" type="text"
+            placeholder="Referencia lugar llegada" v-model="booking.reference_location" />
 
-  </div>
+        </div>
 
-</div>
-</Card>
+      </div>
+    </Card>
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mt-4">
       <div class="lg:col-span-1"></div> <!-- Columna vacía para mantener la alineación -->
       <div class="lg:col-span-3 flex justify-end">
@@ -412,7 +412,7 @@ export default {
       commissionIds: [],
       moneyIds: [],
       searchTerm: '',
-      
+
       branchOptions: [],
       showEditModal: false,  // Nueva propiedad para controlar el modal de edición
       showReserveModal: false,  // Nueva propiedad para controlar el modal de edición
@@ -596,7 +596,7 @@ export default {
         {
           label: "Precio Coorporativo",
           field: "precio_corporativo",
-        }, 
+        },
         {
           label: "Cobranza",
           field: "cobranza",
@@ -659,7 +659,7 @@ export default {
           label: "Observación",
           field: "observacion",
         },
-  
+
         {
           label: "Subtotal",
           field: "subtotal",
@@ -743,22 +743,22 @@ export default {
 
   watch: {
     'projects': {
-        deep: true,
-        handler(newProjects, oldProjects) {
-            let totalCobranza = 0; // Variable para almacenar la suma total de cobranzas
-            for (let i = 0; i < newProjects.length; i++) {
-                const project = newProjects[i];
-                const nPasajeros = parseFloat(project.nPasajseros);
-                const precioCorporate = parseFloat(project.precio_corporate);
-                if (!isNaN(nPasajeros) && !isNaN(precioCorporate)) {
-                    this.projects[i].cobranza = nPasajeros * precioCorporate;
-                    totalCobranza += this.projects[i].cobranza; // Sumar la cobranza actual al total
-                }
+      deep: true,
+      handler(newProjects, oldProjects) {
+        let totalCobranza = 0; // Variable para almacenar la suma total de cobranzas
+        for (let i = 0; i < newProjects.length; i++) {
+          const project = newProjects[i];
+          const nPasajeros = parseFloat(project.nPasajseros);
+          const precioCorporate = parseFloat(project.precio_corporate);
+          if (!isNaN(nPasajeros) && !isNaN(precioCorporate)) {
+            this.projects[i].cobranza = nPasajeros * precioCorporate;
+            totalCobranza += this.projects[i].cobranza; // Sumar la cobranza actual al total
+          }
 
-                this.tour.totalTour = totalCobranza; // Actualizar el valor total del tour
+          this.tour.totalTour = totalCobranza; // Actualizar el valor total del tour
 
-            }
         }
+      }
     },
     selectedTour(newTour, oldTour) {
       if (newTour !== oldTour) {
@@ -781,7 +781,7 @@ export default {
                 totalTour: null
               };
               this.projects.push(newProject);
-              console.log("Gaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", this.projects);
+              // console.log("Gaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", this.projects);
             })
             .catch(error => {
               console.error('Error al obtener la descripción del tour:', error);
@@ -798,7 +798,7 @@ export default {
       // console.log(this.idCliente);
       axios.get(`${import.meta.env.VITE_API_URL}/clients/cellphone&telephone/${newValue}`, headers)
         .then(response => {
-          console.log(response);
+          // console.log(response);
 
           this.booking.phoneNumber = response.data.contact_numbers;
         })
@@ -849,7 +849,7 @@ export default {
 
         const otherData = JSON.parse(to.query.otherData); // Convertir la cadena JSON a objeto
 
-        console.log(otherData.agency.id);
+        // console.log(otherData.agency.id);
 
         this.selectedBranch = otherData.agency.id;
 
@@ -897,7 +897,7 @@ export default {
         }));
 
 
-        console.log(  this.projects);
+        // console.log(this.projects);
 
         // this.reservasHotel = otherData.hotelsbookings;
 
@@ -945,7 +945,7 @@ export default {
 
       this.booking.total = totalReserva;
 
-      console.log(this.booking.total);
+      // console.log(this.booking.total);
 
       // Formatear la suma total como 'S/.0.00'
       return 'S/.' + sumaTotal.toFixed(2);
@@ -953,14 +953,14 @@ export default {
 
 
     limitedCustomerOptions() {
-     return this.customerOptions.slice(0, 6);
-   }
+      return this.customerOptions.slice(0, 6);
+    }
 
   },
   methods: {
     capturarDatos() {
       // Imprimir la lista de proyectos en la consola
-      console.log(this.projects);
+      // console.log(this.projects);
 
       // O cualquier otra acción que desees realizar con la lista de proyectos
     },
@@ -974,7 +974,7 @@ export default {
       this.commissionIds = formattedId;
 
       // Hacer algo con el ID, por ejemplo, imprimir en la consola
-      console.log('ID de la comisión:', this.commissionIds);
+      // console.log('ID de la comisión:', this.commissionIds);
     },
 
     handleFormSubmitted(responseData) {
@@ -985,17 +985,17 @@ export default {
       this.moneyIds = formattedId;
 
       // Hacer algo con el ID, por ejemplo, imprimir en la consola
-      console.log('ID del ingreso amortización:', this.moneyIds);
+      // console.log('ID del ingreso amortización:', this.moneyIds);
     },
 
     deleteProject(index) {
       // Eliminar el proyecto del índice proporcionado
       this.projects.splice(index, 1);
-      console.log(this.projects);
+      // console.log(this.projects);
 
       if (this.projects.length === 0) {
-    this.tour.totalTour = 0;
-  }
+        this.tour.totalTour = 0;
+      }
     },
     deleteItem(id, index) {
       // Mostrar un cuadro de diálogo de confirmación nativo del navegador
@@ -1006,7 +1006,7 @@ export default {
         axios.delete(`${import.meta.env.VITE_API_URL}/hotelsbookings/destroy/${id}`, headers)
           .then(response => {
             // El elemento se ha eliminado correctamente en el backend
-            console.log("El elemento con ID:", id, "se ha eliminado correctamente en el backend");
+            // console.log("El elemento con ID:", id, "se ha eliminado correctamente en el backend");
 
             // Eliminar el elemento del array this.reservasHotel
             this.reservasHotel.splice(index, 1);
@@ -1032,7 +1032,7 @@ export default {
           });
       } else {
         // El usuario ha cancelado la eliminación
-        console.log("El usuario ha cancelado la eliminación del elemento con ID:", id);
+        // console.log("El usuario ha cancelado la eliminación del elemento con ID:", id);
       }
     },
 
@@ -1073,7 +1073,7 @@ export default {
       let nuevaSuma = parseFloat(totalSum);
       this.totalHotelValue = parseFloat(this.totalHotelValue) + nuevaSuma;
 
-      console.log(this.totalHotelValue);
+      // console.log(this.totalHotelValue);
     },
 
     calcularTotalHotelValue() {
@@ -1089,7 +1089,7 @@ export default {
       // Asignar el total calculado a totalHotelValue
       this.totalHotelValue = total;
 
-      console.log(this.totalHotelValue);
+      // console.log(this.totalHotelValue);
     },
 
     formatReserva(reserva) {
@@ -1127,7 +1127,7 @@ export default {
             label: agency.tradename // Asume que la agencia tiene un campo 'name' que se utilizará como etiqueta
           }));
 
-          console.log(response);
+          // console.log(response);
         })
         .catch(error => {
           console.error('Error al obtener las agencias:', error);
@@ -1187,7 +1187,7 @@ export default {
         money_ids: this.moneyIds
       };
 
-      console.log(dataToSend);
+      // console.log(dataToSend);
 
       // Realiza la solicitud HTTP POST al backend
       axios.post(`${import.meta.env.VITE_API_URL}/bookings/edit/${this.idBooking}`, dataToSend, {
@@ -1197,7 +1197,7 @@ export default {
           const toast = useToast();
 
           // Maneja la respuesta del backend según sea necesario
-          console.log(response.data);
+          // console.log(response.data);
 
           toast.success(response.data.message, { duration: 3000 });
 
@@ -1232,12 +1232,12 @@ export default {
       this.idCliente = this.idCliente;
       this.totalBooking = this.booking.total;
       this.showAmortizar = true;
-      console.log(this.idCliente);
+      // console.log(this.idCliente);
     },
 
     handleComisionEnviada(comisionData) {
       // Recibir los datos de la comisión y mostrarlos en la consola
-      console.log('Datos de la comisión recibidos en el componente padre:', comisionData);
+      // console.log('Datos de la comisión recibidos en el componente padre:', comisionData);
     },
 
     openModalReservaHotel() {
@@ -1259,7 +1259,7 @@ export default {
     },
 
     async fetchHotelsBooking() {
-      console.log("Fetching HotelsBooking...");
+      // console.log("Fetching HotelsBooking...");
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/clients/list`, headers);
         this.customerOptions = response.data.data.map(customer => ({
@@ -1290,10 +1290,10 @@ export default {
     },
 
     async fetchTours() {
-      console.log("Fetching tours...");
+      // console.log("Fetching tours...");
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/tours/list`, headers);
-        console.log(response);
+        // console.log(response);
 
         // this.projects = response.data.data;
 

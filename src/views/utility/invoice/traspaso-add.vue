@@ -550,7 +550,7 @@ export default {
     const modelValue = ref(null);
 
     watch(() => modelValue.value, (newValue, oldValue) => {
-      console.log('El valor ha cambiado de', oldValue, 'a', newValue);
+      // console.log('El valor ha cambiado de', oldValue, 'a', newValue);
       // Aquí puedes realizar acciones adicionales cuando el valor cambie
     });
 
@@ -561,11 +561,11 @@ export default {
   methods: {
     handleSelectionChange(selectedValue) {
       // Realizar acciones con el valor seleccionado
-      console.log('Valor seleccionado:', selectedValue);
+      // console.log('Valor seleccionado:', selectedValue);
     },
 
     handleCheckboxChange(tourId) {
-      console.log("Se seleccionó el tour con ID:", tourId);
+      // console.log("Se seleccionó el tour con ID:", tourId);
       const index = this.selectedTours.indexOf(tourId);
       if (index !== -1) {
         this.selectedTours.splice(index, 1);
@@ -601,7 +601,7 @@ export default {
         return; // Detener la ejecución de la función
       }
       // Acceder al valor de 'booking'
-      console.log('Valor de booking:', this.booking);
+      // console.log('Valor de booking:', this.booking);
 
 
 
@@ -621,7 +621,7 @@ export default {
       axios.post(`${import.meta.env.VITE_API_URL}/bookings/create-traspase`, dataToSend, headers)
         .then(response => {
           // Manejar la respuesta del backend si es necesario
-          console.log(response.data);
+          // console.log(response.data);
 
           toast.success(response.data.message);
 
@@ -646,7 +646,7 @@ export default {
         .map(tour => tour.delegated_payment) // Obtener los pagos delegados
         .filter(payment => payment !== null); // Eliminar pagos nulos
 
-        console.log(this.idMega);
+        // console.log(this.idMega);
       // Construir el objeto de datos a enviar
       const dataToSend2 = {
         ids: filteredSelectedTours, // Obtener los IDs de los tours seleccionados sin valores nulos
@@ -654,19 +654,19 @@ export default {
         booking_id: Number(this.idMega) // Convertir this.idMega a un valor numérico
       };
 
-      console.log(dataToSend2);
-      console.log(this.tours);
+      // console.log(dataToSend2);
+      // console.log(this.tours);
 
      
    axios.post(`${import.meta.env.VITE_API_URL}/bookings/update-delegated-payments`, dataToSend2, headers)
      .then(response => {
        // Manejar la respuesta del backend si es necesario
-       console.log(response.data);
+       // console.log(response.data);
        toast.success("Pagos delegados actualizados correctamente");
      })
      .catch(error => {
        // Manejar cualquier error que ocurra durante la solicitud
-       console.error('Error al guardar el traspaso:', error);
+       // console.error('Error al guardar el traspaso:', error);
        toast.error("Error al guardar el traspaso");
      });
 
@@ -678,7 +678,7 @@ export default {
       const searchTerm = this.searchTerm.toLowerCase();
       if (this.bookingsOptions) {
         this.filteredOptions = this.bookingsOptions.filter(option => option.label.toLowerCase().includes(searchTerm));
-        console.log(this.filteredOptions);
+        // console.log(this.filteredOptions);
       }
     },
 
@@ -693,18 +693,18 @@ export default {
 
   watch: {
     modelValue(newValue, oldValue) {
-      console.log('Valor seleccionado:', newValue);
+      // console.log('Valor seleccionado:', newValue);
     },
 
     // Observa los cambios en el valor de booking.tour_id
     'booking.tour_id': function (newValue, oldValue) {
-      console.log('ID:', newValue.value);
+      // console.log('ID:', newValue.value);
 
 
       this.idMega = newValue.value;
 
       
-      console.log("Id Booking", this.idMega);
+      // console.log("Id Booking", this.idMega);
 
       // Realiza acciones en respuesta al cambio de valor
       axios.get(`${import.meta.env.VITE_API_URL}/bookings/record-fortrasnfer/${newValue.value}`, headers)
@@ -722,7 +722,7 @@ export default {
           this.cellClient = response.data.data.book.client.cellphone;
           this.booking.reference_location = response.data.data.book.reference_location;
 
-          console.log('Registro cargado:', this.tours);
+          // console.log('Registro cargado:', this.tours);
 
           if (this.tours.length === 0) {
             const toast = useToast();
@@ -756,8 +756,8 @@ export default {
 
 
     // Haz lo que necesites con 'id' y 'fullname' en este componente
-    console.log('ID:', this.idTraspase);
-    console.log('Fullname:', fullname);
+    // console.log('ID:', this.idTraspase);
+    // console.log('Fullname:', fullname);
   },
   mounted() {
 

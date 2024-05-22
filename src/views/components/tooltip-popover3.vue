@@ -486,7 +486,7 @@ export default {
     async reloadCrmTable() {
       axios.get(`${import.meta.env.VITE_API_URL}/bookings/list-recivied?start_date=${this.dateValue.startDate}&end_date=${this.dateValue.endDate}`, headers)
         .then(response => {
-          console.log(response.data);
+          // console.log(response.data);
 
         
           const toast = useToast();
@@ -494,7 +494,7 @@ export default {
 
           this.advancedTable = response.data.data;
 
-          console.log(response);
+          // console.log(response);
         })
         .catch(error => {
           console.error(error);
@@ -516,7 +516,7 @@ export default {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/agencies/list`, headers);
         this.agencies = response.data.data;
 
-        console.log(this.agencies);
+        // console.log(this.agencies);
       } catch (error) {
         console.error('Error al obtener los datos:', error);
       }
@@ -562,7 +562,7 @@ export default {
           .then(response => {
             const toast = useToast();
 
-            console.log(response.data);
+            // console.log(response.data);
             toast.success(response.data.message);
 
             // Si la respuesta es exitosa, establecer la tabla avanzada con los datos recibidos
@@ -591,7 +591,7 @@ export default {
   mounted() {
     axios.get(`${import.meta.env.VITE_API_URL}/bookings/list-recivied?start_date=${this.dateValue.startDate}&end_date=${this.dateValue.endDate}`, headers)
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
 
         const toast = useToast();
 

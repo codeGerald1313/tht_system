@@ -295,12 +295,12 @@ export default {
         return;
       }
       // Esta función se ejecutará solo si shouldWatchGroupTransportId es verdadero
-      console.log('Nuevo valor de transport_id:', newVal.value);
+      // console.log('Nuevo valor de transport_id:', newVal.value);
 
       axios.get(`${import.meta.env.VITE_API_URL}/transports/record-capacity/${newVal.value}`, headers)
         .then(response => {
           // Manejar la respuesta del backend
-          console.log(response.data); // Aquí puedes ver la respuesta del backend
+          // console.log(response.data); // Aquí puedes ver la respuesta del backend
 
           this.group.capacity_vehicle = response.data.data.capacity;
           // Puedes hacer más cosas con los datos devueltos si lo necesitas
@@ -329,8 +329,8 @@ export default {
 
         this.idGrupo = groupId;
         const groupData = JSON.parse(to.query.group_data); // Convertir la cadena JSON a objeto
-        console.log('ID del grupo:', groupId);
-        console.log('Data del grupo:', groupData);
+        // console.log('ID del grupo:', groupId);
+        // console.log('Data del grupo:', groupData);
 
         // Establecer las propiedades del objeto group con los valores correspondientes de groupData
         if (groupData) {
@@ -351,7 +351,7 @@ export default {
           this.group.is_confirmed = groupData.group_is_confirmed || false;
           this.group.observations = groupData.group_observations || '';
 
-          console.log(this.group.observations);
+          // console.log(this.group.observations);
         }
       }
     }
@@ -604,7 +604,7 @@ export default {
           // this.bookingTourIds = this.projects.map(project => project.booking_tour.id);
 
 
-          console.log("Gaaaaaaaaaaa", this.bookingTourIds);
+          // console.log("Gaaaaaaaaaaa", this.bookingTourIds);
         } else {
           toast.info('Este Tour no tiene Reservas Pendientes');
           this.projects = [];
@@ -636,11 +636,11 @@ export default {
 
 
     capturarValor(reservaId) {
-      console.log("Valor capturado:", reservaId);
+      // console.log("Valor capturado:", reservaId);
       this.$router.push({ name: 'reserve-preview', params: { id: reservaId } });
     },
     updateCapacitySelected(row) {
-      console.log(row);
+      // console.log(row);
       const bookingId = row.booking_tour.id;
 
       // Variable booleana para verificar si el checkbox está marcado
@@ -650,8 +650,8 @@ export default {
       const hasGroupAssigned = row.booking_tour.group_assigned !== null;
 
 
-      console.log("Ga1",bookingId);
-      console.log("Ga2",hasGroupAssigned);
+      // console.log("Ga1",bookingId);
+      // console.log("Ga2",hasGroupAssigned);
 
 
       if (isChecked && hasGroupAssigned) {
@@ -669,7 +669,7 @@ export default {
         }
       }
 
-      console.log(this.bookingTourIds);
+      // console.log(this.bookingTourIds);
 
       // Calcular la cantidad disponible restando la capacidad total del vehículo menos la cantidad seleccionada
       this.group.capacity_available = this.group.capacity_vehicle - this.group.capacity_selected;
@@ -689,8 +689,8 @@ export default {
     async storeGroup() {
       const toast = useToast();
 
-      console.log(this.bookingTourIds);
-      console.log(this.group.transport_id);
+      // console.log(this.bookingTourIds);
+      // console.log(this.group.transport_id);
 
       try {
         const data = {
@@ -706,7 +706,7 @@ export default {
           bookings: this.bookingTourIds // IDs de las reservas que deseas asignar al grupo
         };
 
-        console.log(data);
+        // console.log(data);
 
 
         const response = await axios.post(`${import.meta.env.VITE_API_URL}/groups/edit/${this.idGrupo}`, data, headers);
@@ -726,7 +726,7 @@ export default {
         }, 3000);
 
 
-        console.log(response.data); // Puedes manejar la respuesta del backend aquí si lo deseas
+        // console.log(response.data); // Puedes manejar la respuesta del backend aquí si lo deseas
         // Si el grupo se creó con éxito, puedes redirigir al usuario a otra página o realizar alguna acción adicional.
       } catch (error) {
         console.error('Error al almacenar el grupo:', error);
@@ -762,7 +762,7 @@ export default {
           .filter(project => project.booking_tour && project.booking_tour.group_assigned !== null)
           .map(project => project.id);
 
-        console.log("Ids Ga", this.projects );
+        // console.log("Ids Ga", this.projects );
 
       } catch (error) {
         console.error('Error fetching departments:', error);
