@@ -187,7 +187,7 @@ const fetchDniData = () => {
     .then(response => {
       // console.log('Respuesta de la API DNI:', response.data.nombre_completo);
       // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
-      formData.clientFullname = response.data.data.nombre_completo;
+      formData.value.clientFullname = response.data.data.nombre_completo;
     })
     .catch(error => {
       console.error('Error al obtener datos del DNI:', error);
