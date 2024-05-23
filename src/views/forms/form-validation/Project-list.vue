@@ -201,7 +201,7 @@ export default {
       advancedTable,
       current: 1,
       dateDefault: obtenerFechaActual(), // Inicializa con la fecha actual en formato 'yyyy-mm-dd' (hora local de Perú)
-      perpage: 3,
+      perpage: 10,
       pageRange: 10,
       actions: [
         {
