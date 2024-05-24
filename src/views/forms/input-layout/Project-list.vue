@@ -35,10 +35,15 @@
         }">
         <template v-slot:table-row="props">
           <span v-if="props.column.field == 'nro_voucher'">
-            <div class="flex space-x-3 items-center text-left rtl:space-x-reverse">
-              <span class="font-bold text-blue-700">{{ props.row.nro_voucher }}</span>
-            </div>
-          </span>
+        <div class="flex space-x-3 items-center text-left rtl:space-x-reverse">
+            <span v-if="props.row.is_visible === 0" class="font-bold text-red-700">
+                {{ props.row.nro_voucher }} (ANULADO)
+            </span>
+            <span v-else class="font-bold text-blue-700">
+                {{ props.row.nro_voucher }}
+            </span>
+        </div>
+    </span>
 
 
 
