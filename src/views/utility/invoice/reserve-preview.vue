@@ -259,16 +259,17 @@
 
 
         <template v-slot:table-row="props">
-
           <span v-if="props.column.field === 'tour'">
-            <template v-if="props.row.is_open === 1"> 
-                <span :style="{ color: props.row.description ? 'red' : '' }" :class="{ 'text-underline-red': props.row.description }"  class="text-slate-500 dark:text-slate-400 text-underline-red">{{ props.row.description }} (Estado abierto)</span>
-            </template>
-            <template v-else>
-                <span class="text-slate-500 dark:text-slate-400">{{ props.row.description }}</span>
-            </template>
-        </span>
-
+        <template v-if="props.row.is_open === 1">
+            <span :style="{ color: props.row.description ? 'red' : '' }" :class="{ 'text-underline-red': props.row.description }" class="text-slate-500 dark:text-slate-400">{{ props.row.description }} (Estado abierto)</span>
+        </template>
+        <template v-else-if="props.row.is_transfer === 1">
+            <span style="color: red;" class="text-underline-red">{{ props.row.description }} Traspasado</span>
+        </template>
+        <template v-else>
+            <span class="text-slate-500 dark:text-slate-400">{{ props.row.description }}</span>
+        </template>
+    </span>
 
      <!-- Columna "pasajerosdetail" -->
      <span v-if="props.column.field === 'pasajerosdetail'">
@@ -300,17 +301,19 @@
 
 
 
-          <span v-if="props.column.field == 'fasignada'">
-           <!-- Columna "fasignada" -->
-<span>
-    <template v-if="props.row.date_assigned === null"> 
-        <span style="color: red; font-weight: bold; text-decoration: underline;">Sin fecha</span>
-    </template>
-    <template v-else>
-        {{ props.row.date_assigned }}
-    </template>
-</span>
-
+        <span v-if="props.column.field === 'fasignada'">
+        <span>
+            <template v-if="props.row.is_transfer === 1">
+                <span class="bg-green-400 border border-green-400 px-2 py-1 font-bold rounded text-white dark:text-slate-800">Confirmado</span>
+            </template>
+            <template v-else-if="props.row.date_assigned === null">
+                <span style="color: red; font-weight: bold; text-decoration: underline;">Sin fecha</span>
+            </template>
+            <template v-else>
+                <span class="text-slate-500 dark:text-slate-400">{{ props.row.date_assigned }}</span>
+            </template>
+        </span>
+    </span>
 
           </span>
 
