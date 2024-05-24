@@ -591,86 +591,59 @@ export default {
       this.totalCobranza = totalCobranza;
     },
     handleGuardarTraspaso() {
+    const toast = useToast();
 
-
-      const toast = useToast();
-
-      if (!this.selectedTours || this.selectedTours.length === 0) {
+    if (!this.selectedTours || this.selectedTours.length === 0) {
         // Mostrar un toast de error
         toast.error("Debe seleccionar al menos un programa para poder registrar el traspaso");
         return; // Detener la ejecución de la función
-      }
-      // Acceder al valor de 'booking'
-      // console.log('Valor de booking:', this.booking);
+    }
 
-
-
-
-
-      // Construir el objeto de datos a enviar
-      const dataToSend = {
+    // Construir el objeto de datos a enviar para la primera solicitud
+    const dataToSend = {
         agency_id: this.idTraspase,
         origintransfer_id: this.booking.tour_id.value,
         observations: this.booking.observations,
         total: this.totalCobranza,
         tours: this.selectedTours // Agregar los IDs de los tours seleccionados
         // Puedes incluir otras propiedades de 'booking' si es necesario
-      };
+    };
 
-      
-      axios.post(`${import.meta.env.VITE_API_URL}/bookings/create-traspase`, dataToSend, headers)
+    // Primera solicitud: crear traspaso
+    axios.post(`${import.meta.env.VITE_API_URL}/bookings/create-traspase`, dataToSend, headers)
         .then(response => {
-          // Manejar la respuesta del backend si es necesario
-          // console.log(response.data);
+            // Manejar la respuesta del backend si es necesario
+            toast.success(response.data.message);
 
-          toast.success(response.data.message);
+            // Después de crear el traspaso, proceder con la actualización de los pagos delegados
+            // Filtrar los pagos delegados solo para los tours seleccionados
+            const filteredSelectedTours = this.selectedTours.filter(tour => tour !== null && tour !== undefined);
+            const filteredDelegatedPayments = this.tours
+                .filter(tour => filteredSelectedTours.includes(tour.id)) // Filtrar tours seleccionados
+                .map(tour => tour.delegated_payment) // Obtener los pagos delegados
+                .filter(payment => payment !== null); // Eliminar pagos nulos
 
-          setTimeout(() => {
-            this.$router.push('/app/wishlist');
-          }, 3000);
+            const dataToSend2 = {
+                ids: filteredSelectedTours, // Obtener los IDs de los tours seleccionados sin valores nulos
+                delegated_payments: filteredDelegatedPayments, // Obtener los pagos delegados de los tours seleccionados sin valores nulos
+                booking_id: Number(this.idMega) // Convertir this.idMega a un valor numérico
+            };
+
+            // Segunda solicitud: actualizar pagos delegados
+            return axios.post(`${import.meta.env.VITE_API_URL}/bookings/update-delegated-payments`, dataToSend2, headers);
+        })
+        .then(response => {
+            // Manejar la respuesta del backend si es necesario
+            toast.success("Pagos delegados actualizados correctamente");
         })
         .catch(error => {
-          // Manejar cualquier error que ocurra durante la solicitud
-          console.error('Error al guardar el traspaso:', error);
-        }); 
+            // Manejar cualquier error que ocurra durante la solicitud
+            console.error('Error:', error);
+            toast.error("Error al guardar el traspaso");
+        });
+},
 
 
-
-      const filteredSelectedTours = this.selectedTours.filter(tour => tour !== null && tour !== undefined);
-
-
-
-      // Filtrar los pagos delegados solo para los tours seleccionados
-      const filteredDelegatedPayments = this.tours
-        .filter(tour => filteredSelectedTours.includes(tour.id)) // Filtrar tours seleccionados
-        .map(tour => tour.delegated_payment) // Obtener los pagos delegados
-        .filter(payment => payment !== null); // Eliminar pagos nulos
-
-        // console.log(this.idMega);
-      // Construir el objeto de datos a enviar
-      const dataToSend2 = {
-        ids: filteredSelectedTours, // Obtener los IDs de los tours seleccionados sin valores nulos
-        delegated_payments: filteredDelegatedPayments, // Obtener los pagos delegados de los tours seleccionados sin valores nulos
-        booking_id: Number(this.idMega) // Convertir this.idMega a un valor numérico
-      };
-
-      // console.log(dataToSend2);
-      // console.log(this.tours);
-
-     
-   axios.post(`${import.meta.env.VITE_API_URL}/bookings/update-delegated-payments`, dataToSend2, headers)
-     .then(response => {
-       // Manejar la respuesta del backend si es necesario
-       // console.log(response.data);
-       toast.success("Pagos delegados actualizados correctamente");
-     })
-     .catch(error => {
-       // Manejar cualquier error que ocurra durante la solicitud
-       // console.error('Error al guardar el traspaso:', error);
-       toast.error("Error al guardar el traspaso");
-     });
-
-    },
 
 
 
