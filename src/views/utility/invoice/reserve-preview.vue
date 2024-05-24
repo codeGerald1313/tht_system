@@ -260,26 +260,30 @@
 
         <template v-slot:table-row="props">
           <span v-if="props.column.field === 'tour'">
-        <template v-if="props.row.is_open === 1">
-            <span :style="{ color: props.row.description ? 'red' : '' }" :class="{ 'text-underline-red': props.row.description }" class="text-slate-500 dark:text-slate-400">{{ props.row.description }} (Estado abierto)</span>
-        </template>
-        <template v-else-if="props.row.is_transfer === 1">
-            <span style="color: red;" class="text-underline-red">{{ props.row.description }} Traspasado</span>
-        </template>
-        <template v-else>
-            <span class="text-slate-500 dark:text-slate-400">{{ props.row.description }}</span>
-        </template>
-    </span>
-
-     <!-- Columna "pasajerosdetail" -->
-     <span v-if="props.column.field === 'pasajerosdetail'">
-            <template v-if="props.row.is_open === 1"> 
-                <span :style="{ color: props.row.quantity ? 'red' : '' }" :class="{ 'text-underline-red': props.row.quantity }" class="text-slate-500 dark:text-slate-400 text-underline-red">{{ props.row.quantity }}</span>
+            <template v-if="props.row.is_open === 1">
+              <span :style="{ color: props.row.description ? 'red' : '' }"
+                :class="{ 'text-underline-red': props.row.description }" class="text-slate-500 dark:text-slate-400">{{
+                  props.row.description }} (Estado abierto)</span>
+            </template>
+            <template v-else-if="props.row.is_transfer === 1">
+              <span style="color: red;" class="text-underline-red">{{ props.row.description }} Traspasado</span>
             </template>
             <template v-else>
-                <span class="text-slate-500 dark:text-slate-400">{{ props.row.quantity }}</span>
+              <span class="text-slate-500 dark:text-slate-400">{{ props.row.description }}</span>
             </template>
-        </span>
+          </span>
+
+          <!-- Columna "pasajerosdetail" -->
+          <span v-if="props.column.field === 'pasajerosdetail'">
+            <template v-if="props.row.is_open === 1">
+              <span :style="{ color: props.row.quantity ? 'red' : '' }"
+                :class="{ 'text-underline-red': props.row.quantity }"
+                class="text-slate-500 dark:text-slate-400 text-underline-red">{{ props.row.quantity }}</span>
+            </template>
+            <template v-else>
+              <span class="text-slate-500 dark:text-slate-400">{{ props.row.quantity }}</span>
+            </template>
+          </span>
 
           <span v-if="props.column.field == 'vehiculo'"
             :class="{ 'text-yellow-500 font-bold': props.row.vehicle_tour === 2, 'text-blue-500 font-bold': props.row.vehicle_tour === 1 }">
@@ -287,35 +291,38 @@
           </span>
 
 
-         <!-- Columna "turno" -->
-         <span v-if="props.column.field === 'turno'" style="font-weight: bold;">
-            <template v-if="props.row.is_open === 1"> 
-                <span :style="{ color: props.row.shift_tour ? 'red' : '' }" :class="{ 'text-underline-red': props.row.shift_tour }">
-                    {{ props.row.shift_tour === 1 ? 'Full Day' : props.row.shift_tour === 2 ? 'Mañana' : props.row.shift_tour === 3 ? 'Tarde' : 'Noche' }}
-                </span>
+          <!-- Columna "turno" -->
+          <span v-if="props.column.field === 'turno'" style="font-weight: bold;">
+            <template v-if="props.row.is_open === 1">
+              <span :style="{ color: props.row.shift_tour ? 'red' : '' }"
+                :class="{ 'text-underline-red': props.row.shift_tour }">
+                {{ props.row.shift_tour === 1 ? 'Full Day' : props.row.shift_tour === 2 ? 'Mañana' :
+                  props.row.shift_tour === 3 ? 'Tarde' : 'Noche' }}
+              </span>
             </template>
             <template v-else>
-                {{ props.row.shift_tour === 1 ? 'Full Day' : props.row.shift_tour === 2 ? 'Mañana' : props.row.shift_tour === 3 ? 'Tarde' : 'Noche' }}
+              {{ props.row.shift_tour === 1 ? 'Full Day' : props.row.shift_tour === 2 ? 'Mañana' : props.row.shift_tour
+                === 3 ? 'Tarde' : 'Noche' }}
             </template>
-        </span>
-
-
-
-        <span v-if="props.column.field === 'fasignada'">
-        <span>
-            <template v-if="props.row.is_transfer === 1">
-                <span class="bg-green-400 border border-green-400 px-2 py-1 font-bold rounded text-white dark:text-slate-800">Confirmado</span>
-            </template>
-            <template v-else-if="props.row.date_assigned === null">
-                <span style="color: red; font-weight: bold; text-decoration: underline;">Sin fecha</span>
-            </template>
-            <template v-else>
-                <span class="text-slate-500 dark:text-slate-400">{{ props.row.date_assigned }}</span>
-            </template>
-        </span>
-    </span>
-
           </span>
+
+
+
+          <span v-if="props.column.field === 'fasignada'">
+            <span>
+              <template v-if="props.row.is_transfer === 1">
+                <span
+                  class="bg-green-400 border border-green-400 px-2 py-1 font-bold rounded text-white dark:text-slate-800">Confirmado</span>
+              </template>
+              <template v-else-if="props.row.date_assigned === null">
+                <span style="color: red; font-weight: bold; text-decoration: underline;">Sin fecha</span>
+              </template>
+              <template v-else>
+                <span class="text-slate-500 dark:text-slate-400">{{ props.row.date_assigned }}</span>
+              </template>
+            </span>
+          </span>
+
 
 
           <div class="flex items-center"> <!-- Flexbox para centrar verticalmente -->
@@ -440,9 +447,8 @@
 
       </div>
 
-      <vue-good-table :columns="columnsComprobantes"
-        styleClass=" vgt-table  table-head   v-middle striped  listview" :rows="this.movimientosInfo"
-        :pagination-options="{
+      <vue-good-table :columns="columnsComprobantes" styleClass=" vgt-table  table-head   v-middle striped  listview"
+        :rows="this.movimientosInfo" :pagination-options="{
           enabled: false,
         }" :sort-options="{
           enabled: false,
@@ -651,11 +657,11 @@ export default {
 
       let routeName = 'invoice-edit'; // Ruta por defecto
 
-     // console.log(this.booking.type_booking); 
+      // console.log(this.booking.type_booking); 
 
-if (this.booking.type_booking === 2) {
-  routeName = 'invoice-edit2'; // Cambiar la ruta si booking es igual a 2
-}
+      if (this.booking.type_booking === 2) {
+        routeName = 'invoice-edit2'; // Cambiar la ruta si booking es igual a 2
+      }
 
 
       this.$router.push({
@@ -1093,7 +1099,7 @@ if (this.booking.type_booking === 2) {
           label: "Estado	",
           field: "estado",
         },
-    
+
         {
           label: "Obs.	",
           field: "obs",
