@@ -139,8 +139,8 @@
               - No hay información disponible
             </template>
           </span>
-          <span v-if="props.column.field == 'deuda'">
-            S/ 0.00
+          <span v-if="props.column.field === 'deuda'" style="color: red; font-weight: bold;">
+            {{ props.row.deuda }}
 
           </span>
 

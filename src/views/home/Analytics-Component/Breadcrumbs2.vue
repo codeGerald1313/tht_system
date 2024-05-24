@@ -149,7 +149,7 @@
             </template>
           </span>
 
-          <span v-if="props.column.field == 'deuda'">
+          <span v-if="props.column.field === 'deuda'" style="color: red; font-weight: bold;">
             {{ props.row.deuda }}
 
           </span>
