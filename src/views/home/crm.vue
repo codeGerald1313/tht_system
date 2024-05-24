@@ -153,6 +153,7 @@
 
       </div>
 
+      <!--
       <div class="grid grid-cols-12 gap-5">
 
         <div class="xl:col-span-12 col-span-12 ">
@@ -206,7 +207,7 @@
 
 
 
-      </div>
+      </div>-->
 
 
       <div class="grid grid-cols-12 gap-5">
