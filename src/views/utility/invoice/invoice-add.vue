@@ -740,7 +740,7 @@ export default {
                 description: response.data.data.description,
                 esAbierto: null,
                 vehiculo: null,
-                turno: null,
+                turno: response.data.data.shift,
                 nPasajseros: null,
                 fechaTour: null,
                 observacion: null,
@@ -748,7 +748,7 @@ export default {
                 totalTour: null
               };
               this.projects.push(newProject);
-              // console.log(this.projects);
+             console.log(this.projects);
             })
             .catch(error => {
               console.error('Error al obtener la descripción del tour:', error);
