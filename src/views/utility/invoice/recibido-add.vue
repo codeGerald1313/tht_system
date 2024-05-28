@@ -1050,7 +1050,7 @@ export default {
             quantity: tour.nPasajseros,
             date_assigned: tour.date_assigned,
             observation: tour.observacion,
-            is_open: tour.esAbierto,
+            is_open: tour.esAbierto ? 1 : 0,  // Transforma el booleano a 0 o 1
             delegated_payment: tour.cobranza
             // is_realized: tour.realizado,
             // Agrega otros campos del tour según sea necesario
