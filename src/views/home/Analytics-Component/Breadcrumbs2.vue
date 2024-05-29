@@ -122,6 +122,8 @@
           </span>
 
           <span v-if="props.column.field == 'telephone'">
+            <strong>Cliente C:</strong> {{ props.row.client_cellphone }}
+
   <template v-if="props.row.booking_telephone_emergency">
     <strong>Teléfono E:</strong> {{ props.row.booking_telephone_emergency }}
     <br>
@@ -130,7 +132,6 @@
     <strong>Contacto E:</strong> {{ props.row.booking_contact_emergency }}
     <br>
   </template>
-  <strong>Cliente C::</strong> {{ props.row.client_cellphone }}
 </span>
 
 
