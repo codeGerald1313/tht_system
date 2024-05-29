@@ -1,30 +1,32 @@
 <template>
   <div>
     <div class="lg:flex justify-end flex-wrap items-center">
-  <div class="flex lg:justify-end items-center flex-wrap">
-    <button class="invocie-btn inline-flex btn btn-sm whitespace-nowrap space-x-1 cursor-pointer bg-red-500 dark:bg-red-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
-      <span class="text-lg">
-        <Icon icon="heroicons:trash" />
-      </span>
-      <span>Borrar</span>
-    </button>
-    <button type="button" @click="print" class="invocie-btn inline-flex btn btn-sm whitespace-nowrap space-x-1 cursor-pointer bg-white dark:bg-slate-800 dark:text-slate-300 btn-md h-min text-sm font-normal text-slate-900 rtl:space-x-reverse">
-      <span class="text-lg">
-        <Icon icon="heroicons:printer" />
-      </span>
-      <span>Imprimir</span>
-    </button>
+      <div class="flex lg:justify-end items-center flex-wrap">
+        <button
+          class="invocie-btn inline-flex btn btn-sm whitespace-nowrap space-x-1 cursor-pointer bg-red-500 dark:bg-red-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
+          <span class="text-lg">
+            <Icon icon="heroicons:trash" />
+          </span>
+          <span>Borrar</span>
+        </button>
+        <button type="button" @click="print"
+          class="invocie-btn inline-flex btn btn-sm whitespace-nowrap space-x-1 cursor-pointer bg-white dark:bg-slate-800 dark:text-slate-300 btn-md h-min text-sm font-normal text-slate-900 rtl:space-x-reverse">
+          <span class="text-lg">
+            <Icon icon="heroicons:printer" />
+          </span>
+          <span>Imprimir</span>
+        </button>
 
 
-    <button @click="editar"
-        class="invocie-btn inline-flex btn btn-sm whitespace-nowrap space-x-1 cursor-pointer bg-white dark:bg-slate-800 dark:text-slate-300 btn-md h-min text-sm font-normal text-slate-900 rtl:space-x-reverse">
-        <span class="text-lg">
-          <Icon icon="heroicons:pencil-square" />
-        </span>
-        <span>Editar</span>
-      </button>
-  </div>
-</div>
+        <button @click="editar"
+          class="invocie-btn inline-flex btn btn-sm whitespace-nowrap space-x-1 cursor-pointer bg-white dark:bg-slate-800 dark:text-slate-300 btn-md h-min text-sm font-normal text-slate-900 rtl:space-x-reverse">
+          <span class="text-lg">
+            <Icon icon="heroicons:pencil-square" />
+          </span>
+          <span>Editar</span>
+        </button>
+      </div>
+    </div>
 
 
 
@@ -46,10 +48,10 @@
                       <div class="uppercase text-xs text-slate-500 dark:text-slate-300 mb-1 leading-[12px]">
                         Destino
                       </div>
-                 
+
 
                       <div class="text-base text-slate-600 dark:text-slate-50 font-bold">
-                        {{ group.destino}}
+                        {{ group.destino }}
                       </div>
                     </div>
                   </li>
@@ -94,8 +96,8 @@
                         Codigo
                       </div>
                       <div class="text-base text-blue-900 dark:text-blue-300 font-bold">
-  {{ group.code }}
-</div>
+                        {{ group.code }}
+                      </div>
 
                     </div>
                   </li>
@@ -255,41 +257,40 @@
           <span v-if="props.column.field == 'hotelubi'">
             {{ props.row.booking_reference_location }}
 
-  </span>
-  <span v-if="props.column.field == 'telephone'">
-  <strong>T.E:</strong> {{ props.row.booking_telephone_emergency }}
-  <br>
-  <strong>C.L:</strong> {{ props.row.client_cellphone }}
-</span>
+          </span>
+          <span v-if="props.column.field == 'telephone'">
+            <strong>Celular cliente:</strong> {{ props.row.client_cellphone }}
+            <strong>Teléfono de emergencia</strong> {{ props.row.booking_telephone_emergency }}
+            <br>
+          </span>
 
           <span v-if="props.column.field == 'observaciones'" class=" uppercase">
-    <!-- Verificar si hay información del tour -->
-    <template v-if="hasTourInformation(props.row)">
-      <!-- Iterar sobre la lista de tours y encontrar el tour correspondiente al group_tour_id -->
-      <template v-for="tour in props.row.tours">
-        <template v-if="tour.id === groupTourIdFromPivot(props.row)">
-          <!-- Mostrar la observación del tour si está presente -->
-          <template v-if="tour.pivot.observation">
-            {{ tour.pivot.observation }}
-          </template>
-          <!-- Mostrar mensaje si no hay observación disponible para el tour -->
-          <template v-else>
-            - No hay información disponible
-          </template>
-        </template>
-      </template>
-    </template>
-    <!-- Mostrar mensaje si no hay información de tours -->
-    <template v-else>
-      - No hay información disponible
-    </template>
-  </span>
+            <!-- Verificar si hay información del tour -->
+            <template v-if="hasTourInformation(props.row)">
+              <!-- Iterar sobre la lista de tours y encontrar el tour correspondiente al group_tour_id -->
+              <template v-for="tour in props.row.tours">
+                <template v-if="tour.id === groupTourIdFromPivot(props.row)">
+                  <!-- Mostrar la observación del tour si está presente -->
+                  <template v-if="tour.pivot.observation">
+                    {{ tour.pivot.observation }}
+                  </template>
+                  <!-- Mostrar mensaje si no hay observación disponible para el tour -->
+                  <template v-else>
+                    - No hay información disponible
+                  </template>
+                </template>
+              </template>
+            </template>
+            <!-- Mostrar mensaje si no hay información de tours -->
+            <template v-else>
+              - No hay información disponible
+            </template>
+          </span>
 
 
-  <span v-if="props.column.field == 'deuda'"
-      class="text-red-500 font-bold">
-  S/. {{ props.row.deuda }}
-</span>
+          <span v-if="props.column.field == 'deuda'" class="text-red-500 font-bold">
+            S/. {{ props.row.deuda }}
+          </span>
 
 
 
@@ -491,7 +492,7 @@ export default {
         date_departure: null, // Asigna la fecha actual en formato YYYY-MM-DD
         code: '',
         pasajerosSeleccionados: null,
-        
+
         correlative: null,
         capacity_vehicle: null,
         capacity_selected: null,
@@ -551,8 +552,8 @@ export default {
     },
     hasHotelInfo(row) {
       return (
-        row.hotel_tradename || 
-        row.hotel_document || 
+        row.hotel_tradename ||
+        row.hotel_document ||
         row.hotel_address
       );
     },
@@ -561,8 +562,8 @@ export default {
       // console.log('Booking ID:', bookingId);
       this.$router.push({ name: 'reserve-preview', params: { id: bookingId } });
     },
-  editar() {
-    this.$router.push({
+    editar() {
+      this.$router.push({
         name: 'grupo-edit',
         params: {
           group_id: this.idGrupo,
@@ -623,17 +624,17 @@ export default {
       });
 
 
-      
-      axios.get(`${import.meta.env.VITE_API_URL}/groups/record-edit-grupo/${group_id}`, headers)
-        .then(response => {
 
-          this.otherData2  = response.data.data;
-        
-        })
-        .catch(error => {
-          // Aquí manejas errores si la solicitud falla
-          console.error('Error fetching invoice data:', error);
-        });
+    axios.get(`${import.meta.env.VITE_API_URL}/groups/record-edit-grupo/${group_id}`, headers)
+      .then(response => {
+
+        this.otherData2 = response.data.data;
+
+      })
+      .catch(error => {
+        // Aquí manejas errores si la solicitud falla
+        console.error('Error fetching invoice data:', error);
+      });
 
 
     // Ahora puedes usar este group_id para hacer lo que necesites en tu componente
