@@ -8,8 +8,12 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div class="flex items-center">
                         <FromGroup label="Colaborador" class="flex-1">
-                            <Select :options="limitedCustomerOptions" v-model="commission_data.collaborator_id"
-                                class="client-select" placeholder="Colaborador a comisionar" />
+
+                            <VueSelect>
+                                <vSelect :options="colaboratorOptions" v-model="commission_data.collaborator_id" />
+                            </VueSelect>
+
+                     
                         </FromGroup>
 
                         <button @click.prevent="openModalColaborador" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
@@ -63,7 +67,7 @@
                             <p>
                                 <span class="text-[32px] leading-10 font-medium text-blue-800">S/ {{
                                     commission_data.total_commission
-                                    }}</span>
+                                }}</span>
                             </p>
                         </FromGroup>
 
@@ -204,6 +208,7 @@ import Textinput from '@/components/Textinput';
 import Dropdown from '@/components/Dropdown';
 import { MenuItem } from "@headlessui/vue";
 import EditProject2 from "./CollaboratorAddModalCommision";
+import vSelect from "vue-select";
 
 import Button from '@/components/Button';
 import { useProjectStore } from "../../../store/project";
@@ -302,6 +307,7 @@ export default {
         Textinput,
         Select,
         VueSelect,
+        vSelect,
         TotalTable,
         Textarea,
         MenuItem,
@@ -419,9 +425,16 @@ export default {
             this.commission_data.paymentmethod_id = parseInt(this.commission_data.paymentmethod_id);
 
             // console.log(this.commission_data);
+            let dataToSend = { ...this.commission_data };
+
+
+            // Asignar el valor de colaborator_id a partir de this.commission_data.collaborator_id.value
+            if (this.commission_data.collaborator_id.value) {
+                dataToSend.collaborator_id = this.commission_data.collaborator_id.value;
+            }
 
             // Realizar la solicitud POST utilizando Axios
-            axios.post(`${import.meta.env.VITE_API_URL}/commisions/create`, this.commission_data, { ...headers })
+            axios.post(`${import.meta.env.VITE_API_URL}/commisions/create`, dataToSend, { ...headers })
                 .then(response => {
                     // Mostrar mensaje de éxito
                     this.$emit('commissionProcessed', response);
@@ -429,12 +442,12 @@ export default {
                     this.closeEditModal();
                     toast.success('¡La comisión se procesó exitosamente!');
 
-                    this.commission_data.collaborator_id =  null;
-                    this.commission_data.paymentmethod_id =  null;
-                    this.commission_data.total_commission =  '0.00'; // Agrega la propiedad total_commission
-                    this.commission_data.total_tour =  '0.00'; // Inicializado en 0.00
+                    this.commission_data.collaborator_id = null;
+                    this.commission_data.paymentmethod_id = null;
+                    this.commission_data.total_commission = '0.00'; // Agrega la propiedad total_commission
+                    this.commission_data.total_tour = '0.00'; // Inicializado en 0.00
                     this.commission_data.total_hotel = '0.00'; // Inicializado en 0.00
-                    this.commission_data.observation =  null;
+                    this.commission_data.observation = null;
 
                     // Opcional: realizar otras acciones después del éxito
                 })
@@ -443,7 +456,7 @@ export default {
                     if (error.response && error.response.data && error.response.data.message) {
                         const toast = useToast();
 
-                        
+
 
                         this.closeEditModal();
 
@@ -500,15 +513,15 @@ export default {
         this.fetchAccountBanks()
     },
     computed: {
-   
-
-   limitedCustomerOptions() {
-     return this.colaboratorOptions.slice(0, 6);
-   }
 
 
+        limitedCustomerOptions() {
+            return this.colaboratorOptions.slice(0, 6);
+        }
 
-  },
+
+
+    },
 };
 </script>
 <style lang="scss">
