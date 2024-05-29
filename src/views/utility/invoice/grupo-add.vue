@@ -360,7 +360,7 @@ export default {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/bookings/booking-tours/${newVal}`, {
           ...headers,
           params: {
-            date: this.currentDate
+            date: this.group.date_departure
           },
         });
         if (response.data && response.data.data && response.data.data.length > 0) {
