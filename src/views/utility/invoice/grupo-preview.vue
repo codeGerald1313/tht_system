@@ -257,7 +257,7 @@
 
   </span>
           <span v-if="props.column.field == 'telephone'">
-            {{ props.row.client_telephone }}
+            {{ props.row.booking_telephone_emergency }}
             <br>
             {{ props.row.client_cellphone }}
 
