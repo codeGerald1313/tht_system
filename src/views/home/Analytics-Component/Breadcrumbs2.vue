@@ -122,9 +122,17 @@
           </span>
 
           <span v-if="props.column.field == 'telephone'">
-            {{ props.row.client_cellphone }}
+  <template v-if="props.row.booking_telephone_emergency">
+    <strong>Teléfono E:</strong> {{ props.row.booking_telephone_emergency }}
+    <br>
+  </template>
+  <template v-else-if="props.row.booking_contact_emergency">
+    <strong>Contacto E:</strong> {{ props.row.booking_contact_emergency }}
+    <br>
+  </template>
+  <strong>Cliente C::</strong> {{ props.row.client_cellphone }}
+</span>
 
-          </span>
 
           <span v-if="props.column.field == 'observaciones'" class=" uppercase">
             <!-- Verificar si hay información del tour -->
