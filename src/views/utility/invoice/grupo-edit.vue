@@ -65,8 +65,7 @@
 
           <span v-if="props.column.field == 'abierto'">
             <div class="flex space-x-3 items-center text-left rtl:space-x-reverse">
-              <Checkbox :checked="props.row.group_assigned !== null"
-                @change="updateCapacitySelected(props.row)" />
+              <Checkbox :checked="props.row.group_assigned !== null" @change="updateCapacitySelected(props.row)" />
             </div>
           </span>
 
@@ -94,11 +93,11 @@
           </span>
           <span v-if="props.column.field == 'responsablecode'" class="block min-w-[208px]">
             <div class="flex flex-col">
-              <div>     {{ 
-        props.row.booking_tour.client?.fullname || 
-        props.row.booking_tour.booking?.client?.fullname || 
-        'Nombre no disponible' 
-      }}</div>
+              <div> {{
+                props.row.booking_tour.client?.fullname ||
+                props.row.booking_tour.booking?.client?.fullname ||
+                'Nombre no disponible'
+              }}</div>
               <div class="text-blue-900 dark:text-blue-300 font-bold underline cursor-pointer"
                 @click.prevent="capturarValor(props.row.booking_id)">
                 {{ props.row.booking_tour.booking.code }}
@@ -109,19 +108,21 @@
             {{ props.row.booking_tour.booking.reference_location }}
           </span>
           <span v-if="props.column.field == 'telephone'">
-  <div class="flex flex-col">
-    <div>
-      {{
-        (props.row.booking_tour.client?.telephone || props.row.booking_tour.booking?.client?.telephone) || 'Teléfono no disponible'
-      }}
-    </div>
-    <div>
-      {{
-        (props.row.booking_tour.client?.cellphone || props.row.booking_tour.booking?.client?.cellphone) || 'Celular no disponible'
-      }}
-    </div>
-  </div>
-</span>
+            <div class="flex flex-col">
+              <div>
+                {{
+                  (props.row.booking_tour.client?.telephone || props.row.booking_tour.booking?.client?.telephone) ||
+                  'Teléfono no disponible'
+                }}
+              </div>
+              <div>
+                {{
+                  (props.row.booking_tour.client?.cellphone || props.row.booking_tour.booking?.client?.cellphone) ||
+                  'Celular no disponible'
+                }}
+              </div>
+            </div>
+          </span>
 
 
           <span v-if="props.column.field == 'observaciones'">
@@ -204,7 +205,7 @@ export default {
     return {
       currentDate: this.getCurrentDate(),
       wasChecked: false, // Indicador para verificar si el checkbox estaba marcado previamente
-    isChecked: false,
+      isChecked: false,
       shouldWatchTourId: false, // Bandera para controlar si se debe observar el cambio de tour_id
       isChecked: false,
       trasnportOptions: [],
@@ -220,7 +221,7 @@ export default {
         guide_id: null,
         transport_idReal: null,
         guide_idReal: null,
-        date_departure: new Date().toISOString(), // Asigna la fecha actual en formato YYYY-MM-DD
+        date_departure: this.getCurrentDate(),
         code: '',
         correlative: null,
         capacity_vehicle: null,
@@ -753,8 +754,10 @@ export default {
 
     async fethById() {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/groups/record-formated/${this.idGrupo}`, headers);
-
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/groups/record-formated/${this.idGrupo}`, {
+          params: { date: this.group.date_departure },  // Añadir el parámetro `date` a la solicitud
+          headers,
+        });
         this.projects = response.data.data.group.bookings;
 
         // Filtrar solo los proyectos que tienen un valor en group_assigned y mapear los IDs
