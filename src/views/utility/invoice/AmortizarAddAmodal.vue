@@ -451,6 +451,13 @@ export default {
                     // console.log('Respuesta del servidor:', response.data);
 
                     // Opcional: Realiza otras acciones después del éxito
+
+
+                    this.income.amount  =  null,
+                    this.income.paymentmethod_id=  null,
+                    this.income.observation =  null;
+
+  
                 })
                 .catch(error => {
                     console.error('Error al guardar los datos:', error);

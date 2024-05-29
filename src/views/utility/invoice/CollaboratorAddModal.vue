@@ -219,7 +219,7 @@ const fetchDniData = () => {
 // Método para realizar la solicitud GET
 const fetchAgencies = () => {
   // Realizar la solicitud HTTP usando axios
-  axios.get(`${import.meta.env.VITE_API_URL}/agencies/list`, headers)
+  axios.get(`${import.meta.env.VITE_API_URL}/partnercompanies/list`, headers)
     .then(response => {
       // Obtener los datos del response
       const agencies = response.data.data;

@@ -428,12 +428,22 @@ export default {
 
                     this.closeEditModal();
                     toast.success('¡La comisión se procesó exitosamente!');
+
+                    this.commission_data.collaborator_id =  null;
+                    this.commission_data.paymentmethod_id =  null;
+                    this.commission_data.total_commission =  '0.00'; // Agrega la propiedad total_commission
+                    this.commission_data.total_tour =  '0.00'; // Inicializado en 0.00
+                    this.commission_data.total_hotel = '0.00'; // Inicializado en 0.00
+                    this.commission_data.observation =  null;
+
                     // Opcional: realizar otras acciones después del éxito
                 })
                 .catch(error => {
                     console.error('Error al guardar los datos:', error);
                     if (error.response && error.response.data && error.response.data.message) {
-                        const toast = useToast()
+                        const toast = useToast();
+
+                        
 
                         this.closeEditModal();
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal :activeModal="store.addmodal" @close="store.closeModal" title="Registrar Nuevo Ingresos" centered>
+    <Modal :activeModal="store.addmodal" @close="store.closeModal" title="Registrar Nuevo Ingreso" centered>
       <form @submit.prevent="addProject" class="space-y-4">
         <div class="grid lg:grid-cols-2 gap-4 grid-cols-1">
           <FromGroup name="d1" :error="boxSelectedError">
@@ -443,6 +443,7 @@ import Textarea from '@/components/Textarea';
 import axios from "axios";
 import { useAuth } from "../../../store/auth";
 import { useToast } from "vue-toastification";
+import { useRouter } from 'vue-router';
 
 const headers = useAuth().headers(); // Obtiene los encabezados de autenticación
 
@@ -654,6 +655,7 @@ const typeaccount = [
   { value: 506, label: 'TARJETA DE CRÉDITO' }
 ];
 
+const router = useRouter();
 
 const selectedCustomer = ref(null);
 const selectedProvider = ref(null);
@@ -784,6 +786,10 @@ const saveIngreso = () => {
       // console.log('Datos guardados exitosamente:', response.data);
       cancel();
       toast.success(response.data.message);
+
+      setTimeout(() => {
+      router.go(0);
+    }, 1500); 
     })
  .catch(error => {
   console.error('Error al guardar los datos:', error);

@@ -463,6 +463,7 @@ import axios from "axios";
 import { useAuth } from "../../../store/auth";
 import { useToast } from "vue-toastification";
 import Checkbox from '@/components/Checkbox';
+import { useRouter } from 'vue-router';
 
 const headers = useAuth().headers(); // Obtiene los encabezados de autenticación
 
@@ -477,6 +478,7 @@ const show3 = ref(false);
 
 const show4 = ref(false);
 
+const router = useRouter();
 
 const departments = ref([]);
 const districts = ref([]);
@@ -838,6 +840,10 @@ const saveIngreso = () => {
       // console.log('Datos guardados exitosamente:', response.data);
       cancel();
       toast.success(response.data.message);
+
+      setTimeout(() => {
+      router.go(0);
+    }, 1500); 
     })
     .catch(error => {
   console.error('Error al guardar los datos:', error);
