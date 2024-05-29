@@ -67,7 +67,7 @@
       </Card>
     </div>
 
-    <Modal :title="modalTitle" label="Modal title" :activeModal="show" @close="show = false" sizeClass="max-w-6xl">
+    <Modal :title="modalTitle" label="Modal title" :activeModal="show" @close="show = false" sizeClass="max-w-7xl">
       <vue-good-table :columns="columnsTraspase" styleClass=" vgt-table  table-head   v-middle striped  listview"
         :rows="projects" :pagination-options="{
           enabled: false,
