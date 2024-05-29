@@ -755,7 +755,7 @@ export default {
                 description: response.data.data.description,
                 esAbierto: null,
                 vehiculo: null,
-                turno: null,
+                turno: response.data.data.shift,
                 nPasajseros: null,
                 fechaTour: null,
                 observacion: null,
