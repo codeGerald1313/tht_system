@@ -256,12 +256,12 @@
             {{ props.row.booking_reference_location }}
 
   </span>
-          <span v-if="props.column.field == 'telephone'">
-            {{ props.row.booking_telephone_emergency }}
-            <br>
-            {{ props.row.client_cellphone }}
+  <span v-if="props.column.field == 'telephone'">
+  <strong>T.E:</strong> {{ props.row.booking_telephone_emergency }}
+  <br>
+  <strong>C.L:</strong> {{ props.row.client_cellphone }}
+</span>
 
-          </span>
           <span v-if="props.column.field == 'observaciones'" class=" uppercase">
     <!-- Verificar si hay información del tour -->
     <template v-if="hasTourInformation(props.row)">
