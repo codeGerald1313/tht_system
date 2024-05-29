@@ -259,9 +259,9 @@
 
           </span>
           <span v-if="props.column.field == 'telephone'">
-            <strong>Celular C.:</strong> {{ props.row.client_cellphone }}
+            <strong>Celular C:</strong> {{ props.row.client_cellphone }}
             <br>
-            <strong>Teléfono E.</strong> {{ props.row.booking_telephone_emergency }}
+            <strong>Teléfono E:</strong> {{ props.row.booking_telephone_emergency }}
           </span>
 
           <span v-if="props.column.field == 'observaciones'" class=" uppercase">
