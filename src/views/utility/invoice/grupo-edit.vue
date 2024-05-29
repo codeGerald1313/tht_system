@@ -756,7 +756,7 @@ export default {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/groups/record-formated/${this.idGrupo}`, {
           params: { date: this.group.date_departure },  // Añadir el parámetro `date` a la solicitud
-          headers,
+          ...headers,
         });
         this.projects = response.data.data.group.bookings;
 
