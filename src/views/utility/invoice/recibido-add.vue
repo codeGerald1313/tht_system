@@ -754,7 +754,7 @@ export default {
                 id: newTour,
                 description: response.data.data.description,
                 esAbierto: null,
-                vehiculo: null,
+                vehiculo: 1,
                 turno: response.data.data.shift,
                 nPasajseros: null,
                 fechaTour: null,
