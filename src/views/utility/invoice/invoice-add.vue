@@ -295,7 +295,9 @@
       <div class="lg:col-span-3 flex justify-end">
         <!-- Botones -->
         <Button text="Cancelar" btnClass="btn-light mr-2" @click="closeModal()" />
-        <Button type="submit" text="Guardar Reserva" @click="saveReserva()" btnClass="btn-dark" />
+        <Button type="submit" v-if="!guardando" text="Guardar Reserva" @click="saveReserva()" btnClass="btn-dark" />
+        <p v-else class="text-green-500 font-bold animate-pulse">Guardando...</p>
+        <!-- Mensaje estilizado con Tailwind CSS -->
       </div>
     </div>
 
@@ -427,6 +429,7 @@ export default {
         start_breakfast: '',
         end_breakfast: ''
       },
+      guardando: false,
 
       originsbooking: [
         { value: 1, label: 'Oficina' },
@@ -748,7 +751,7 @@ export default {
                 totalTour: null
               };
               this.projects.push(newProject);
-             console.log(this.projects);
+              console.log(this.projects);
             })
             .catch(error => {
               console.error('Error al obtener la descripción del tour:', error);
@@ -873,7 +876,7 @@ export default {
       } else {
         console.error("Invalid response data format");
       }
-    }, 
+    },
     handleFormSubmitted22(responseData) {
 
       this.booking.totalPagado = responseData.amount;
@@ -962,7 +965,9 @@ export default {
     },
 
     saveReserva() {
+      if (this.guardando) return; // Evitar múltiples clics mientras se está procesando una petición
 
+      this.guardando = true; // Ocultar el botón
       const isVoucherExternal = this.booking.voucherReference ? 1 : 0;
       const isBreakfast = this.booking.includeBreakfast ? 1 : 0;
       const isFavorite = this.booking.isFavorite ? 1 : 0;
@@ -1037,6 +1042,9 @@ export default {
           const toast = useToast();
           // Maneja cualquier error de la solicitud
           toast.error('Error al enviar los datos al backend', { duration: 3000 });
+
+          // Reactivar el botón si hubo un error
+          this.guardando = false;
         });
     }
     ,

@@ -305,7 +305,8 @@
       <div class="lg:col-span-3 flex justify-end">
         <!-- Botones -->
         <Button text="Cancelar" btnClass="btn-light mr-2" @click="closeModal()" />
-        <Button type="submit" text="Guardar Reserva" @click="saveReserva()" btnClass="btn-dark" />
+        <Button type="submit" v-if="!guardando" text="Guardar Reserva" @click="saveReserva()" btnClass="btn-dark" />
+        <p v-else class="text-green-500 font-bold animate-pulse">Guardando...</p>ss
       </div>
     </div>
 
@@ -444,6 +445,7 @@ export default {
       },
 
       originsbooking: [], // Array vacío para almacenar las opciones de agencias
+      guardando: false,
 
       originsReserve: [
         { value: 1, label: 'Sin Asignar' },
@@ -1013,6 +1015,10 @@ export default {
     },
 
     saveReserva() {
+      if (this.guardando) return; // Evitar múltiples clics mientras se está procesando una petición
+
+this.guardando = true; // Ocultar el botón
+
       // Construye el objeto de datos a enviar al backend
       const dataToSend = {
         bookingorigin_id: this.booking.originReserve,
@@ -1085,6 +1091,8 @@ export default {
           const toast = useToast();
           // Maneja cualquier error de la solicitud
           toast.error('Error al enviar los datos al backend', { duration: 3000 });
+          this.guardando = false;
+
         });
     }
     ,

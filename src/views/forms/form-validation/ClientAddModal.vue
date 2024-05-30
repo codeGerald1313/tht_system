@@ -436,7 +436,8 @@
         <div class="form-group col-lg-12 form__footerBtn mt-4">
           <div class="text-right">
             <Button text="Cancelar" btnClass="btn-light mr-2" @click="cancel" />
-            <Button type="submit" text="Guardar Cambios" btnClass="btn-dark" @click="saveIngreso" />
+            <Button v-if="!isLoading" type="submit" text="Guardar Cambios" btnClass="btn-dark" @click="saveIngreso" />
+            <p v-else class="text-green-500 font-bold animate-pulse">Guardando...</p>
             <!-- Botón Submit -->
           </div>
         </div>
@@ -694,6 +695,7 @@ const typeaccount = [
   { value: 505, label: 'CUENTA CORRIENTE' },
   { value: 506, label: 'TARJETA DE CRÉDITO' }
 ];
+const isLoading = ref(false);
 
 
 const selectedCustomer = ref(null);
@@ -750,6 +752,10 @@ const openModaalBanckAccount = () => {
 
 
 const saveIngreso = () => {
+
+  if (isLoading.value) return; // Evitar múltiples clics mientras se está procesando una petición
+  isLoading.value = true; // Inicia la carga y oculta el botón de guardar
+
 
   const selectElement = document.querySelector('.cajonci-select select');
 
@@ -848,13 +854,17 @@ const saveIngreso = () => {
     .catch(error => {
   console.error('Error al guardar los datos:', error);
   if (error.response && error.response.data && error.response.data.message) {
-    cancel();
+    // cancel();
 
     const errorMessage = error.response.data.message;
     toast.error(errorMessage);
+    isLoading.value = false;
+
   } else {
     // Si no se puede acceder al mensaje de error específico, muestra un mensaje genérico
     toast.error('Ha ocurrido un error al guardar los datos. Por favor, inténtalo de nuevo.');
+    isLoading.value = false;
+
   }
 });
 

@@ -165,7 +165,9 @@
         <div class="lg:col-span-3 flex justify-end">
           <!-- Botones -->
           <Button text="Cancelar" btnClass="btn-light mr-2" link="/app/grupo" />
-          <Button @click.prevent="storeGroup" text="Generar" btnClass="btn-dark" />
+          <Button v-if="!isLoading" @click.prevent="storeGroup" text="Generar" btnClass="btn-dark" />
+          <p v-else class="text-green-500 font-bold animate-pulse">Guardando...</p>
+          <!-- Mensaje estilizado con Tailwind CSS -->
         </div>
       </div>
     </Card>
@@ -224,6 +226,7 @@ export default {
       guiaOptions: [],
       bookingTourIds: [],
       projects: [], // Tu objeto rows
+      isLoading: false,
       group: {
         user_id: null,
         tour_id: null,
@@ -441,6 +444,9 @@ export default {
 
     async storeGroup() {
       const toast = useToast();
+      if (this.isLoading) return; // Evitar múltiples clics mientras se está procesando una petición
+
+      this.isLoading = true; // Inicia la carga y oculta el botón de generar
 
       try {
         const data = {
@@ -479,7 +485,12 @@ export default {
         // Si el grupo se creó con éxito, puedes redirigir al usuario a otra página o realizar alguna acción adicional.
       } catch (error) {
         console.error('Error al almacenar el grupo:', error);
-        // Puedes manejar los errores aquí, por ejemplo, mostrar un mensaje al usuario
+        // Maneja los errores aquí, por ejemplo, mostrando un mensaje al usuario
+        toast.error('Error al almacenar el grupo', {
+          position: 'top-right',
+          timeout: 2000 // Duración del mensaje en milisegundos
+        });
+        this.isLoading = false; // Reactiva el botón solo si ocurre un error
       }
     },
 

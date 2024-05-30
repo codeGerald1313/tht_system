@@ -20,7 +20,8 @@
             <Select label="Emisor (opcional)" :options="userposition" v-model="selected" class="emisor-select" />
           </FromGroup>
           <FromGroup name="d4">
-            <Select label="Concepto ingreso" :options="concepts" v-model="conceptSelected" class="concept-select" placeholder="Seleccione ingreso" />
+            <Select label="Concepto ingreso" :options="concepts" v-model="conceptSelected" class="concept-select"
+              placeholder="Seleccione ingreso" />
             <span v-if="!conceptSelected" class="text-red-500">Por favor selecciona un concepto</span>
           </FromGroup>
         </div>
@@ -150,10 +151,10 @@
                 <FromGroup label="Fecha de nacimiento">
                   <flat-pickr v-model="client.date_birthday" class="form-control" id="date_birthday"
                     placeholder="yyyy, dd M" :config="{
-      altInput: true,
-      altFormat: 'F j, Y',
-      dateFormat: 'Y-m-d',
-    }" />
+                      altInput: true,
+                      altFormat: 'F j, Y',
+                      dateFormat: 'Y-m-d',
+                    }" />
                 </FromGroup>
               </div>
               <div>
@@ -388,7 +389,8 @@
               Método de pago
               <span class="text-red-500 ml-1">*</span>
             </label>
-            <Select id="payment-type" :options="paymentMethods" v-model="selectedPaymentType" class="pago-select mt-2" />
+            <Select id="payment-type" :options="paymentMethods" v-model="selectedPaymentType"
+              class="pago-select mt-2" />
           </FromGroup>
 
 
@@ -398,7 +400,8 @@
           <template v-if="selectedPaymentType === 'account_deposit'">
             <div class="flex items-center">
               <FromGroup label="Cuenta destino" class="flex-1">
-                <Select :options="accountOptions" v-model="selectedAccount" class="cuentadestino-select"  placeholder="Seleccione"/>
+                <Select :options="accountOptions" v-model="selectedAccount" class="cuentadestino-select"
+                  placeholder="Seleccione" />
               </FromGroup>
 
               <button @click="openModaalBanckAccount" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
@@ -417,7 +420,9 @@
         <div class="form-group col-lg-12 form__footerBtn mt-4">
           <div class="text-right">
             <Button text="Cancelar" btnClass="btn-light mr-2" @click="cancel" />
-            <Button type="submit" text="Guardar Cambios" btnClass="btn-dark" @click="saveIngreso" />
+            <Button v-if="!isLoading" type="submit" text="Guardar Cambios" btnClass="btn-dark" @click="saveIngreso" />
+            <p v-else class="text-green-500 font-bold animate-pulse">Guardando...</p>
+
             <!-- Botón Submit -->
           </div>
         </div>
@@ -457,6 +462,7 @@ const show2 = ref(false);
 const show3 = ref(false);
 
 const show4 = ref(false);
+const isLoading = ref(false);
 
 
 const departments = ref([]);
@@ -706,6 +712,10 @@ const openModaalBanckAccount = () => {
 
 
 const saveIngreso = () => {
+  if (isLoading.value) return; // Evitar múltiples clics mientras se está procesando una petición
+
+  isLoading.value = true; // Inicia la carga y oculta el botón de guardar
+
 
   const selectElement = document.querySelector('.cajonci-select select');
 
@@ -788,21 +798,27 @@ const saveIngreso = () => {
       toast.success(response.data.message);
 
       setTimeout(() => {
-      router.go(0);
-    }, 1500); 
+        router.go(0);
+      }, 1500);
     })
- .catch(error => {
-  console.error('Error al guardar los datos:', error);
-  if (error.response && error.response.data && error.response.data.message) {
-    cancel();
+    .catch(error => {
+      console.error('Error al guardar los datos:', error);
+      if (error.response && error.response.data && error.response.data.message) {
+        // cancel();
 
-    const errorMessage = error.response.data.message;
-    toast.error(errorMessage);
-  } else {
-    // Si no se puede acceder al mensaje de error específico, muestra un mensaje genérico
-    toast.error('Ha ocurrido un error al guardar los datos. Por favor, inténtalo de nuevo.');
-  }
-});
+        const errorMessage = error.response.data.message;
+        toast.error(errorMessage);
+
+        isLoading.value = false;
+
+
+      } else {
+        // Si no se puede acceder al mensaje de error específico, muestra un mensaje genérico
+        toast.error('Ha ocurrido un error al guardar los datos. Por favor, inténtalo de nuevo.');
+        isLoading.value = false;
+
+      }
+    });
 
 
 
@@ -973,27 +989,27 @@ const handleProvinceChange = async () => {
 
 const fetchRucData = () => {
 
-axios.post(`${import.meta.env.VITE_API_URL}/getRucData`, {
+  axios.post(`${import.meta.env.VITE_API_URL}/getRucData`, {
     ruc: provider.value.document
   })
-  .then(response => {
-    // console.log('Respuesta de la API RUC:', response.data);
-    
-    provider.value.fullname = response.data.data.nombre_o_razon_social;
-    provider.value.address = response.data.data.direccion;
-  })
-  .catch(error => {
-    console.error('Error al obtener datos del RUC:', error);
-    // Aquí puedes manejar errores, como mostrar un mensaje al usuario
-  });
+    .then(response => {
+      // console.log('Respuesta de la API RUC:', response.data);
+
+      provider.value.fullname = response.data.data.nombre_o_razon_social;
+      provider.value.address = response.data.data.direccion;
+    })
+    .catch(error => {
+      console.error('Error al obtener datos del RUC:', error);
+      // Aquí puedes manejar errores, como mostrar un mensaje al usuario
+    });
 };
 
 
 
 const fetchDniData = () => {
   axios.post(`${import.meta.env.VITE_API_URL}/getDniData`, {
-      dni: client.value.document
-    })
+    dni: client.value.document
+  })
     .then(response => {
       // console.log('Respuesta de la API DNI:', response.data.nombre_completo);
       // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
