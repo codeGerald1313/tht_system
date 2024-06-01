@@ -234,7 +234,24 @@
                   <!-- end single list -->
                 </ul>
               </div>
-
+              <div>
+                <ul class="list space-y-8">
+                  <li class="flex space-x-3 rtl:space-x-reverse">
+                    <div class="flex-none text-2xl text-slate-600 dark:text-slate-300">
+                      <Icon icon="heroicons:link" />
+                    </div>
+                    <div class="flex-1">
+                      <div class="uppercase text-xs text-slate-500 dark:text-slate-300 mb-1 leading-[12px]">
+                        Referencia Para Recojo Del Turista
+                      </div>
+                      <div class="text-base text-slate-600 dark:text-slate-50">
+                        {{ booking.reference_location }}
+                      </div>
+                    </div>
+                  </li>
+                  <!-- end single list -->
+                </ul>
+              </div>
             </div>
           </Card>
         </div>
@@ -787,6 +804,8 @@ export default {
           }
 
           this.booking.reference_voucher = data.book.reference_voucher;
+          this.booking.reference_location = data.book.reference_location;
+
           this.booking.fullName = data.book.client.fullname;
           this.booking.clientDocument = data.book.client.document;
           this.booking.clientCellphone = data.book.client.cellphone;

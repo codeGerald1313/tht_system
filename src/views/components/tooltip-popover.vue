@@ -48,14 +48,14 @@
               {{ props.row.user.name }}
               <br>
             </span>
-            <span v-if="props.column.field == 'client_id'" class="text-slate-500 dark:text-slate-400"
+            <span v-if="props.column.field == 'client.fullname'" class="text-slate-500 dark:text-slate-400"
               :style="{ color: props.row.is_checkout === 1 ? 'red' : 'inherit', display: 'flex', flexDirection: 'column' }">
               <span>{{ props.row.client.fullname }}</span>
               <span class="font-bold">{{ props.row.client.document }}</span>
             </span>
 
 
-            <span v-if="props.column.field === 'amount'"
+            <span v-if="props.column.field === 'client.cellphone'"
               :style="{ color: props.row.is_checkout === 1 ? 'red' : 'inherit', display: 'flex', flexDirection: 'column' }">
               <span>Teléfono: {{ props.row.client.telephone }}</span>
               <span style="margin-top: 5px;">Celular: {{ props.row.client.cellphone }}</span>
@@ -310,7 +310,7 @@ export default {
         },
         {
           label: "Reponsable	",
-          field: "client_id",
+          field: "client.fullname",
         },
         {
           label: "N° pax	",
@@ -318,7 +318,7 @@ export default {
         },
         {
           label: "Teléfonos	",
-          field: "amount",
+          field: "client.cellphone",
         },
         {
           label: "Sobre tours	",

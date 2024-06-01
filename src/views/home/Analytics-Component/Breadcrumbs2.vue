@@ -427,7 +427,7 @@ const openModal = async (id) => {
       });
 
       const { tour_description, booking_tour_date_assigned } = projects.value[0];
-      const formattedDate = getCurrentDate(booking_tour_date_assigned);
+      const formattedDate = booking_tour_date_assigned;
 
       // Utilizar la suma total de pasajeros en el título del modal
       modalTitle.value = `Datos de salida | ${tour_description} (${formattedDate}) ${totalPassengers} PASAJEROS`;
