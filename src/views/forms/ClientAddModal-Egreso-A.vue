@@ -45,7 +45,9 @@
               <Select :options="employeeOptions" v-model="selectedEmployee" class="employee-select" />
             </FromGroup>
           </div>
-
+          <FromGroup label="Fecha del movimiento"  name="d1">
+            <flat-pickr v-model="income.date_movement" class="form-control" id="d1" placeholder="yyyy, dd M" />
+          </FromGroup>
 
           <Checkbox label="Incluye Comprobante" v-model="includeReceipt" />
 
@@ -477,11 +479,13 @@ const show3 = ref(false);
 const show4 = ref(false);
 
 
+
 const departments = ref([]);
 const districts = ref([]);
 
 const provinces = ref([]);
 
+const dateDefault = ref(null);
 
 const cancel = () => {
   store.closeModal3(); // Cierra el modal al hacer clic en el botón "Cancelar"

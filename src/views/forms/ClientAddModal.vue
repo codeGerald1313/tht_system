@@ -46,6 +46,11 @@
           </div>
         </div>
 
+        <FromGroup label="Fecha del movimiento"  name="d1">
+            <flat-pickr v-model="income.date_movement" class="form-control" id="d1" placeholder="yyyy, dd M" />
+          </FromGroup>
+
+
         <Modal title="Registrar nuevo Cliente" label="Modal title" :activeModal="show" @close="show = false"
           sizeClass="max-w-4xl">
           <form name="client_form" id="client_form" autocomplete="off" class="mx-auto space-y-4">
@@ -776,7 +781,7 @@ const saveIngreso = () => {
   // También puedes asignar la descripción del concepto seleccionado al campo concept
 
 
-  // console.log(income.value)
+  console.log(income.value)
 
   axios.post(`${import.meta.env.VITE_API_URL}/moneys-akemy/create`, income.value, {
     ...headers
@@ -802,6 +807,7 @@ const saveIngreso = () => {
 
 };
 
+const dateDefault = ref(null);
 
 const openModalBanck = () => {
   show4.value = !show4.value;
