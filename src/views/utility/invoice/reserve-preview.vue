@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center flex-wrap mb-4">
       <div>
         <button @click="retroceder"
-          class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-500 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
+          class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-700 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
           <span class="text-xl">
             <Icon icon="heroicons:arrow-left" />
           </span>
@@ -12,7 +12,7 @@
       </div>
       <div class="flex justify-end items-center flex-wrap space-x-2">
         <button type="button" @click="print"
-        class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-500 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
+          class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-700  dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
           <span class="text-xl">
             <Icon icon="heroicons:printer" />
           </span>
@@ -27,7 +27,7 @@
             <span>Check-Out</span>
         </button> -->
         <button
-        class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-500 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse"
+          class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-700  dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse"
           @click="openModalComisionar()">
           <span class="text-xl">
             <Icon icon="heroicons-solid:cash" />
@@ -35,7 +35,7 @@
           <span>Comisionar</span>
         </button>
         <button v-if="this.deuda !== 0 && this.deuda !== '0.00'"
-        class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-500 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse"
+          class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-700  dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse"
           @click="openModalAmortizar()">
           <span class="text-xl">
             <Icon icon="heroicons-solid:banknotes" />
@@ -43,7 +43,7 @@
           <span>Amortizar({{ this.deuda }})</span>
         </button>
         <button @click="editar"
-          class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-500 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
+          class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-700  dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
           <span class="text-xl">
             <Icon icon="heroicons:pencil-square" />
           </span>

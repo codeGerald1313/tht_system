@@ -3,7 +3,7 @@
     <div class="lg:flex justify-between flex-wrap items-center">
     <div>
         <button @click="retroceder"
-            class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-500 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
+            class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-700 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse hover:bg-black">
             <span class="text-xl">
                 <Icon icon="heroicons:arrow-left" />
             </span>
@@ -12,14 +12,14 @@
     </div>
     <div class="flex lg:justify-end items-center flex-wrap">
         <button type="button" @click="print"
-            class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-500 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
+            class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-700  dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse hover:bg-black">
             <span class="text-lg">
                 <Icon icon="heroicons:printer" />
             </span>
             <span>Imprimir</span>
         </button>
         <button @click="editar"
-            class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-500 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
+            class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-700 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse hover:bg-black">
             <span class="text-lg">
                 <Icon icon="heroicons:pencil-square" />
             </span>
@@ -27,6 +27,7 @@
         </button>
     </div>
 </div>
+
 
 
 
