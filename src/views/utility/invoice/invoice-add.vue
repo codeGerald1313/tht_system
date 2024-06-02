@@ -2,7 +2,7 @@
   <div>
     <div class="flex justify-end space-x-4 mb-3">
       <button
-        class="invoice-btn inline-flex btn btn-sm whitespace-nowrap space-x-1 cursor-pointer bg-white dark:bg-slate-800 dark:text-slate-300 btn-md h-min text-sm font-normal text-slate-900 rtl:space-x-reverse"
+      class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-700 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse hover:bg-black"
         @click="openModalComisionar()">
         <span class="text-lg">
           <Icon icon="heroicons-solid:cash" />
@@ -10,7 +10,7 @@
         <span>Comisionar</span>
       </button>
       <button
-        class="invoice-btn inline-flex btn btn-sm whitespace-nowrap space-x-1 cursor-pointer bg-white dark:bg-slate-800 dark:text-slate-300 btn-md h-min text-sm font-normal text-slate-900 rtl:space-x-reverse"
+      class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-700 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse hover:bg-black"
         @click="openModalAmortizar()">
         <span class="text-lg">
           <Icon icon="heroicons-solid:banknotes" />
@@ -332,7 +332,7 @@
     </div>
 
     <EditProject :activeModal="showEditModal" @close="showEditModal = false" title="Actualizar Registro de Colaborador"
-      @updateClientList="fetchClients"></EditProject>
+      @updateClientList="handleUpdateClientList"></EditProject>
 
     <EditProject2 :activeModal="showReserveModal" title="Actualizar Registro de Colaborador"
       @postComplete="handlePostComplete" :idCliente="idCliente" @close="showReserveModal = false"></EditProject2>
@@ -1077,6 +1077,16 @@ export default {
 
     openModalReservaHotel() {
       this.showReserveModal = true;
+    },
+    handleUpdateClientList(data) {
+      // Aquí recibes la data emitida por el evento
+      console.log('Datos recibidos del componente hijo:', data);
+
+      const clientId = data.data.id;
+      // Establece el id en v-model="booking.clients"
+      this.booking.clients = clientId;
+      // Puedes llamar a fetchClients o realizar cualquier otra acción necesaria
+      this.fetchClients();
     },
 
     async fetchClients() {

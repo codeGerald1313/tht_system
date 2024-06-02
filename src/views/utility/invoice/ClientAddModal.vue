@@ -315,7 +315,7 @@ const save = () => {
   })
     .then(response => {
       // console.log('Datos guardados exitosamente:', response.data);
-      emits('updateClientList'); // Emitir el evento personalizado al componente padre
+      emits('updateClientList', response.data);
       closeEditModal();
       toast.success(response.data.message);
     })

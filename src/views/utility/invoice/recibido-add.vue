@@ -306,7 +306,7 @@
         <!-- Botones -->
         <Button text="Cancelar" btnClass="btn-light mr-2" @click="closeModal()" />
         <Button type="submit" v-if="!guardando" text="Guardar Reserva" @click="saveReserva()" btnClass="btn-dark" />
-        <p v-else class="text-green-500 font-bold animate-pulse">Guardando...</p>ss
+        <p v-else class="text-green-500 font-bold animate-pulse">Guardando...</p>
       </div>
     </div>
 
@@ -341,7 +341,7 @@
     </div>
 
     <EditProject :activeModal="showEditModal" @close="showEditModal = false" title="Actualizar Registro de Colaborador"
-      @updateClientList="fetchClients"></EditProject>
+      @updateClientList="handleUpdateClientList"></EditProject>
 
     <EditProject2 :activeModal="showReserveModal" title="Actualizar Registro de Colaborador"
       @postComplete="handlePostComplete" :idCliente="idCliente" @close="showReserveModal = false"></EditProject2>
@@ -898,6 +898,18 @@ export default {
           // console.error('Error al obtener las agencias:', error);
         });
     },
+
+    handleUpdateClientList(data) {
+      // Aquí recibes la data emitida por el evento
+      console.log('Datos recibidos del componente hijo:', data);
+
+      const clientId = data.data.id;
+      // Establece el id en v-model="booking.clients"
+      this.booking.clients = clientId;
+      // Puedes llamar a fetchClients o realizar cualquier otra acción necesaria
+      this.fetchClients();
+    },
+
 
     handleCommissionProcessed(response) {
       // Capturar el ID de la comisión

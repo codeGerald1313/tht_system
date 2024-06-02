@@ -1,34 +1,41 @@
 <template>
   <div class="flex flex-col justify-center items-center">
+    <!-- Cronograma de salidas -->
     <h1 class="text-3xl font-bold mb-4">Cronograma de salidas</h1>
-    <div class="flex flex-col justify-center items-center w-full mt-4">
-      <span class="mb-2">Seleccionar fecha</span>
-      <div class="flex items-center" prependIcon="heroicons-outline:search"> <!-- Envoltura del componente -->
-
-
-        <Button icon="heroicons-outline:calendar-days"
-          btnClass=" btn-outline-secondary text-slate-600 dark:border-slate-700 dark:text-slate-300 font-normal btn-sm mr-3"
-          iconClass="text-lg" />
-        <flat-pickr class="form-control " id="date_birthday" placeholder="yyyy, dd M" :config="{
-          altInput: true,
-          altFormat: 'F j, Y',
-          dateFormat: 'Y-m-d',
-        }" v-model="dateValue2" />
-
-        <div class="ml-3">
-          <Button icon="heroicons-outline:arrows-up-down"
-            btnClass="btn-outline-secondary text-slate-600 dark:border-slate-700 dark:text-slate-300 font-normal btn-sm "
-            iconClass="text-lg" @click="recargarDatos" />
-
+    <div class="flex flex-col lg:flex-row justify-center items-center w-full mt-4">
+      <!-- Bloque "Seleccionar fecha" -->
+      <div class="flex items-center">
+        <span class="mb-2 lg:mb-0 s mr-4 lg:mr-0 font-bold">Seleccionar fecha</span>
+        <div class="flex items-center">
+          <Button icon="heroicons-outline:calendar-days"
+            btnClass="btn-outline-secondary text-slate-600 dark:border-slate-700 dark:text-slate-300 font-normal btn-sm mr-3"
+            iconClass="text-lg" />
+          <flat-pickr class="form-control " id="date_birthday" placeholder="yyyy, dd M" :config="{
+            altInput: true,
+            altFormat: 'F j, Y',
+            dateFormat: 'Y-m-d',
+          }" v-model="dateValue2" />
+          <div class="ml-3">
+            <Button icon="heroicons-outline:arrows-up-down"
+              btnClass="btn-outline-secondary text-slate-600 dark:border-slate-700 dark:text-slate-300 font-normal btn-sm "
+              iconClass="text-lg" @click="recargarDatos" />
+          </div>
         </div>
-
       </div>
+      <!-- Cuadro de búsqueda 
+      <div class="w-full lg:w-1/2 mt-4 lg:mt-0 lg:ml-4">
+        <InputGroup type="text" prependIcon="heroicons-outline:search" v-model="searchTerm "
+          placeholder="Buscar por nombre de cliente o número de celular" class="w-full" />
+      </div>
+       -->
     </div>
   </div>
 
+
+
   <!-- Diseño de estadísticas -->
   <div class="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-3 mt-8">
-    <div v-for="(item, i) in statistics" :key="i" :class="item.bg"
+    <div v-for="(item, i) in filteredStatistics" :key="i" :class="item.bg"
       class="rounded-md p-4 bg-opacity-25 dark:bg-opacity-25 relative z-10 cursor-pointer" @click="openModal(item.id)">
 
       <span class="block mb-6 text-sm text-slate-900 dark:text-white font-bold">{{ item.title }}</span>
@@ -124,15 +131,15 @@
           <span v-if="props.column.field == 'telephone'">
             <strong>Cliente C:</strong> {{ props.row.client_cellphone }}
 
-  <template v-if="props.row.booking_telephone_emergency">
-    <strong>Teléfono E:</strong> {{ props.row.booking_telephone_emergency }}
-    <br>
-  </template>
-  <template v-else-if="props.row.booking_contact_emergency">
-    <strong>Contacto E:</strong> {{ props.row.booking_contact_emergency }}
-    <br>
-  </template>
-</span>
+            <template v-if="props.row.booking_telephone_emergency">
+              <strong>Teléfono E:</strong> {{ props.row.booking_telephone_emergency }}
+              <br>
+            </template>
+            <template v-else-if="props.row.booking_contact_emergency">
+              <strong>Contacto E:</strong> {{ props.row.booking_contact_emergency }}
+              <br>
+            </template>
+          </span>
 
 
           <span v-if="props.column.field == 'observaciones'" class=" uppercase">
@@ -283,6 +290,7 @@ import { useAuth } from '../../../store/auth';
 import axios from 'axios';
 import { useToast } from 'vue-toastification';
 
+import InputGroup from "@/components/InputGroup";
 
 const headers = useAuth().headers(); // Obtiene los encabezados de autenticación
 
@@ -417,6 +425,8 @@ const openModal = async (id) => {
 
     if (response.data && response.data.data && response.data.data.length > 0) {
       projects.value = response.data.data;
+
+      console.log(projects.value);
 
       // Inicializar la suma de pasajeros
       let totalPassengers = 0;
@@ -590,6 +600,7 @@ const getIcon = (vehicleShared) => {
     return 'heroicons:user';
   }
 };
+const searchTerm = ref('');
 
 const getPercentText = (vehicleShared) => {
   // Define la lógica para el texto de "Compartido" o "Privado" basado en el número de pasajeros compartidos
@@ -608,6 +619,17 @@ const cards = [
     icon: "heroicons-outline:information-circle",
   },
 ];
+
+const filteredStatistics = computed(() => {
+  return statistics.value.filter(statistic => {
+    return statistic.title.toLowerCase().includes(searchTerm.value.toLowerCase());
+  });
+});
+
+// Imprimir el resultado en la consola
+console.log(filteredStatistics.value);
+
+
 
 watch(dateValue2, async (newValue) => {
   // console.log('Nuevo valor del calendario:', newValue);
