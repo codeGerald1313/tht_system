@@ -641,14 +641,16 @@ export default {
       this.$router.push({ name: 'reserve-preview', params: { id: reservaId } });
     },
     updateCapacitySelected(row) {
-      // console.log(row);
-      const bookingId = row.booking_tour.id;
+      console.log(row);
+      const bookingId = row.id;
+
+      console.log(bookingId);
 
       // Variable booleana para verificar si el checkbox está marcado
-      const isChecked = row.booking_tour.group_assigned !== null;
+      const isChecked = row.group_assigned !== null;
 
       // Variable booleana para verificar si group_assigned tiene un valor
-      const hasGroupAssigned = row.booking_tour.group_assigned !== null;
+      const hasGroupAssigned = row.group_assigned !== null;
 
 
       // console.log("Ga1",bookingId);
@@ -661,16 +663,18 @@ export default {
         const index = this.bookingTourIds.indexOf(bookingId);
         if (index !== -1) {
           this.bookingTourIds.splice(index, 1);
+          console.log(this.bookingTourIds);
         }
       } else if (!isChecked && row.booking_tour.group_assigned === null) {
         // Si está desmarcado y group_assigned es null, se suma
         this.group.capacity_selected += row.booking_tour.booking.nro_pax;
         if (!this.bookingTourIds.includes(bookingId)) {
           this.bookingTourIds.push(bookingId);
+          console.log(this.bookingTourIds);
         }
       }
 
-      // console.log(this.bookingTourIds);
+       console.log(this.bookingTourIds);
 
       // Calcular la cantidad disponible restando la capacidad total del vehículo menos la cantidad seleccionada
       this.group.capacity_available = this.group.capacity_vehicle - this.group.capacity_selected;
@@ -764,10 +768,10 @@ export default {
 
         // Filtrar solo los proyectos que tienen un valor en group_assigned y mapear los IDs
         this.bookingTourIds = this.projects
-          .filter(project => project.booking_tour && project.booking_tour.group_assigned !== null)
+          .filter(project =>project.group_assigned !== null)
           .map(project => project.id);
 
-        // console.log("Ids Ga", this.projects );
+        console.log("Ids Ga", this.projects );
 
       } catch (error) {
         console.error('Error fetching departments:', error);
