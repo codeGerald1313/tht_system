@@ -1,32 +1,32 @@
 <template>
   <div>
-    <div class="lg:flex justify-end flex-wrap items-center">
-      <div class="flex lg:justify-end items-center flex-wrap">
-        <button
-          class="invocie-btn inline-flex btn btn-sm whitespace-nowrap space-x-1 cursor-pointer bg-red-500 dark:bg-red-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
-          <span class="text-lg">
-            <Icon icon="heroicons:trash" />
-          </span>
-          <span>Borrar</span>
+    <div class="lg:flex justify-between flex-wrap items-center">
+    <div>
+        <button @click="retroceder"
+            class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-500 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
+            <span class="text-xl">
+                <Icon icon="heroicons:arrow-left" />
+            </span>
+            <span>Retroceder</span>
         </button>
-        <button type="button" @click="print"
-          class="invocie-btn inline-flex btn btn-sm whitespace-nowrap space-x-1 cursor-pointer bg-white dark:bg-slate-800 dark:text-slate-300 btn-md h-min text-sm font-normal text-slate-900 rtl:space-x-reverse">
-          <span class="text-lg">
-            <Icon icon="heroicons:printer" />
-          </span>
-          <span>Imprimir</span>
-        </button>
-
-
-        <button @click="editar"
-          class="invocie-btn inline-flex btn btn-sm whitespace-nowrap space-x-1 cursor-pointer bg-white dark:bg-slate-800 dark:text-slate-300 btn-md h-min text-sm font-normal text-slate-900 rtl:space-x-reverse">
-          <span class="text-lg">
-            <Icon icon="heroicons:pencil-square" />
-          </span>
-          <span>Editar</span>
-        </button>
-      </div>
     </div>
+    <div class="flex lg:justify-end items-center flex-wrap">
+        <button type="button" @click="print"
+            class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-500 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
+            <span class="text-lg">
+                <Icon icon="heroicons:printer" />
+            </span>
+            <span>Imprimir</span>
+        </button>
+        <button @click="editar"
+            class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-500 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
+            <span class="text-lg">
+                <Icon icon="heroicons:pencil-square" />
+            </span>
+            <span>Editar</span>
+        </button>
+    </div>
+</div>
 
 
 
@@ -259,15 +259,15 @@
 
           </span>
           <span v-if="props.column.field == 'telephone'">
-  <strong>Celular C:</strong> {{ props.row.client_cellphone }}
-  <br>
-  <template v-if="props.row.booking_telephone_emergency">
-    <strong>Teléfono E:</strong> {{ props.row.booking_telephone_emergency }}
-  </template>
-  <template v-else-if="props.row.booking_contact_emergency">
-    <strong>Contacto E:</strong> {{ props.row.booking_contact_emergency }}
-  </template>
-</span>
+            <strong>Celular C:</strong> {{ props.row.client_cellphone }}
+            <br>
+            <template v-if="props.row.booking_telephone_emergency">
+              <strong>Teléfono E:</strong> {{ props.row.booking_telephone_emergency }}
+            </template>
+            <template v-else-if="props.row.booking_contact_emergency">
+              <strong>Contacto E:</strong> {{ props.row.booking_contact_emergency }}
+            </template>
+          </span>
 
 
           <span v-if="props.column.field == 'observaciones'" class=" uppercase">
@@ -563,7 +563,9 @@ export default {
         row.hotel_address
       );
     },
-
+    retroceder() {
+            window.location.href = '/app/grupo';
+        },
     openModal(bookingId) {
       // console.log('Booking ID:', bookingId);
       this.$router.push({ name: 'reserve-preview', params: { id: bookingId } });

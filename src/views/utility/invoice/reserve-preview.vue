@@ -1,53 +1,55 @@
 <template>
   <div>
-    <div class="flex justify-end">
-
-      <button type="button" @click="print"
-        class="invocie-btn inline-flex btn btn-sm whitespace-nowrap space-x-1 cursor-pointer bg-white dark:bg-slate-800 dark:text-slate-300 btn-md h-min text-sm font-normal text-slate-900 rtl:space-x-reverse">
-        <span class="text-lg">
-          <Icon icon="heroicons:printer" />
-        </span>
-        <span>Imprimir</span>
-      </button>
-
-      <!--
-      <button
-        class="invocie-btn inline-flex btn btn-sm whitespace-nowrap space-x-1 cursor-pointer bg-white dark:bg-slate-800 dark:text-slate-300 btn-md h-min text-sm font-normal text-slate-900 rtl:space-x-reverse">
-        <span class="text-lg ">
-          <Icon icon="heroicons-solid:check" />
-        </span>
-        <span>Check-Out</span>
-      </button> -->
-
-
-      <button
-        class="invocie-btn inline-flex btn btn-sm whitespace-nowrap space-x-1 cursor-pointer bg-white dark:bg-slate-800 dark:text-slate-300 btn-md h-min text-sm font-normal text-slate-900 rtl:space-x-reverse"
-        @click="openModalComisionar()">
-        <span class="text-lg ">
-          <Icon icon="heroicons-solid:cash" />
-        </span>
-        <span>Comisionar</span>
-      </button>
-      <button v-if="this.deuda !== 0 && this.deuda !== '0.00'"
-        class="invocie-btn inline-flex btn btn-sm whitespace-nowrap space-x-1 cursor-pointer bg-white dark:bg-slate-800 dark:text-slate-300 btn-md h-min text-sm font-normal text-slate-900 rtl:space-x-reverse"
-        @click="openModalAmortizar()">
-        <span class="text-lg ">
-          <Icon icon="heroicons-solid:banknotes" />
-        </span>
-        <span>Amortizar({{ this.deuda }})</span>
-      </button>
-
-
-
-
-      <button @click="editar"
-        class="invocie-btn inline-flex btn btn-sm whitespace-nowrap space-x-1 cursor-pointer bg-white dark:bg-slate-800 dark:text-slate-300 btn-md h-min text-sm font-normal text-slate-900 rtl:space-x-reverse">
-        <span class="text-lg">
-          <Icon icon="heroicons:pencil-square" />
-        </span>
-        <span>Editar</span>
-      </button>
-
+    <div class="flex justify-between items-center flex-wrap mb-4">
+      <div>
+        <button @click="retroceder"
+          class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-500 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
+          <span class="text-xl">
+            <Icon icon="heroicons:arrow-left" />
+          </span>
+          <span>Retroceder</span>
+        </button>
+      </div>
+      <div class="flex justify-end items-center flex-wrap space-x-2">
+        <button type="button" @click="print"
+        class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-500 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
+          <span class="text-xl">
+            <Icon icon="heroicons:printer" />
+          </span>
+          <span>Imprimir</span>
+        </button>
+        <!--
+        <button
+            class="invocie-btn inline-flex btn btn-sm whitespace-nowrap space-x-1 cursor-pointer bg-white dark:bg-slate-800 dark:text-slate-300 btn-md h-min text-sm font-normal text-slate-900 rtl:space-x-reverse">
+            <span class="text-lg ">
+                <Icon icon="heroicons-solid:check" />
+            </span>
+            <span>Check-Out</span>
+        </button> -->
+        <button
+        class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-500 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse"
+          @click="openModalComisionar()">
+          <span class="text-xl">
+            <Icon icon="heroicons-solid:cash" />
+          </span>
+          <span>Comisionar</span>
+        </button>
+        <button v-if="this.deuda !== 0 && this.deuda !== '0.00'"
+        class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-500 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse"
+          @click="openModalAmortizar()">
+          <span class="text-xl">
+            <Icon icon="heroicons-solid:banknotes" />
+          </span>
+          <span>Amortizar({{ this.deuda }})</span>
+        </button>
+        <button @click="editar"
+          class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-500 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse">
+          <span class="text-xl">
+            <Icon icon="heroicons:pencil-square" />
+          </span>
+          <span>Editar</span>
+        </button>
+      </div>
     </div>
 
 
@@ -868,7 +870,9 @@ export default {
           console.error('Error fetching invoice data:', error);
         });
     },
-
+    retroceder() {
+      window.location.href = '/app/products';
+    },
     fetchDataEditGrupo() {
       const id = this.$route.params.id;
 
