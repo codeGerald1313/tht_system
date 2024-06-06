@@ -253,6 +253,14 @@ const routes = [
         },
       },
       {
+        path: "box-ericka",
+        name: "caja-ericka",
+        component: () => import("@/views/forms/ericka-box/index"),
+        meta: {
+          hide: true
+        },
+      },
+      {
         path: "/monexboxes/:label",
         name: "monexboxes",
         component: () => import("@/views/forms/input-mask"),

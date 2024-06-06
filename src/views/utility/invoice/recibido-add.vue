@@ -758,7 +758,7 @@ export default {
                 esAbierto: null,
                 vehiculo: 1,
                 turno: response.data.data.shift,
-                nPasajseros: null,
+                nPasajseros: this.booking.numPassengers,
                 fechaTour: null,
                 observacion: null,
                 realizado: null,

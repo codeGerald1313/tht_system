@@ -6,14 +6,28 @@
 
     </div>
 
-    <div class="flex sm:space-x-4 space-x-2 sm:justify-end items-center md:mb-6 mb-4 rtl:space-x-reverse">
-      <span
-        class="input-group-prepend  bg-gray-200 bg-opacity-25 px-2 py-1 rounded-lg font-bold text-slate-600 dark:text-slate-300">
-        Caja seleccionada
-      </span>
+    <div class="flex justify-between flex-wrap items-center">
 
-      <Select :options="boxesOptions" v-model="selected" class="w-48" placeholder="Seleccionar Caja" />
-      <!-- Ajusta el tamaño deseado aquí -->
+
+      <div class="flex sm:space-x-4 space-x-2 sm:justify-end items-center md:mb-6 mb-4 rtl:space-x-reverse">
+        <!-- Mostrar el botón solo si el authenticatedUser.id es 7 -->
+        <button v-if="authenticatedUser && authenticatedUser.id === 7"
+          class="inline-flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-teal-500 hover:bg-teal-600"
+          @click.prevent="redirectToCajaEricka">          <span class="text-lg">
+            <!-- Icono de una caja -->
+            <Icon icon="heroicons:archive-box" />
+          </span>
+          <span class="ml-2">Caja Ericka</span>
+        </button>
+
+        <span
+          class="input-group-prepend bg-gray-200 bg-opacity-25 px-2 py-1 rounded-lg font-bold text-slate-600 dark:text-slate-300">
+          Caja seleccionada
+        </span>
+
+        <Select :options="boxesOptions" v-model="selected" class="w-48" placeholder="Seleccionar Caja" />
+        <!-- Ajusta el tamaño deseado aquí -->
+      </div>
     </div>
 
 
@@ -320,7 +334,10 @@ export default {
     openBox() {
       store.openProject();
     },
-
+    redirectToCajaEricka() {
+      // Redireccionar a la ruta específica
+      this.$router.push({ name: 'caja-ericka' });
+    },
     handleVerDocumento() {
       axios.get(`${import.meta.env.VITE_API_URL}/list-box-cuadre/${this.id}`)
         .then(response => {
@@ -404,13 +421,13 @@ export default {
     },
 
 
-    
-handleGuardadoExitosoTransfer() {
-  // Aquí puedes realizar cualquier lógica adicional con el ID capturado
-  
-  // Forzar la recarga de la página
-  location.reload(true); // El parámetro true fuerza la recarga desde el servidor
-},
+
+    handleGuardadoExitosoTransfer() {
+      // Aquí puedes realizar cualquier lógica adicional con el ID capturado
+
+      // Forzar la recarga de la página
+      location.reload(true); // El parámetro true fuerza la recarga desde el servidor
+    },
 
     transferirCajaGeneral() {
       store.openTransfer();
