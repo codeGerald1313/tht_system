@@ -29,7 +29,7 @@
 
                   <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
                     <!-- Selección de Sucursal -->
-                    <Select label="Sucursal" name="branch" :options="branchOptions" v-model="selectedBranch" />
+                    <Select label="Caja" name="branch" :options="branchOptions" v-model="selectedBranch" />
 
                     <!-- Selección de Rango de Fechas -->
                     <FromGroup label="Rango de Fechas" name="d1">
@@ -166,7 +166,7 @@
 
                   <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
                     <!-- Selección de Sucursal -->
-                    <Select label="Sucursal" name="branch" :options="branchOptions" v-model="selectedBranch" />
+                    <Select label="Caja" name="branch" :options="branchOptions" v-model="selectedBranch" />
 
                     <!-- Selección de Rango de Fechas -->
                     <FromGroup label="Rango de Fechas" name="d1">
@@ -305,7 +305,7 @@
 
                   <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
                     <!-- Selección de Sucursal -->
-                    <Select label="Sucursal" name="branch" :options="branchOptions" v-model="selectedBranch" />
+                    <Select label="Caja" name="branch" :options="branchOptions" v-model="selectedBranch" />
 
                     <!-- Selección de Rango de Fechas -->
                     <FromGroup label="Rango de Fechas" name="d1">
@@ -316,6 +316,8 @@
                     <Select label="Método de Pago" name="paymentMethod" :options="paymentOptions"
                       v-model="selectedPaymentMethod" />
 
+                      <Select label="Cuenta Bancaria" name="paymentMethod" :options="accountBanks"
+                      v-model="selectedAccountBank" />
                   </div>
 
 
@@ -523,6 +525,14 @@ export default {
       conceptExpenseOptions: [],
       // Opciones de Método de pago
       paymentOptions: [],
+      accountBanks: [
+      { value: 1, label: 'YAPE - GUAROS GROUP' },
+      { value: 2, label: 'YAPE - THT' },
+      { value: 3, label: 'BCP THT - THT' },
+      { value: 4, label: 'TRANSF GUAROS - GUAROS' },
+      { value: 5, label: 'YAPE - YAPE AKEMI' },
+      { value: 6, label: 'BBVA THT - BBVA THT' }
+    ],
       // Opciones de Tipo de Documento
       documentTypeOptions: [
         { value: 1, label: 'EXCEL' },
@@ -534,6 +544,7 @@ export default {
 
       selectedConcept: '',
       selectedPaymentMethod: '',
+      selectedAccountBank: '',
       selectedDocumentType: 1,
       includeVoucher: false, // Para manejar si se incluye el comprobante
 
@@ -698,8 +709,8 @@ export default {
             start_range: this.dateValue.startDate,
             end_range: this.dateValue.endDate,
             branchoffice: this.selectedBranch,
-            payment_method: this.selectedPaymentMethod
-
+            payment_method: this.selectedPaymentMethod,
+            account_bank: this.selectedAccountBank
           },
           ...headers
         });
@@ -951,7 +962,8 @@ export default {
               start_range: this.dateValue.startDate,
               end_range: this.dateValue.endDate,
               branchoffice: this.selectedBranch,
-              payment_method: this.selectedPaymentMethod
+              payment_method: this.selectedPaymentMethod,
+              account_bank: this.selectedAccountBank
             },
             responseType: 'blob' // Especifica responseType como 'blob' para manejar archivos binarios
           }
