@@ -70,8 +70,8 @@
                         <vue-good-table class="-mx-6 mb-5" :columns="columnsReservaHotelExpense"
                             styleClass=" vgt-table  table-head   v-middle striped lesspadding2 listview"
                             :rows="this.projects" :sort-options="{
-            enabled: false,
-        }">
+                                enabled: false,
+                            }">
 
 
                             <template v-slot:table-row="props">
@@ -557,15 +557,15 @@ export default {
     },
 
     computed: {
-   
-
-   limitedCustomerOptions() {
-     return this.customerOptions.slice(0, 6);
-   }
 
 
+        limitedCustomerOptions() {
+            return this.customerOptions.slice(0, 6);
+        }
 
-  },
+
+
+    },
 };
 
 

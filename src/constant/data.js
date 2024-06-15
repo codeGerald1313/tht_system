@@ -51,7 +51,10 @@ export const menuItems = [
         childtitle: "Reservas",
         childlink: "/app/products",
       },
-
+      {
+        childtitle: "Reserva de Hotel",
+        childlink: "/app/reservas-hotel",
+      },
       {
         childtitle: "Recibidos & Traspasos",
         childlink: "/app/wishlist",

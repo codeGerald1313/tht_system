@@ -457,7 +457,14 @@ const routes = [
           hide: true,
         },
       },
-      
+      {
+        path: "reservas-hotel",
+        name: "reservas-hotel",
+        component: () => import("@/views/components/index-reservas-hotel.vue"),
+        meta: {
+          hide: true,
+        },
+      },
       {
         path: "products/:id",
         name: "product-details",
