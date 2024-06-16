@@ -322,6 +322,14 @@ export default {
             typebedroom_id: detail.typebedroom_id ?? null,
             date_checkin: detail.date_checkin ?? null,
             date_checkout: detail.date_checkout ?? null,
+            quantity: detail.quantity ?? null,
+            guests: detail.guests ?? null,
+            nights: detail.nights ?? null,
+            price: detail.price ?? null,
+            additional: detail.additional ?? null,
+            discount: detail.discount ?? null,
+            observation: detail.observation ?? null,
+            typebedroom: detail.typebedroom ?? null,
             // Agrega más propiedades de detailbedrooms_data según sea necesario
           })) ?? [],
           detailbedrooms_paid_data: result.detailbedrooms_paid_data?.map(detail => ({
@@ -334,14 +342,121 @@ export default {
 
         console.log(this.projects);
         const toast = useToast();
-        toast.success('Clientes listados correctamente', { timeout: 1500 });
+        toast.success('Reservas de hotel listadas correctamente', { timeout: 1500 });
       } catch (error) {
         console.error('Error al obtener los datos de los empleados:', error);
       }
     }
   },
 
+  watch: {
+    dateValue(newValue, oldValue) {
+      if (!newValue.startDate || !newValue.endDate) {
+        // Si están vacíos, establecer la tabla avanzada en vacío
+        this.advancedTable = [];
+      } else {
+        const startDateOnly = newValue.startDate.split(' ')[0];
+        const endDateOnly = newValue.endDate.split(' ')[0];
 
+        axios.get(`${import.meta.env.VITE_API_URL}/hotelsbookings/list-all?start_date=${startDateOnly}&end_date=${endDateOnly}`, headers)
+          .then(response => {
+            const results = response.data.results; // Accedes directamente a 'results' en la respuesta
+        this.projects = results.map(result => ({
+          id: result.id ?? null,
+          hotel_id: result.hotel_data?.id ?? null,
+          booking_id: result.booking_id ?? null,
+          client_id: result.client_data?.id ?? null,
+          collaborator_id: result.collaborator_id ?? null,
+          code: result.code ?? null,
+          total: result.total ?? null,
+
+          correlative: result.correlative ?? null,
+          reference_voucher: result.reference_voucher ?? null,
+          is_external: result.is_external ?? null,
+          observation: result.observation ?? null,
+          created_at: result.created_at ?? null,
+          updated_at: result.updated_at ?? null,
+          deleted_at: result.deleted_at ?? null,
+          hotel_description: result.hotel_description ?? null,
+          client_fullname: result.client_fullname ?? null,
+          client_document: result.client_document ?? null,
+          client_cellphone: result.client_cellphone ?? null,
+          client_telephone: result.client_telephone ?? null,
+          hotel_data: {
+            id: result.hotel_data?.id ?? null,
+            tourismcitie_id: result.hotel_data?.tourismcitie_id ?? null,
+            tradename: result.hotel_data?.tradename ?? null,
+            document: result.hotel_data?.document ?? null,
+            fullname: result.hotel_data?.fullname ?? null,
+            // Agrega más propiedades de hotel_data según sea necesario
+          },
+          client_data: {
+            id: result.client_data?.id ?? null,
+            typedocument_id: result.client_data?.typedocument_id ?? null,
+            type_client: result.client_data?.type_client ?? null,
+            fullname: result.client_data?.fullname ?? null,
+            document: result.client_data?.document ?? null,
+            // Agrega más propiedades de client_data según sea necesario
+          },
+          booking_data: {
+            id: result.booking_data?.id ?? null,
+            type_booking: result.booking_data?.type_booking ?? null,
+            user_id: result.booking_data?.user_id ?? null,
+            code: result.booking_data?.code ?? null,
+
+            // Agrega más propiedades de booking_data según sea necesario
+          },
+          detailbedrooms_data: result.detailbedrooms_data?.map(detail => ({
+            id: detail.id ?? null,
+            hotelsbooking_id: detail.hotelsbooking_id ?? null,
+            typebedroom_id: detail.typebedroom_id ?? null,
+            date_checkin: detail.date_checkin ?? null,
+            date_checkout: detail.date_checkout ?? null,
+            quantity: detail.quantity ?? null,
+            guests: detail.guests ?? null,
+            nights: detail.nights ?? null,
+            price: detail.price ?? null,
+            additional: detail.additional ?? null,
+            discount: detail.discount ?? null,
+            observation: detail.observation ?? null,
+            typebedroom: detail.typebedroom ?? null,
+            // Agrega más propiedades de detailbedrooms_data según sea necesario
+          })) ?? [],
+          detailbedrooms_paid_data: result.detailbedrooms_paid_data?.map(detail => ({
+            id: detail.id ?? null,
+            // Agrega más propiedades de detailbedrooms_paid_data según sea necesario
+          })) ?? [],
+          // Agrega más propiedades según sea necesario
+        }));
+
+
+        console.log(this.projects);
+        const toast = useToast();
+
+
+        toast.success('Reservas de hotel listadas correctamente', { timeout: 1500 });
+
+      
+          })
+          .catch(error => {
+            console.error(error);
+            if (error.response && error.response.status === 404) {
+              // Si el error es 404 (No encontrado), mostrar un toast con el mensaje del backend
+              const toast = useToast();
+              toast.info('No se encontraron reservas dentro del rango de fechas proporcionado.');
+            } else {
+              // Si es otro tipo de error, mostrar un toast genérico de error
+              const toast = useToast();
+              toast.error('Ocurrió un error al obtener las reservas.');
+            }
+            // Vaciar la tabla avanzada
+            this.advancedTable = [];
+          });
+      }
+    }
+
+
+  },
   mounted() {
     this.listarClientes();
   }
