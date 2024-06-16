@@ -22,7 +22,6 @@
                                 </VueSelect>
 
                             </FromGroup>
-                            <button @click.prevent="openModal" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
                         </div>
                     </div>
                     <div>
@@ -33,14 +32,15 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
-                    <div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    
+                    <!--
                         <FromGroup label="Búsqueda de hotel">
-                            <!-- Componente VueSelect -->
+                           
                             <Select :options="hotelOptions" v-model="bookinghotel.hotel_id"
                                 placeholder="Buscar hotel" />
-                        </FromGroup>
-                    </div>
+                        </FromGroup> -->
+                   
                     <div>
                         <FromGroup label="Asignar habitación">
                             <!-- Componente Select -->
@@ -106,6 +106,11 @@
                                         v-model="projects[props.index].date_checkin" />
 
                                 </span>
+
+                                <span v-if="props.column.field == 'hotel'"
+                                class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
+                                <Select :options="hotelOptions" v-model="projects[props.index].hotel" />
+              </span>
                                 <span v-if="props.column.field == 'checkout'" class="block w-full">
                                     <flat-pickr class="form-control" id="d1" placeholder="yyyy, dd M"
                                         v-model="projects[props.index].date_checkout"
@@ -271,6 +276,10 @@ export default {
                     field: "habitacion",
                 },
                 {
+                    label: "Hotel",
+                    field: "hotel",
+                },
+                {
                     label: "N° PAX	",
                     field: "pasajeross",
                 },
@@ -413,20 +422,20 @@ export default {
             }
         },
         'bookinghotel.client_id'(newClientId) {
-      if (newClientId) {
-        const { value, label } = newClientId;
-        console.log(`Nuevo cliente seleccionado: ${value}, ${label}`);
+            if (newClientId) {
+                const { value, label } = newClientId;
+                console.log(`Nuevo cliente seleccionado: ${value}, ${label}`);
 
-        if (value !== undefined) {
-          this.bookinghotel.client_id_number = value;
-          this.fetchContactNumbers(value);
-        } else {
-          this.fetchContactNumbers(this.bookinghotel.client_id_number);
-        }
-      } else {
-        this.bookinghotel.client_id_number = null;
-      }
-    },
+                if (value !== undefined) {
+                    this.bookinghotel.client_id_number = value;
+                    this.fetchContactNumbers(value);
+                } else {
+                    this.fetchContactNumbers(this.bookinghotel.client_id_number);
+                }
+            } else {
+                this.bookinghotel.client_id_number = null;
+            }
+        },
 
 
         'projects': {
@@ -488,6 +497,7 @@ export default {
                         date_checkin: detail.date_checkin ?? null,
                         date_checkout: detail.date_checkout ?? null,
                         quantity: detail.quantity ?? null,
+                        hotel: detail.hotel_id ?? null,
                         guests: detail.guests ?? null,
                         nights: detail.nights ?? null,
                         price: detail.price ?? null,
@@ -534,13 +544,13 @@ export default {
             this.projects[index].nights = nightCount;
         },
         async fetchContactNumbers(clientIdNumber) {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/clients/cellphone&telephone/${clientIdNumber}`, headers);
-        this.tellephonAndCellphone = response.data.contact_numbers;
-      } catch (error) {
-        console.error('Error al obtener los números de contacto:', error);
-      }
-    },
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/clients/cellphone&telephone/${clientIdNumber}`, headers);
+                this.tellephonAndCellphone = response.data.contact_numbers;
+            } catch (error) {
+                console.error('Error al obtener los números de contacto:', error);
+            }
+        },
         calculateTotalForAllProjects() {
             let total = 0;
             this.projects.forEach(project => {
@@ -581,6 +591,7 @@ export default {
                         date_checkout: detail.date_checkout,
                         quantity: detail.quantity,
                         guests: detail.guests,
+                        hotel_id: detail.hotel,
                         nights: detail.nights,
                         price: detail.price,
                         additional: detail.additional,

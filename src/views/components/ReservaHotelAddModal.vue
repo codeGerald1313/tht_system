@@ -4,18 +4,17 @@
       <Modal title="Registrar reserva de hotel" label="Modal title" :activeModal="store.addmodal" @close="store.closeModal"
           sizeClass="max-w-8xl">
           <form name="book_form" id="book_form" autocomplete="off" class="mx-auto space-y-4">
-              <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                  <div>
-                      <FromGroup label="Asociar reserva">
-                          <InputGroup type="tel" v-model="bookinghotel.booking_id" placeholder="Reserva" />
-                      </FromGroup>
-                  </div>
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          
                   <div>
                       <div class="flex items-center">
-                          <FromGroup label="Cliente Responsable" class="flex-1">
-                              <Select :options="limitedCustomerOptions" v-model="bookinghotel.client_id"
-                                  class="client-select" />
-                          </FromGroup>
+                        <FromGroup label="Cliente Responsable" class="flex-1">
+
+<VueSelect>
+    <vSelect :options="customerOptions" v-model="bookinghotel.client_id" />
+</VueSelect>
+
+</FromGroup>
                           <button @click.prevent="openModal" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
                       </div>
                   </div>
@@ -27,14 +26,8 @@
                   </div>
               </div>
 
-              <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
-                  <div>
-                      <FromGroup label="Búsqueda de hotel">
-                          <!-- Componente VueSelect -->
-                          <Select :options="hotelOptions" v-model="bookinghotel.hotel_id"
-                              placeholder="Buscar hotel" />
-                      </FromGroup>
-                  </div>
+              <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          
                   <div>
                       <FromGroup label="Asignar habitación">
                           <!-- Componente Select -->
@@ -94,6 +87,10 @@
                                       v-model="projects[props.index].quantity" />
 
                               </span>
+                              <span v-if="props.column.field == 'hotel'"
+                                class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
+                                <Select :options="hotelOptions" v-model="projects[props.index].hotel" />
+              </span>
                               <span v-if="props.column.field == 'checkin'"
                                   class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
                                   <flat-pickr class="form-control" id="d1" placeholder="yyyy, dd M"
@@ -193,6 +190,7 @@ import InputGroup from '@/components/InputGroup';
 import Select from "@/components/Select";
 import EditProject from "./ClientAddModal";
 import { useProjectStore } from "@/store/project";
+import vSelect from "vue-select";
 
 import Dropdown from "@/components/Dropdown";
 import Icon from "@/components/Icon";
@@ -214,6 +212,7 @@ export default {
   components: {
       Dropdown,
       Select,
+      vSelect,
       Button,
       FromGroup,
       EditProject,
@@ -261,6 +260,10 @@ export default {
                   label: "Habitacion",
                   field: "habitacion",
               },
+              {
+                    label: "Hotel",
+                    field: "hotel",
+                },
               {
                   label: "N° PAX	",
                   field: "pasajeross",
@@ -391,9 +394,11 @@ export default {
                       });
               }
           }
+
+          this.selectedAsignHotel = null;
       },
       'bookinghotel.client_id'(newClientId, oldClientId) {
-          axios.get(`${import.meta.env.VITE_API_URL}/clients/cellphone&telephone/${newClientId}`, headers)
+          axios.get(`${import.meta.env.VITE_API_URL}/clients/cellphone&telephone/${newClientId.value}`, headers)
               .then(response => {
                   // console.log(response);
 
@@ -424,7 +429,7 @@ export default {
 
           this.fetchClients();
           this.bookinghotel.client_id = newValueIdClient;
-          // console.log('El valor del idCliente es', newValueIdClient);
+          console.log('El valor del idCliente es', newValueIdClient);
       },
       idBooking: function (newValueIdBooking, oldValueIdBooking) {
 
@@ -469,8 +474,8 @@ export default {
       saveReservaHotel() {
           // Construye el objeto de datos a enviar al backend
           const dataToSend = {
-              hotel_id: this.bookinghotel.hotel_id,
-              client_id: this.bookinghotel.client_id,
+              //hotel_id: this.bookinghotel.hotel_id,
+              client_id: this.bookinghotel.client_id.value,
               booking_id: this.idBookingg,
               collaborator_id: this.bookinghotel.collaborator_id,
               code: this.bookinghotel.code,
@@ -487,6 +492,7 @@ export default {
                       quantity: detail.quantity,
                       guests: detail.guests,
                       nights: detail.nights,
+                      hotel_id: detail.hotel,
                       price: detail.price,
                       additional: detail.additional,
                       discount: detail.discount,

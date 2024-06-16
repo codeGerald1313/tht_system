@@ -325,6 +325,7 @@ export default {
             quantity: detail.quantity ?? null,
             guests: detail.guests ?? null,
             nights: detail.nights ?? null,
+            hotel_id: detail.hotel_id ?? null,
             price: detail.price ?? null,
             additional: detail.additional ?? null,
             discount: detail.discount ?? null,
