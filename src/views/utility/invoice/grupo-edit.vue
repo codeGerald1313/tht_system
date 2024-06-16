@@ -286,15 +286,21 @@ export default {
         },
       ],
       shouldWatchGroupTransportId: false, // Inicialmente deshabilitado
+      shouldWatchGroupGuideId: false, // Inicialmente deshabilitado
 
     }
   },
   watch: {
     'group.transport_id': function (newVal, oldVal) {
+      console.log(newVal);
+
       if (!this.shouldWatchGroupTransportId) {
         // Si shouldWatchGroupTransportId es falso, sal de la función sin hacer nada
         return;
       }
+      this.group.transport_idReal = newVal.value;
+      console.log(this.group.transport_idReal );
+
       // Esta función se ejecutará solo si shouldWatchGroupTransportId es verdadero
       // console.log('Nuevo valor de transport_id:', newVal.value);
 
@@ -319,9 +325,21 @@ export default {
         // Si la bandera indica que no se debe observar el cambio de tour_id, sal de la función
         return;
       }
+    },
+      'group.guide_id': async function (newVal, oldVal) {
+        console.log(newVal);
 
-      // Llama al método para obtener los tours de reserva
-      await this.fetchBookingTours(newVal);
+        
+      if (!this.shouldWatchGroupGuideId) {
+        // Si shouldWatchGroupTransportId es falso, sal de la función sin hacer nada
+        return;
+      }
+
+      this.group.guide_idReal = newVal.value;
+      console.log(this.group.guide_idReal);
+
+
+
     },
     '$route': {
       immediate: true,
@@ -812,6 +830,8 @@ export default {
 
     // Después de cargar la aplicación, cambia shouldWatchTourId a true
     this.shouldWatchGroupTransportId = true;
+    this.shouldWatchGroupGuideId = true;
+
   },
   created() {
     this.store = useProjectStore();
