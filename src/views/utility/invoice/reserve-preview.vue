@@ -388,42 +388,44 @@
         </div>
       </div>
 
-      <vue-good-table :columns="columnsReservasAlojamiento"
-        styleClass=" vgt-table  table-head  bordered v-middle striped  listview" :rows="this.reservasInfo"
-        :sort-options="{
-          enabled: false,
-        }">
-        <template v-slot:table-row="props">
-          <span v-if="props.column.field == 'codigo'" class="text-blue-900 font-bold">
-            {{ props.row.code }}
-          </span>
+      <vue-good-table 
+  :columns="columnsReservasAlojamiento"
+  styleClass="vgt-table table-head bordered v-middle striped listview" 
+  :rows="reservasInfo"
+  :sort-options="{ enabled: false }"
+>
+  <template v-slot:table-row="props">
+    <!-- Codigo -->
+    <span v-if="props.column.field == 'codigo'" class="text-blue-900 font-bold">
+      {{ props.row.hotelsbooking.code }}
+    </span>
 
+    <!-- Nombre del Hotel -->
+    <span v-if="props.column.field == 'nombreHotel'" class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
+      <span class="font-bold">{{ props.row.hotel.tradename }}</span> 
+      ({{ props.row.hotel.citie_turistic?.description }})
+      <br>
+      Cell: {{ props.row.hotel.cellphone }}
+    </span>
 
-          <span v-if="props.column.field == 'nombreHotel'"
-            class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
-            <span class="font-bold">{{ props.row.hotel.tradename }}</span>({{
-              props.row.hotel.citie_turistic.description }})
-            <br>
-            Cell: {{ props.row.hotel.cellphone }}
-          </span>
-          <span v-if="props.row.detailbedrooms && props.column.field == 'detallehotel'"
-            class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
-            {{ props.row.detailbedrooms.map(bedroom => `${bedroom.typebedroom.description} (${bedroom.quantity} hab. x
-            ${bedroom.nights} noches)`).join(', ') }}
-          </span>
+    <!-- Detalle del Hotel -->
+    <span v-if="props.column.field == 'detallehotel'" 
+          class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
+          {{ `${props.row.typebedroom.description} (${props.row.quantity} hab. x ${props.row.nights} noches)` }}
 
-          <template v-if="props.column.field === 'action'">
-            <div class="action-btn text-end mr-3">
-              <div class="text-xl">
-                <Icon icon="heroicons-outline:trash" class="text-danger-500" @click="confirmDelete(props.row.id)" />
-              </div>
-            </div>
-          </template>
+    </span>
 
+    <!-- Acciones -->
+    <template v-if="props.column.field === 'action'">
+      <div class="action-btn text-end mr-3">
+        <div class="text-xl">
+          <Icon icon="heroicons-outline:trash" class="text-danger-500" @click="confirmDelete(props.row.id)" />
+        </div>
+      </div>
+    </template>
+  </template>
+</vue-good-table>
 
-        </template>
-
-      </vue-good-table>
 
 
 
@@ -852,18 +854,27 @@ export default {
 
 
           this.projects = data.tours;
-          if (data.hotels != null) {
-            this.reservasInfo = data.hotels;
-          } else {
-            this.reservasInfo = []; // O cualquier otro valor predeterminado que desees
-          }
+          if (data.hotels != null && data.hotels.length > 0) {
+    // Si hay hoteles en data.hotels y no es null
+    this.reservasInfo = []; // Inicializar reservasInfo como un array vacío
+
+    // Iterar sobre cada hotel en data.hotels
+    data.hotels.forEach(hotel => {
+        // Agregar cada detailbedrooms del hotel a this.reservasInfo
+        if (hotel.detailbedrooms && hotel.detailbedrooms.length > 0) {
+            this.reservasInfo.push(...hotel.detailbedrooms);
+        }
+    });
+} else {
+    this.reservasInfo = []; // Si no hay hoteles en data.hotels, asignar un array vacío
+}
 
 
           this.movimientosInfo = data.movements;
           this.commisionInfo = data.commissions;
           this.booking.dateArrivalFormatted = data.created_at; // Formatea la fecha de llegada
 
-          // console.log(this.projects);
+          console.log(this.reservasInfo);
         })
         .catch(error => {
           // Aquí manejas errores si la solicitud falla
