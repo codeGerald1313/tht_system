@@ -402,10 +402,10 @@
 
     <!-- Nombre del Hotel -->
     <span v-if="props.column.field == 'nombreHotel'" class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
-      <span class="font-bold">{{ props.row.hotel.tradename }}</span> 
+      <span class="font-bold">{{ props.row.hotel?.tradename }}</span> 
       ({{ props.row.hotel.citie_turistic?.description }})
       <br>
-      Cell: {{ props.row.hotel.cellphone }}
+      Cell: {{ props.row.hotel?.cellphone }}
     </span>
 
     <!-- Detalle del Hotel -->
