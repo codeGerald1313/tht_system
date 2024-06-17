@@ -23,9 +23,8 @@
         <div class="grid grid-cols-3 gap-5">
           <div style="display: flex; align-items: center;">
             <Textinput label="N° Pax" type="text" placeholder="N° pax" v-model="booking.numPassengers" />
-            <Checkbox label="¿Referenciar?"    :checked="booking.referenciar"
-
- @click="toggleReferences" v-model="booking.referenciar"  />
+            <Checkbox label="¿Referenciar?" :checked="booking.referenciar" @click="toggleReferences"
+              v-model="booking.referenciar" />
           </div>
           <div v-if="booking.referenciar">
             <FromGroup label="Referencia de pasajeros:" class="flex-1">
@@ -62,10 +61,11 @@
         <!-- Cuarta fila -->
         <div class="grid grid-cols-3 gap-5">
           <div>
-            <Checkbox label="¿Es favorito (reserva)?" :checked="booking.isFavorite" v-model="booking.isFavorite"  />
+            <Checkbox label="¿Es favorito (reserva)?" :checked="booking.isFavorite" v-model="booking.isFavorite" />
           </div>
           <div>
-            <Checkbox label="¿Incluye desayuno?" :checked="booking.includeBreakfast" v-model="booking.includeBreakfast" />
+            <Checkbox label="¿Incluye desayuno?" :checked="booking.includeBreakfast"
+              v-model="booking.includeBreakfast" />
           </div>
           <div v-if="booking.includeBreakfast" class="form-group col-lg-9">
             <div class="flex">
@@ -218,7 +218,8 @@
             }">
             <template v-slot:table-row="props">
               <span v-if="props.column.field == 'code'" class="text-blue-900 font-bold">
-                {{ props.row.code }}
+                {{ props.row.hotelsbooking.code }}
+
               </span>
 
               <span v-if="props.column.field == 'nombreHotel'"
@@ -231,8 +232,8 @@
 
               <span v-if="props.column.field == 'detallehotel'"
                 class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
-                {{ props.row.detailbedrooms?.map(bedroom => `${bedroom.description} (${bedroom.quantity} hab. x
-                ${bedroom.nights} noches)`).join(', ') }}
+                {{ `${props.row.typebedroom.description} (${props.row.quantity} hab. x ${props.row.nights} noches)` }}
+
               </span>
 
 
@@ -262,18 +263,18 @@
     <Card class="mt-4" noborder>
 
 
-<div class="grid grid-cols-1 lg:grid-cols-1 gap-5">
+      <div class="grid grid-cols-1 lg:grid-cols-1 gap-5">
 
-  <!-- Segunda fila -->
-  <div class="grid grid-cols-3 gap-5">
+        <!-- Segunda fila -->
+        <div class="grid grid-cols-3 gap-5">
 
-    <Textinput label="Ubicación y referencias para recojo del turista" type="text" placeholder="Referencia lugar llegada"
-      v-model="booking.reference_location" />
+          <Textinput label="Ubicación y referencias para recojo del turista" type="text"
+            placeholder="Referencia lugar llegada" v-model="booking.reference_location" />
 
-  </div>
+        </div>
 
-</div>
-</Card>
+      </div>
+    </Card>
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mt-4">
       <div class="lg:col-span-1"></div> <!-- Columna vacía para mantener la alineación -->
       <div class="lg:col-span-3 flex justify-end">
@@ -807,13 +808,13 @@ export default {
 
         const otherData = JSON.parse(to.query.otherData); // Convertir la cadena JSON a objeto
 
-        // console.log(otherData);
+        console.log(otherData);
 
         // Asignar los valores correspondientes del objeto otherData al objeto booking
         this.booking.clients = otherData.client_id;
 
 
-       //  console.log("Id Cliente", this.booking.clients );
+        //  console.log("Id Cliente", this.booking.clients );
         this.booking.originReserve = otherData.bookingorigin_id;
         this.booking.numPassengers = otherData.nro_pax;
         this.booking.referenciar = otherData.is_reference_pax === 1 ? true : false;
@@ -839,7 +840,17 @@ export default {
         this.booking.endDate = otherData.end_breakfast;
         this.booking.total = otherData.total;
         this.tour.totalTour = otherData.subtotal_tour;
-        this.totalHotelValue = otherData.subtotal_hotel;
+        // Verificar si otherData.hotelsbookings tiene al menos un elemento
+        if (otherData.hotelsbookings && otherData.hotelsbookings.length > 0) {
+          // Obtener el total del primer elemento como un número flotante
+          const firstHotelBookingTotal = parseFloat(otherData.hotelsbookings[0].total);
+
+          // Asignar el total del primer elemento a this.totalHotelValue
+          this.totalHotelValue = firstHotelBookingTotal || 0; // Si es NaN, asignar 0
+        } else {
+          // Manejar el caso donde otherData.hotelsbookings está vacío o no existe
+          this.totalHotelValue = 0; // O algún valor predeterminado apropiado
+        }
 
         this.projects = otherData.tours.map(tour => ({
           id: tour.id,
@@ -856,24 +867,17 @@ export default {
 
         // this.reservasHotel = otherData.hotelsbookings;
 
-        this.reservasHotel = otherData.hotelsbookings.map(booking => ({
-          id: booking.id,
-          code: booking.code,
-          total: booking.total,
-          hotel: {
-            tradename: booking.hotel?.tradename || '', // Si hotel es null o indefinido, establece un valor predeterminado
-            citie_turistic: {
-              description: booking.hotel?.citie_turistic?.description || '', // Si citie_turistic es null o indefinido, establece un valor predeterminado
-            },
-            cellphone: booking.hotel?.cellphone || '', // Si cellphone es null o indefinido, establece un valor predeterminado
-          },
-          detailbedrooms: booking.detailbedrooms.map(bedroom => ({
-            quantity: bedroom.quantity,
-            nights: bedroom.nights,
-            description: bedroom.typebedroom?.description || '', // Si typebedroom es null o indefinido, establece un valor predeterminado
-          })),
-          // Agrega otras propiedades necesarias aquí
-        }));
+        // Procesar bookings de otherData.hotelsbookings para consolidar detailbedrooms
+        if (otherData.hotelsbookings != null && otherData.hotelsbookings.length > 0) {
+          otherData.hotelsbookings.forEach(booking => {
+            if (booking.detailbedrooms && booking.detailbedrooms.length > 0) {
+              this.reservasHotel.push(...booking.detailbedrooms);
+
+            }
+          });
+        }
+
+        console.log(this.reservasHotel, "SDSDSDSDSD");
 
 
 
@@ -908,8 +912,8 @@ export default {
 
 
     limitedCustomerOptions() {
-     return this.customerOptions.slice(0, 6);
-   }
+      return this.customerOptions.slice(0, 6);
+    }
 
   },
   methods: {
