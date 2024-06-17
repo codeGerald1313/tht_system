@@ -347,8 +347,8 @@ export default {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/exports-hotelsbooking/filters-reservas-hotel`, {
           params: {
-            start_range: this.dateValue.startDate,
-              end_range: this.dateValue.endDate,
+            start_date: this.dateValue.startDate,
+            end_date: this.dateValue.endDate,
               tradename: selectedHotelValue,
               typebedroom_id: this.selectedTypeBedroom,
               // Otros parámetros de filtro si es necesario
@@ -374,8 +374,8 @@ export default {
           `${import.meta.env.VITE_API_URL}/export-reservas-hotel`,
           {
             params: {
-              start_range: this.dateValue.startDate,
-              end_range: this.dateValue.endDate,
+              start_date: this.dateValue.startDate,
+              end_date: this.dateValue.endDate,
               tradename: selectedHotelValue,
               typebedroom_id: this.selectedTypeBedroom,
               // Otros parámetros de filtro si es necesario
