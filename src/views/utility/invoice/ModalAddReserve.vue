@@ -500,7 +500,7 @@ export default {
             // console.log(dataToSend);
 
             // Realiza la solicitud HTTP POST al backend
-            axios.post(`${import.meta.env.VITE_API_URL}/hotelsbookings/create`, dataToSend, {
+            axios.post(`${import.meta.env.VITE_API_URL}/hotelsbookings/create-normally`, dataToSend, {
                 ...headers
             })
                 .then(response => {
