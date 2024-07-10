@@ -195,20 +195,17 @@
     <div class="mt-3 flex justify-start items-start">
       <div class="mr-5">
 
-        <Switch label="Ver Historial" v-model="applyForHistory" class="mr-2" />
+        <Switch label="Ver Historial" v-model="applyForHistory" class="mr-2" @change="handleSwitchChange" />
       </div>
 
-      <div class="mb-2">
-        <Switch label="Ver todos los movimientos del mes" v-model="applyForEntireMonth" />
-      </div>
+
     </div>
 
     <div class="mt-3 flex justify-between items-start">
       <div class="w-full"> <!-- Contenedor para List con ancho completo -->
-        <List v-if="!applyForEntireMonth && !applyForHistory" /> <!-- Mostrar solo si applyForEntireMonth es false -->
-        <ListEgreso v-if="!applyForEntireMonth && !applyForHistory" class="mt-5" />
+
         <!-- Mostrar solo si applyForEntireMonth es false -->
-        <ListIngresoEgreso v-if="applyForEntireMonth" class="mt-5" />
+        <ListIngresoEgreso v-if="applyForEntireMonth && !applyForHistory" class="mt-5" />
         <CajaHistorialA v-if="applyForHistory" class="mt-5" />
 
         <!-- Mostrar solo si applyForEntireMonth es true -->
@@ -299,7 +296,7 @@ export default {
       monto: "2,447.700", // Valor estático inicial
       cajaInicial: '',
       authStore: useAuth(),
-      applyForEntireMonth: false,
+      applyForEntireMonth: true,
       applyForHistory: false,
       idBoxed: "1",
       showModalCierre: false,
@@ -375,7 +372,10 @@ export default {
     openBox() {
       store.openProject();
     },
-
+    handleSwitchChange() {
+      // Al cambiar el switch, actualiza applyForEntireMonth según applyForHistory
+      this.applyForEntireMonth = !this.applyForHistory;
+    },
     handleVerDocumento() {
       axios.get(`${import.meta.env.VITE_API_URL}/list-box-cuadre-akemy/${this.id}`)
         .then(response => {
