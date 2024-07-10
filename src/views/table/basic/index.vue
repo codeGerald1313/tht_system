@@ -182,7 +182,7 @@ export default {
     return {
       searchTerm: "",
       current: 1,
-      perpage: 3,
+      perpage: 10,
       pageRange: 10,
       selectedHotel: null,
       dateValue: null,

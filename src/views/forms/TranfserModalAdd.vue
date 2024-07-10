@@ -4,6 +4,7 @@
       class="max-w-xs mx-auto" centered>
       <form @submit.prevent="save" class="space-y-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
           <div class="md:col-span-2">
             <div class="form-group relative">
               <FromGroup label="¿De donde se descontara el dinero?" name="d2">
@@ -13,7 +14,16 @@
           </div>
           <div>
             <div class="form-group relative">
-              <FromGroup label="Monto de transferencia" name="d2" class="mt-3" v-if="showAmountInputs">
+              <div class="md:col-span-2">
+                <div class="form-group relative">
+                  <FromGroup label="Seleccionar cuenta bancaria" name="account"  v-if="showAmountInputs">
+                    <Select id="bank-account" :options="bankAccounts" v-model="selectedBankAccount"
+                      class="account-select" />
+                  </FromGroup>
+                </div>
+              </div>
+
+              <FromGroup label="Monto de transferencia" name="d2" class="mt-3" v-if="showAmountInputs2">
                 <InputGroup type="text" appendIcon="heroicons-outline:cash" placeholder="Ingresar Monto"
                   v-model.trim="object.description" />
               </FromGroup>
@@ -27,7 +37,7 @@
 
 
             <div class="form-group relative">
-              <FromGroup label="Total de dinero en la" name="d3" class="mt-3  text-center" v-if="showAmountInputs">
+              <FromGroup label="Total de dinero en la" name="d3" class="mt-3  text-center" v-if="showAmountInputs2">
                 <span class="text-red-500 text-4xl text-center">{{ object.totalAcumlado }}</span>
               </FromGroup>
             </div>
@@ -52,7 +62,7 @@ import Button from "@/components/Button";
 import Modal from "@/components/Modal";
 import Textinput from "@/components/Textinput";
 import { useProjectStore } from "@/store/project";
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import axios from "axios";
 import { useAuth } from "@/store/auth";
 import { useToast } from "vue-toastification";
@@ -76,6 +86,7 @@ const props = defineProps({
   id: String // Puedes ajustar el tipo de dato según el tipo esperado del prop 'id'
 });
 
+const bankAccounts = ref([]);
 
 const paymentMethods = [
   { value: 1, label: "Efectivo" },
@@ -83,9 +94,11 @@ const paymentMethods = [
   { value: 3, label: "Cheque" },
   { value: 4, label: "Depósito a cuenta" }
 ];
-
+const selectedBankAccount = ref(null);
 const selectedPaymentType = ref(null);
+
 const showAmountInputs = ref(false);
+const showAmountInputs2 = ref(false);
 
 // Método para guardar los datos y realizar la solicitud POST
 const save = () => {
@@ -133,25 +146,24 @@ const cancel = () => {
   store.closeModalTransfer();
 };
 
-// Observa cambios en selectedPaymentType y muestra u oculta los inputs en función del valor seleccionado
-watch(selectedPaymentType, (newValue) => {
-  showAmountInputs.value = newValue !== null;
-});
 
 // Observa cambios en selectedPaymentType y muestra u oculta los inputs en función del valor seleccionado
 watch(selectedPaymentType, (newValue, oldValue) => {
   // console.log('Valor seleccionado:', newValue);
   showAmountInputs.value = newValue !== null;
 
+});
 
-  // console.log(props.id)
+watch(selectedBankAccount, (newValue, oldValue) => {
+  // console.log('Valor seleccionado:', newValue);
+  showAmountInputs2.value = newValue !== null;
 
   // Llamar al método para obtener el total del dinero en caja cada vez que se active el watcher
   if (newValue !== null) {
     // Realizar la solicitud al backend para obtener el total del dinero en la caja
-    axios.post(`${import.meta.env.VITE_API_URL}/transfers-moneyboxes/calculate-totals`, {
+    axios.post(`${import.meta.env.VITE_API_URL}/transfers-moneyboxes/calculate-totals-for-account`, {
       moneybox_id: props.id, // ID de la caja de dinero (en duro por ahora)
-      paymentmethod_id: newValue, // ID del método de pago seleccionado
+      accountbank_id: selectedBankAccount.value, // ID del método de pago seleccionado
     }, {
       ...headers
     })
@@ -166,8 +178,8 @@ watch(selectedPaymentType, (newValue, oldValue) => {
         console.error('Error al obtener el total del dinero en caja:', error);
       });
   }
+ 
 });
-
 const inputValue = ref('');
 const inputTimeout = ref(null);
 
@@ -199,6 +211,26 @@ const handleInput = (event) => {
 };
 
 
+// Método para obtener los métodos de pago desde el backend
+const fetchAccountBanks = async () => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/accountbanks/list`, { ...headers });
+
+    console.log(response);
+    bankAccounts.value = response.data.data.map(method => ({
+      value: method.id,
+      label: method.name
+    }));
+  } catch (error) {
+    console.error('Error al obtener los métodos de pago:', error);
+    toast.error('Error al obtener los métodos de pago');
+  }
+};
+
+
+onMounted(() => {
+  fetchAccountBanks();
+});
 
 
 </script>
