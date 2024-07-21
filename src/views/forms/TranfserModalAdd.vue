@@ -16,7 +16,7 @@
             <div class="form-group relative">
               <div class="md:col-span-2">
                 <div class="form-group relative">
-                  <FromGroup label="Seleccionar cuenta bancaria" name="account"  v-if="showAmountInputs">
+                  <FromGroup label="Seleccionar cuenta bancaria" name="account" v-if="showAmountInputs">
                     <Select id="bank-account" :options="bankAccounts" v-model="selectedBankAccount"
                       class="account-select" />
                   </FromGroup>
@@ -24,6 +24,10 @@
               </div>
 
               <FromGroup label="Monto de transferencia" name="d2" class="mt-3" v-if="showAmountInputs2">
+                <InputGroup type="text" appendIcon="heroicons-outline:cash" placeholder="Ingresar Monto"
+                  v-model.trim="object.description" />
+              </FromGroup>
+              <FromGroup label="Monto de transferencia" name="d2" class="mt-3" v-if="showAmountInputs3">
                 <InputGroup type="text" appendIcon="heroicons-outline:cash" placeholder="Ingresar Monto"
                   v-model.trim="object.description" />
               </FromGroup>
@@ -38,6 +42,10 @@
 
             <div class="form-group relative">
               <FromGroup label="Total de dinero en la" name="d3" class="mt-3  text-center" v-if="showAmountInputs2">
+                <span class="text-red-500 text-4xl text-center">{{ object.totalAcumlado }}</span>
+              </FromGroup>
+
+              <FromGroup label="Total de dinero en la" name="d3" class="mt-3  text-center" v-if="showAmountInputs3">
                 <span class="text-red-500 text-4xl text-center">{{ object.totalAcumlado }}</span>
               </FromGroup>
             </div>
@@ -99,6 +107,7 @@ const selectedPaymentType = ref(null);
 
 const showAmountInputs = ref(false);
 const showAmountInputs2 = ref(false);
+const showAmountInputs3 = ref(false);
 
 // Método para guardar los datos y realizar la solicitud POST
 const save = () => {
@@ -146,13 +155,41 @@ const cancel = () => {
   store.closeModalTransfer();
 };
 
-
-// Observa cambios en selectedPaymentType y muestra u oculta los inputs en función del valor seleccionado
 watch(selectedPaymentType, (newValue, oldValue) => {
-  // console.log('Valor seleccionado:', newValue);
-  showAmountInputs.value = newValue !== null;
+  console.log('Valor seleccionado:', newValue);
+  
+  // Condición para establecer showAmountInputs
+  if (newValue === '4') {
+    showAmountInputs.value = true;
+  } else {
+    showAmountInputs.value = false;
+  }
 
+  // Condición para activar el método y establecer showAmountInputs3
+  if (['1', '2', '3'].includes(newValue)) {
+    showAmountInputs3.value = true;
+
+    if (newValue !== null) {
+      // Realizar la solicitud al backend para obtener el total del dinero en la caja
+      axios.post(`${import.meta.env.VITE_API_URL}/transfers-moneyboxes/calculate-totals`, {
+        moneybox_id: props.id, // ID de la caja de dinero (en duro por ahora)
+        paymentmethod_id: selectedPaymentType.value, // ID del método de pago seleccionado
+      }, {
+        ...headers
+      })
+        .then(response => {
+          // Actualizar el valor de object.totalAcumlado con el total obtenido del backend
+          object.value.totalAcumlado = response.data.total;
+        })
+        .catch(error => {
+          console.error('Error al obtener el total del dinero en caja:', error);
+        });
+    }
+  } else {
+    showAmountInputs3.value = false;
+  }
 });
+
 
 watch(selectedBankAccount, (newValue, oldValue) => {
   // console.log('Valor seleccionado:', newValue);
@@ -178,7 +215,7 @@ watch(selectedBankAccount, (newValue, oldValue) => {
         console.error('Error al obtener el total del dinero en caja:', error);
       });
   }
- 
+
 });
 const inputValue = ref('');
 const inputTimeout = ref(null);
