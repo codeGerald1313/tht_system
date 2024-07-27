@@ -18,6 +18,13 @@ const routes = [
     component: () => import("@/views/auth/login/index.vue"),
   },
   {
+    path: "/login3",
+    name: "login3",
+    component: () => import("@/views/auth/login/login3.vue"),
+    meta: { requireAuth: true },
+    beforeEnter: requireAuth,
+  },
+  {
     path: "/app",
     name: "Layout",
     redirect: "/app/home",
@@ -743,6 +750,25 @@ const routes = [
         name: "icons",
         component: () => import("@/views/icons.vue"),
       },
+    ],
+  },
+  {
+    path: "/app-guaros",
+    name: "LayoutGuaros",
+    redirect: "/app-guaros/home-guaros",
+    component: () => import("@/Layout/index-guaros.vue"),
+    meta: { requireAuth: true },
+    beforeEnter: requireAuth,
+    children: [
+      {
+        path: "home-guaros",
+        name: "home-guaross",
+        component: () => import("@/views/home/crm.vue"),
+        meta: {
+          hide: true,
+        },
+      },
+      // otras rutas específicas de guaros
     ],
   },
   {

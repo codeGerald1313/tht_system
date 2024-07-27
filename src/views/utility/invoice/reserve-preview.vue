@@ -543,6 +543,13 @@
 
           </span>
 
+          
+          <span class="font-bold" v-if="props.column.field == 'branch.description'">
+            {{ props.row.branch?.description }}
+
+          </span>
+
+
           <span v-if="props.column.field == 'totalcomision'">
             {{ (parseFloat(props.row.total_tour) + parseFloat(props.row.total_hotel)).toFixed(2) }}
           </span>
@@ -1327,7 +1334,10 @@ export default {
           label: "COMISIÓN TOURS	",
           field: "comisiontours",
         },
-
+        {
+          label: "CAJA	",
+          field: "branch.description",
+        },
         {
           label: "TOTAL COMISIÓN",
           field: "totalcomision",

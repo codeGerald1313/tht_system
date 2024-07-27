@@ -1,6 +1,7 @@
 <template>
   <div>
-    <Modal :activeModal="store.addmodal3" @close="store.closeModal3" title="Registrar Nuevo Egreso - Caja General" centered>
+    <Modal :activeModal="store.addmodal3" @close="store.closeModal3" title="Registrar Nuevo Egreso - Caja General"
+      centered sizeClass="max-w-2xl">
       <form @submit.prevent="addProject" class="space-y-4">
         <div class="grid lg:grid-cols-2 gap-4 grid-cols-1">
           <FromGroup name="d1" :error="boxSelectedError">
@@ -24,15 +25,63 @@
               placeholder="Seleccione concepto" />
             <span v-if="!conceptSelected" class="text-red-500">Por favor selecciona un concepto</span>
           </FromGroup>
+
+
         </div>
 
         <div class="grid lg:grid-cols-1 gap-4 grid-cols-1">
-          <div v-if="selected === 'clients'" class="flex items-center">
-            <FromGroup label="Clientes" class="flex-1">
-              <Select :options="limitedCustomerOptions" v-model="selectedCustomer" class="client-select" />
+          <FromGroup v-if="showCustomerSelect" label="Busqueda de Reservas" class="flex-1">
+
+            <VueSelect>
+              <vSelect :options="bookingOptions" v-model="income.booking_id"
+                placeholder="Ingrese Códido o proforma de reserva" @search="updateSearchTerm"
+                @input="handleSelectionChange" />
+
+
+            </VueSelect>
+
+
+          </FromGroup>
+
+          <div class="flex items-center">
+            <FromGroup label="Colaborador" class="flex-1">
+
+              <VueSelect>
+                <vSelect :options="projects" v-model="income.collaborator_id" />
+              </VueSelect>
+
+
             </FromGroup>
 
-            <button @click="openModal" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
+            <button @click.prevent="openModalColaborador" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
+          </div>
+          <!-- Contenedor para total de hotel y total de tours en la misma fila -->
+          <div class="grid grid-cols-2 gap-4">
+            <!-- FormGroup para total de hotel -->
+            <FromGroup label="Total Hotel" class="flex-1">
+              <Textinput type="text" v-model="income.total_hotel" placeholder="Ingrese Total Hotel"
+                class="form-input" />
+            </FromGroup>
+
+            <!-- FormGroup para total de tours -->
+            <FromGroup label="Total Tours" class="flex-1">
+              <Textinput type="text" v-model="income.total_tour" placeholder="Ingrese Total Tours" class="form-input" />
+            </FromGroup>
+          </div>
+
+          <!-- FormGroup para observación -->
+          <FromGroup label="Observación" class="flex-1">
+            <Textinput type="text" v-model="income.observation" placeholder="Ingrese Observación" class="form-input" />
+          </FromGroup>
+
+
+          <div v-if="selected === 'clients'" class="flex items-center">
+            <FromGroup label="Clientes" class="flex-1">
+              <Select :options="limitedCustomerOptions" v-model="selectedCustomer" placeholder="Seleccionar Cliente"
+                class="client-select" />
+            </FromGroup>
+
+
           </div>
           <div v-else-if="selected === 'providers'" class="flex items-center">
             <FromGroup label="Proveedores" class="flex-1">
@@ -45,7 +94,10 @@
               <Select :options="employeeOptions" v-model="selectedEmployee" class="employee-select" />
             </FromGroup>
           </div>
-          <FromGroup label="Fecha del movimiento"  name="d1">
+
+
+
+          <FromGroup label="Fecha del movimiento" name="d1">
             <flat-pickr v-model="income.date_movement" class="form-control" id="d1" placeholder="yyyy, dd M" />
           </FromGroup>
 
@@ -169,10 +221,10 @@
                 <FromGroup label="Fecha de nacimiento">
                   <flat-pickr v-model="client.date_birthday" class="form-control" id="date_birthday"
                     placeholder="yyyy, dd M" :config="{
-      altInput: true,
-      altFormat: 'F j, Y',
-      dateFormat: 'Y-m-d',
-    }" />
+                      altInput: true,
+                      altFormat: 'F j, Y',
+                      dateFormat: 'Y-m-d',
+                    }" />
                 </FromGroup>
               </div>
               <div>
@@ -454,6 +506,8 @@ import InputGroup from "@/components/InputGroup";
 
 import Modal from "@/components/Modal";
 import Textinput from "@/components/Textinput";
+import VueSelect from "@/components/Select/VueSelect.vue";
+import vSelect from "vue-select";
 
 import { useField, useForm } from "vee-validate";
 import { useProjectStore } from "@/store/project";
@@ -478,6 +532,7 @@ const show3 = ref(false);
 
 const show4 = ref(false);
 
+const showCustomerSelect = ref(false);
 
 
 const departments = ref([]);
@@ -516,10 +571,14 @@ const income = ref({
   reference_operation: '',
   nro_voucher: '',
   serie: '',
+  date_commision: '',
   correlative: '',
   billing_external_id: '',
   billing_hash: '',
   motive_cancelled: '',
+  collaborator_id: '',
+  total_hotel: '',
+  total_tour: '',
   billing_cancelled: '',
   date_repayment: '',
   repaymentmovement_id: '',
@@ -532,6 +591,76 @@ const income = ref({
   observation: '',
   is_visible: '',
 });
+
+// Declarar los datos reactivos para bookings
+const bookingOptions = ref([]);
+const selectedBooking = ref(null);
+const searchTerm = ref('');
+const projects = ref([]);
+
+
+
+const listarColaboradores = async (term) => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/collaborators/list`, headers);
+    projects.value = response.data.data.map(customer => ({
+      value: customer.id,
+      label: customer.fullname
+    }));
+
+
+    const toast = useToast();
+    toast.success('Coolaboradores listados correctamente', {
+      timeout: 1500, // Cierre automático después de 1.5 segundos
+    });
+
+    // console.log(this.projects);
+  } catch (error) {
+    // console.error('Error al obtener los datos de los empleados:', error);
+  }
+}
+// Método para buscar las reservas
+const fetchBookings = async (term) => {
+  try {
+    if (term) {
+      // Asegurarse de que el término de búsqueda es una cadena de texto
+      const searchTermString = String(term);
+
+      // Inicializar los parámetros de filtro
+      const params = {};
+
+      // Determinar el tipo de búsqueda y asignar el parámetro correspondiente
+      if (searchTermString.startsWith('R')) {
+        params.code = searchTermString;
+      } else if (searchTermString.length === 6 && !isNaN(searchTermString)) {
+        params.reference_voucher = searchTermString;
+      } else {
+        params.client_fullname = searchTermString;
+      }
+
+      // Realizar la solicitud con el parámetro adecuado
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/bookings/filter`, { params, ...headers });
+
+      // Poblar las opciones del VueSelect con los datos recibidos
+      bookingOptions.value = response.data.bookings.map(booking => ({
+        value: booking.id,
+        label: booking.details
+      }));
+    }
+  } catch (error) {
+    console.error('Error fetching bookings:', error);
+  }
+};
+
+// Watcher para escuchar cambios en searchTerm
+watch(searchTerm, (newTerm) => {
+  fetchBookings(newTerm);
+});
+
+// Método para actualizar searchTerm
+const updateSearchTerm = (term) => {
+  searchTerm.value = term;
+};
 
 const fetchDepartments = async () => {
   try {
@@ -632,6 +761,14 @@ const fetchProviders = async () => {
   }
 };
 
+// Método para manejar el cambio de selección
+const handleSelectionChange = (selected) => {
+  // `selected` contiene el objeto seleccionado
+  if (selected) {
+    console.log('ID del booking seleccionado:', selected.value);
+    // Puedes hacer algo con el ID aquí, como actualizar el estado o hacer una solicitud adicional
+  }
+};
 
 const fetchEmployees = async () => {
   try {
@@ -832,7 +969,10 @@ const saveIngreso = () => {
   }
 
 
-  // console.log(income.value)
+  income.value.booking_id = income.value.booking_id.value;
+  income.value.collaborator_id = income.value.collaborator_id.value;
+
+  console.log(income.value)
 
   axios.post(`${import.meta.env.VITE_API_URL}/moneys-akemy/create-expense`, income.value, {
     ...headers
@@ -843,17 +983,17 @@ const saveIngreso = () => {
       toast.success(response.data.message);
     })
     .catch(error => {
-  console.error('Error al guardar los datos:', error);
-  if (error.response && error.response.data && error.response.data.message) {
-    cancel();
+      console.error('Error al guardar los datos:', error);
+      if (error.response && error.response.data && error.response.data.message) {
+        cancel();
 
-    const errorMessage = error.response.data.message;
-    toast.error(errorMessage);
-  } else {
-    // Si no se puede acceder al mensaje de error específico, muestra un mensaje genérico
-    toast.error('Ha ocurrido un error al guardar los datos. Por favor, inténtalo de nuevo.');
-  }
-});
+        const errorMessage = error.response.data.message;
+        toast.error(errorMessage);
+      } else {
+        // Si no se puede acceder al mensaje de error específico, muestra un mensaje genérico
+        toast.error('Ha ocurrido un error al guardar los datos. Por favor, inténtalo de nuevo.');
+      }
+    });
 
 
 };
@@ -880,6 +1020,12 @@ const provider = ref({
 
 const selectedPaymentType = ref('cash'); // Por defecto se inicia en "Efectivo"
 
+// Watcher para escuchar cambios en selectedBooking
+watch(selectedBooking, (newSelection) => {
+  if (newSelection) {
+    console.log('ID del booking seleccionado:', newSelection.value);
+  }
+});
 
 
 
@@ -1027,27 +1173,27 @@ const handleProvinceChange = async () => {
 
 const fetchRucData = () => {
 
-axios.post(`${import.meta.env.VITE_API_URL}/getRucData`, {
+  axios.post(`${import.meta.env.VITE_API_URL}/getRucData`, {
     ruc: provider.value.document
   })
-  .then(response => {
-    // console.log('Respuesta de la API RUC:', response.data);
-    
-    provider.value.fullname = response.data.data.nombre_o_razon_social;
-    provider.value.address = response.data.data.direccion;
-  })
-  .catch(error => {
-    console.error('Error al obtener datos del RUC:', error);
-    // Aquí puedes manejar errores, como mostrar un mensaje al usuario
-  });
+    .then(response => {
+      // console.log('Respuesta de la API RUC:', response.data);
+
+      provider.value.fullname = response.data.data.nombre_o_razon_social;
+      provider.value.address = response.data.data.direccion;
+    })
+    .catch(error => {
+      console.error('Error al obtener datos del RUC:', error);
+      // Aquí puedes manejar errores, como mostrar un mensaje al usuario
+    });
 };
 
 
 
 const fetchDniData = () => {
   axios.post(`${import.meta.env.VITE_API_URL}/getDniData`, {
-      dni: client.value.document
-    })
+    dni: client.value.document
+  })
     .then(response => {
       // console.log('Respuesta de la API DNI:', response.data.nombre_completo);
       // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
@@ -1219,7 +1365,7 @@ const saveAccountBank = () => {
 
 
     // Imprime el label seleccionado
-   //  console.log('Label seleccionado:', selectedIndex, selectedLabel);
+    //  console.log('Label seleccionado:', selectedIndex, selectedLabel);
   } else {
     // console.log('No se ha seleccionado ninguna opción.');
   }
@@ -1282,7 +1428,12 @@ watch(() => selectedBox.value, (newValue, oldValue) => {
 
 
 watch(() => conceptSelected.value, (newValue, oldValue) => {
-
+  if (newValue === '8') {
+    showCustomerSelect.value = true;
+    console.log('El id seleccionado es 6');
+  } else {
+    showCustomerSelect.value = false;
+  }
 
 });
 
@@ -1508,6 +1659,7 @@ onMounted(async () => {
     await fetchEmployees();
     await fetchDepartments();
     await fetchTypeComprobante();
+    await listarColaboradores();
   } catch (error) {
     console.error("Error al realizar llamadas a la API:", error);
   }

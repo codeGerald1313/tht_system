@@ -61,12 +61,17 @@ export default {
       profileImg,
       userName: '',
       ProfileMenu: [
-    
+      {
+          label: "Guaros Group",
+          icon: "heroicons-outline:shield-check",
+          link: this.redirectToGuaros,
+        },
         {
           label: "Cerrar Sesión",
           icon: "heroicons-outline:login",
           link: this.handleLogout,
         },
+        
       ],
     };
   },
@@ -76,6 +81,9 @@ export default {
       const auth = useAuth();
       auth.logout();
 
+    },
+    redirectToGuaros() {
+      this.$router.push('/login3');
     }
   },
   created() {
