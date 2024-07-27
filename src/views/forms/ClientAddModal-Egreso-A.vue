@@ -29,7 +29,7 @@
 
         </div>
 
-        <div class="grid lg:grid-cols-1 gap-4 grid-cols-1">
+        <div v-if="showCustomerSelect" class="grid lg:grid-cols-1 gap-4 grid-cols-1">
           <FromGroup v-if="showCustomerSelect" label="Busqueda de Reservas" class="flex-1">
 
             <VueSelect>
@@ -43,7 +43,7 @@
 
           </FromGroup>
 
-          <div class="flex items-center">
+          <div v-if="showCustomerSelect" class="flex items-center">
             <FromGroup  v-if="showCustomerSelect" label="Colaborador" class="flex-1">
 
               <VueSelect>
@@ -56,7 +56,7 @@
             <button  v-if="showCustomerSelect" @click.prevent="openModalColaborador" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
           </div>
           <!-- Contenedor para total de hotel y total de tours en la misma fila -->
-          <div class="grid grid-cols-2 gap-4">
+          <div v-if="showCustomerSelect" class="grid grid-cols-2 gap-4">
             <!-- FormGroup para total de hotel -->
             <FromGroup  v-if="showCustomerSelect" label="Total Hotel" class="flex-1">
               <Textinput type="text" v-model="income.total_hotel" placeholder="Ingrese Total Hotel"
