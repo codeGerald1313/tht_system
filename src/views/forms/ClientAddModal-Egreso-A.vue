@@ -44,7 +44,7 @@
           </FromGroup>
 
           <div class="flex items-center">
-            <FromGroup label="Colaborador" class="flex-1">
+            <FromGroup  v-if="showCustomerSelect" label="Colaborador" class="flex-1">
 
               <VueSelect>
                 <vSelect :options="projects" v-model="income.collaborator_id" />
@@ -53,24 +53,24 @@
 
             </FromGroup>
 
-            <button @click.prevent="openModalColaborador" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
+            <button  v-if="showCustomerSelect" @click.prevent="openModalColaborador" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
           </div>
           <!-- Contenedor para total de hotel y total de tours en la misma fila -->
           <div class="grid grid-cols-2 gap-4">
             <!-- FormGroup para total de hotel -->
-            <FromGroup label="Total Hotel" class="flex-1">
+            <FromGroup  v-if="showCustomerSelect" label="Total Hotel" class="flex-1">
               <Textinput type="text" v-model="income.total_hotel" placeholder="Ingrese Total Hotel"
                 class="form-input" />
             </FromGroup>
 
             <!-- FormGroup para total de tours -->
-            <FromGroup label="Total Tours" class="flex-1">
+            <FromGroup  v-if="showCustomerSelect" label="Total Tours" class="flex-1">
               <Textinput type="text" v-model="income.total_tour" placeholder="Ingrese Total Tours" class="form-input" />
             </FromGroup>
           </div>
 
           <!-- FormGroup para observación -->
-          <FromGroup label="Observación" class="flex-1">
+          <FromGroup  v-if="showCustomerSelect" label="Observación" class="flex-1">
             <Textinput type="text" v-model="income.observation" placeholder="Ingrese Observación" class="form-input" />
           </FromGroup>
 
