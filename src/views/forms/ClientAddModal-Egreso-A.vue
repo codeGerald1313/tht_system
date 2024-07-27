@@ -29,7 +29,7 @@
 
         </div>
 
-        <div v-if="showCustomerSelect" class="grid lg:grid-cols-1 gap-4 grid-cols-1">
+        <div  class="grid lg:grid-cols-1 gap-4 grid-cols-1">
           <FromGroup v-if="showCustomerSelect" label="Busqueda de Reservas" class="flex-1">
 
             <VueSelect>
