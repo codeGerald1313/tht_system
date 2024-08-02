@@ -69,8 +69,33 @@
           </span>
 
           <span v-if="props.column.field == 'pasajero'" class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
-            {{ props.row.booking_nro_pax }}
+            <!-- Verificar si hay información del tour -->
+            <template v-if="hasTourInformation(props.row)">
+              <!-- Iterar sobre la lista de tours -->
+              <template v-for="tour in props.row.tours" :key="tour.id">
+                <!-- Verificar si el tour_id coincide con el id del tour -->
+                <template v-if="tour.id === props.row.tour_id">
+                  <!-- Mostrar la cantidad del tour si está presente -->
+                  <template v-if="tour.pivot && tour.pivot.quantity">
+                    {{ tour.pivot.quantity }}
+                  </template>
+                  <!-- Mostrar mensaje si no hay cantidad disponible para el tour -->
+                  <template v-else>
+                    - No hay cantidad disponible
+                  </template>
+                </template>
+              </template>
+              <!-- Mostrar mensaje si no se encontró un tour con el id correspondiente -->
+              <template v-if="!props.row.tours.some(tour => tour.id === props.row.tour_id)">
+                - No hay información disponible
+              </template>
+            </template>
+            <!-- Mostrar mensaje si no hay información de tours -->
+            <template v-else>
+              - No hay información disponible
+            </template>
           </span>
+
           <span v-if="props.column.field == 'vehiculo'" class="block min-w-[108px]">
             <span
               :class="{ 'font-bold': true, 'text-blue-500': props.row.booking_tour_vehicle_tour === 1, 'text-yellow-500': props.row.booking_tour_vehicle_tour === 2 }"
@@ -371,7 +396,7 @@ export default {
           // this.bookingTourIds = this.projects.map(project => project.booking_tour_id);
           toast.info('Tours Pendientes encontrados con éxito');
 
-          // console.log(this.bookingTourIds);
+          console.log(this.projects);
         } else {
           toast.info('Este Tour no tiene Reservas Pendientes');
           this.projects = [];
@@ -418,24 +443,26 @@ export default {
       this.$router.push({ name: 'reserve-preview', params: { id: reservaId } });
     },
     updateCapacitySelected(row) {
-      // console.log(row);
+       // Verificar si la información del tour está presente en la fila
+  const tour = row.tours.find(tour => tour.id === row.tour_id);
 
-      if (row.booking_is_grouped) {
-        // Si está marcado, añadir el valor de nro_pax y el booking_id al array
-        this.group.capacity_selected += row.booking_nro_pax;
-        this.bookingTourIds.push(row.booking_tour_id);
+if (tour) {
+  // Si está marcado, añadir el valor de nro_pax y el booking_id al array
+  if (row.booking_is_grouped) {
+    this.group.capacity_selected += tour.pivot.quantity || 0;
+    this.bookingTourIds.push(row.booking_tour_id);
 
-        // console.log(this.bookingTourIds);
-      } else {
-        // Si está desmarcado, restar el valor de nro_pax y eliminar el booking_id del array
-        this.group.capacity_selected -= row.booking_nro_pax;
-        const index = this.bookingTourIds.indexOf(row.booking_tour_id);
-        if (index !== -1) {
-          this.bookingTourIds.splice(index, 1);
-        }
-        // console.log(this.bookingTourIds);
-
-      }
+    // console.log(this.bookingTourIds);
+  } else {
+    // Si está desmarcado, restar el valor de nro_pax y eliminar el booking_id del array
+    this.group.capacity_selected -= tour.pivot.quantity || 0;
+    const index = this.bookingTourIds.indexOf(row.booking_tour_id);
+    if (index !== -1) {
+      this.bookingTourIds.splice(index, 1);
+    }
+    // console.log(this.bookingTourIds);
+  }
+}
 
       // Calcular la cantidad disponible restando la capacidad total del vehículo menos la cantidad seleccionada
       this.group.capacity_available = this.group.capacity_vehicle - this.group.capacity_selected;

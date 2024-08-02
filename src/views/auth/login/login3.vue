@@ -53,13 +53,13 @@
         </div>
       </div>
       <div class="auth-footer3 text-white py-5 px-5 text-xl w-full">
-        Unlock your Project performance
+        Guaros Group & Tht Admin System
       </div>
     </div>
   </div>
 </template>
 <script>
-import Signin from "../common/Signin";
+import Signin from "../common/SigninAdminGuaros";
 import Social from "../common/Social";
 // Image Import
 import loginBg from "@/assets/images/all-img/page-bg.png";

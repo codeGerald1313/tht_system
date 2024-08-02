@@ -70,7 +70,7 @@
           </span>
 
           <span v-if="props.column.field == 'pasajero'" class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
-            {{ props.row.booking_tour.booking.nro_pax }}
+            {{ props.row.quantity }}
           </span>
           <span v-if="props.column.field == 'vehiculo'" class="block min-w-[108px]">
             <span
@@ -299,7 +299,7 @@ export default {
         return;
       }
       this.group.transport_idReal = newVal.value;
-      console.log(this.group.transport_idReal );
+      console.log(this.group.transport_idReal);
 
       // Esta función se ejecutará solo si shouldWatchGroupTransportId es verdadero
       // console.log('Nuevo valor de transport_id:', newVal.value);
@@ -326,10 +326,10 @@ export default {
         return;
       }
     },
-      'group.guide_id': async function (newVal, oldVal) {
-        console.log(newVal);
+    'group.guide_id': async function (newVal, oldVal) {
+      console.log(newVal);
 
-        
+
       if (!this.shouldWatchGroupGuideId) {
         // Si shouldWatchGroupTransportId es falso, sal de la función sin hacer nada
         return;
@@ -623,7 +623,7 @@ export default {
           // this.bookingTourIds = this.projects.map(project => project.booking_tour.id);
 
 
-          // console.log("Gaaaaaaaaaaa", this.bookingTourIds);
+          console.log("Gaaaaaaaaaaa", this.projects);
         } else {
           toast.info('Este Tour no tiene Reservas Pendientes');
           this.projects = [];
@@ -677,7 +677,7 @@ export default {
 
       if (isChecked && hasGroupAssigned) {
         // Si está marcado y group_assigned tiene un valor, se resta
-        this.group.capacity_selected -= row.booking_tour.booking.nro_pax;
+        this.group.capacity_selected -= row.booking_tour.quantity;
         const index = this.bookingTourIds.indexOf(bookingId);
         if (index !== -1) {
           this.bookingTourIds.splice(index, 1);
@@ -685,14 +685,14 @@ export default {
         }
       } else if (!isChecked && row.booking_tour.group_assigned === null) {
         // Si está desmarcado y group_assigned es null, se suma
-        this.group.capacity_selected += row.booking_tour.booking.nro_pax;
+        this.group.capacity_selected += row.booking_tour.quantity;
         if (!this.bookingTourIds.includes(bookingId)) {
           this.bookingTourIds.push(bookingId);
           console.log(this.bookingTourIds);
         }
       }
 
-       console.log(this.bookingTourIds);
+      console.log(this.bookingTourIds);
 
       // Calcular la cantidad disponible restando la capacidad total del vehículo menos la cantidad seleccionada
       this.group.capacity_available = this.group.capacity_vehicle - this.group.capacity_selected;
@@ -786,10 +786,10 @@ export default {
 
         // Filtrar solo los proyectos que tienen un valor en group_assigned y mapear los IDs
         this.bookingTourIds = this.projects
-          .filter(project =>project.group_assigned !== null)
+          .filter(project => project.group_assigned !== null)
           .map(project => project.id);
 
-        console.log("Ids Ga", this.projects );
+        console.log("Ids Ga", this.projects);
 
       } catch (error) {
         console.error('Error fetching departments:', error);

@@ -87,9 +87,32 @@
 
         <template v-slot:table-row="props">
 
-          <span v-if="props.column.field == 'pasajero'">
-            {{ props.row.booking_nro_pax }}
-
+          <span v-if="props.column.field == 'pasajero'" class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
+            <!-- Verificar si hay información del tour -->
+            <template v-if="hasTourInformation(props.row)">
+              <!-- Iterar sobre la lista de tours -->
+              <template v-for="tour in props.row.tours" :key="tour.id">
+                <!-- Verificar si el tour_id coincide con el id del tour -->
+                <template v-if="tour.id === props.row.tour_id">
+                  <!-- Mostrar la cantidad del tour si está presente -->
+                  <template v-if="tour.pivot && tour.pivot.quantity">
+                    {{ tour.pivot.quantity }}
+                  </template>
+                  <!-- Mostrar mensaje si no hay cantidad disponible para el tour -->
+                  <template v-else>
+                    - No hay cantidad disponible
+                  </template>
+                </template>
+              </template>
+              <!-- Mostrar mensaje si no se encontró un tour con el id correspondiente -->
+              <template v-if="!props.row.tours.some(tour => tour.id === props.row.tour_id)">
+                - No hay información disponible
+              </template>
+            </template>
+            <!-- Mostrar mensaje si no hay información de tours -->
+            <template v-else>
+              - No hay información disponible
+            </template>
           </span>
 
           <span v-if="props.column.field == 'vehiculo'"
@@ -422,30 +445,36 @@ const openModal = async (id) => {
         },
       }
     );
-
     if (response.data && response.data.data && response.data.data.length > 0) {
-      projects.value = response.data.data;
+  projects.value = response.data.data;
 
-      console.log(projects.value);
+  console.log(projects.value);
 
-      // Inicializar la suma de pasajeros
-      let totalPassengers = 0;
+  // Inicializar la suma de pasajeros
+  let totalPassengers = 0;
 
-      // Iterar sobre cada proyecto y sumar los pasajeros
-      projects.value.forEach(project => {
-        totalPassengers += project.booking_nro_pax;
+  // Iterar sobre cada proyecto
+  projects.value.forEach(project => {
+    // Verificar si hay tours en el proyecto
+    if (project.tours && project.tours.length > 0) {
+      project.tours.forEach(tour => {
+        // Verificar si el tour_id coincide
+        if (tour.id === project.tour_id && tour.pivot && tour.pivot.quantity) {
+          totalPassengers += tour.pivot.quantity;
+        }
       });
+    }
+  });
 
-      const { tour_description, booking_tour_date_assigned } = projects.value[0];
-      const formattedDate = booking_tour_date_assigned;
+  const { tour_description, booking_tour_date_assigned } = projects.value[0];
+  const formattedDate = booking_tour_date_assigned;
 
-      // Utilizar la suma total de pasajeros en el título del modal
-      modalTitle.value = `Datos de salida | ${tour_description} (${formattedDate}) ${totalPassengers} PASAJEROS`;
+  // Utilizar la suma total de pasajeros en el título del modal
+  modalTitle.value = `Datos de salida | ${tour_description} (${formattedDate}) ${totalPassengers} PASAJEROS`;
 
-      toast.info('Tours Pendientes encontrados con éxito');
-
-      // console.log(response);
-    } else {
+  toast.info('Tours Pendientes encontrados con éxito');
+}
+ else {
       toast.info('Este Tour no tiene Reservas Pendientes');
       this.projects = [];
     }

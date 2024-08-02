@@ -1,32 +1,32 @@
 <template>
   <div>
     <div class="lg:flex justify-between flex-wrap items-center">
-    <div>
+      <div>
         <button @click="retroceder"
-            class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-700 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse hover:bg-black">
-            <span class="text-xl">
-                <Icon icon="heroicons:arrow-left" />
-            </span>
-            <span>Retroceder</span>
+          class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-700 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse hover:bg-black">
+          <span class="text-xl">
+            <Icon icon="heroicons:arrow-left" />
+          </span>
+          <span>Retroceder</span>
         </button>
-    </div>
-    <div class="flex lg:justify-end items-center flex-wrap">
+      </div>
+      <div class="flex lg:justify-end items-center flex-wrap">
         <button type="button" @click="print"
-            class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-700  dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse hover:bg-black">
-            <span class="text-lg">
-                <Icon icon="heroicons:printer" />
-            </span>
-            <span>Imprimir</span>
+          class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-700  dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse hover:bg-black">
+          <span class="text-lg">
+            <Icon icon="heroicons:printer" />
+          </span>
+          <span>Imprimir</span>
         </button>
         <button @click="editar"
-            class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-700 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse hover:bg-black">
-            <span class="text-lg">
-                <Icon icon="heroicons:pencil-square" />
-            </span>
-            <span>Editar</span>
+          class="invocie-btn inline-flex btn btn-lg whitespace-nowrap space-x-1 cursor-pointer bg-slate-700 dark:bg-white-700 btn-md h-min text-sm font-normal text-white rtl:space-x-reverse hover:bg-black">
+          <span class="text-lg">
+            <Icon icon="heroicons:pencil-square" />
+          </span>
+          <span>Editar</span>
         </button>
+      </div>
     </div>
-</div>
 
 
 
@@ -234,11 +234,24 @@
 
 
         <template v-slot:table-row="props">
-
-          <span v-if="props.column.field == 'pasajero'">
-            {{ props.row.booking_nro_pax }}
-
+          <span v-if="props.column.field === 'pasajero'" class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
+            <!-- Verificar si hay información de tours en la fila -->
+            <template v-if="hasTourInformation(props.row)">
+              <!-- Iterar sobre la lista de tours -->
+              <template v-for="tour in props.row.tours" :key="tour.id">
+                <!-- Verificar si el tour.id coincide con el group_tour_id obtenido del pivot -->
+                <template v-if="tour.id === groupTourIdFromPivot(props.row)">
+                  <!-- Mostrar el número de pasajeros basado en la información del pivot -->
+                  {{ tour.pivot.quantity || 'No hay cantidad disponible' }}
+                </template>
+              </template>
+            </template>
+            <!-- Mostrar mensaje si no hay información de tours -->
+            <template v-else>
+              No hay información de tours
+            </template>
           </span>
+
 
           <span v-if="props.column.field == 'proforma'" class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
             {{ props.row.booking_reference_voucher }}
@@ -565,8 +578,8 @@ export default {
       );
     },
     retroceder() {
-            window.location.href = '/app/grupo';
-        },
+      window.location.href = '/app/grupo';
+    },
     openModal(bookingId) {
       // console.log('Booking ID:', bookingId);
       this.$router.push({ name: 'reserve-preview', params: { id: bookingId } });
