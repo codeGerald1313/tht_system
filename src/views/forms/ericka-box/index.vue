@@ -73,49 +73,50 @@
 
                 </div>
                 <div class="flex justify-center mt-6">
-  <!-- Texto "Caja inicial S/. 325.20" -->
-  <span class="font-bold mr-5 text-slate-600 dark:text-slate-300">Caja inicial S/ {{ cajaInicial }}</span>
+                  <!-- Texto "Caja inicial S/. 325.20" -->
+                  <span class="font-bold mr-5 text-slate-600 dark:text-slate-300">Caja inicial S/ {{ cajaInicial
+                    }}</span>
 
-  <!-- Botones -->
-  <button
-    class="inline-flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-teal-500 hover:bg-teal-600 mr-5"
-    @click.prevent="handleVerDocumento()">
-    <span class="text-lg">
-      <Icon icon="heroicons:arrow-down-tray" />
-    </span>
-    <span class="ml-2">Arquero</span>
-  </button>
-  <button
-    class="inline-flex items-center justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-orange-500 hover:bg-orange-600 mr-5"
-    @click.prevent="openBoxClosed()">
-    <span class="text-lg">
-      <Icon icon="heroicons:lock-closed" />
-    </span>
-    <span class="ml-2">Cerrar Caja</span>
-  </button>
+                  <!-- Botones -->
+                  <button
+                    class="inline-flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-teal-500 hover:bg-teal-600 mr-5"
+                    @click.prevent="handleVerDocumento()">
+                    <span class="text-lg">
+                      <Icon icon="heroicons:arrow-down-tray" />
+                    </span>
+                    <span class="ml-2">Arquero</span>
+                  </button>
+                  <button
+                    class="inline-flex items-center justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-orange-500 hover:bg-orange-600 mr-5"
+                    @click.prevent="openBoxClosed()">
+                    <span class="text-lg">
+                      <Icon icon="heroicons:lock-closed" />
+                    </span>
+                    <span class="ml-2">Cerrar Caja</span>
+                  </button>
 
-  <!-- Nuevo botón para Transferir a Caja Principal -->
-  <button
-    class="inline-flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600 mr-5"
-    @click.prevent="transferirCajaPrincipal()">
-    <span class="text-lg">
-      <!-- Puedes cambiar el icono según lo necesites -->
-      <Icon icon="heroicons:currency-dollar" />
-    </span>
-    <span class="ml-2">Transferir Caja Principal</span>
-  </button>
+                  <!-- Nuevo botón para Transferir a Caja Principal -->
+                  <button
+                    class="inline-flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600 mr-5"
+                    @click.prevent="transferirCajaPrincipal()">
+                    <span class="text-lg">
+                      <!-- Puedes cambiar el icono según lo necesites -->
+                      <Icon icon="heroicons:currency-dollar" />
+                    </span>
+                    <span class="ml-2">Transferir Caja Principal</span>
+                  </button>
 
-  <!-- Nuevo botón para Transferir a Caja General -->
-  <button
-    class="inline-flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-500 hover:bg-purple-600"
-    @click.prevent="transferirCajaGeneral()">
-    <span class="text-lg">
-      <!-- Puedes cambiar el icono según lo necesites -->
-      <Icon icon="heroicons:currency-dollar" />
-    </span>
-    <span class="ml-2">Transferir Caja General</span>
-  </button>
-</div>
+                  <!-- Nuevo botón para Transferir a Caja General -->
+                  <button
+                    class="inline-flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-500 hover:bg-purple-600"
+                    @click.prevent="transferirCajaGeneral()">
+                    <span class="text-lg">
+                      <!-- Puedes cambiar el icono según lo necesites -->
+                      <Icon icon="heroicons:currency-dollar" />
+                    </span>
+                    <span class="ml-2">Transferir Caja General</span>
+                  </button>
+                </div>
 
               </Card>
             </div>

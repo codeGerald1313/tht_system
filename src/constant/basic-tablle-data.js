@@ -1,9 +1,9 @@
-import user1 from "@/assets/images/users/user-1.jpg"
-import user2 from "@/assets/images/users/user-2.jpg"
-import user3 from "@/assets/images/users/user-3.jpg"
-import user4 from "@/assets/images/users/user-4.jpg"
-import user5 from "@/assets/images/users/user-5.jpg"
-import user6 from "@/assets/images/users/user-6.jpg"
+import user1 from "@/assets/images/users/user-1.jpg";
+import user2 from "@/assets/images/users/user-2.jpg";
+import user3 from "@/assets/images/users/user-3.jpg";
+import user4 from "@/assets/images/users/user-4.jpg";
+import user5 from "@/assets/images/users/user-5.jpg";
+import user6 from "@/assets/images/users/user-6.jpg";
 export const basiTableData = [
   {
     id: 1,
@@ -557,7 +557,7 @@ export const basiTableData = [
   },
 ];
 
-import customer1 from "@/assets/images/all-img/customer_1.png"
+import customer1 from "@/assets/images/all-img/customer_1.png";
 export const advancedTable = [
   {
     id: 1,
@@ -1495,26 +1495,12 @@ export const recetOrder = [
     price: "$38.65",
     status: "cancled",
   },
-  {
-    user: {
-      name: "Darrell Steward",
-      image: user5,
-    },
-    product: "Headphone",
-    invoice: "#4224",
-    price: "$178.65",
-    status: "shipped",
-  },
-  {
-    user: {
-      name: "Darrell Steward",
-      image: user6,
-    },
-    product: "Headphone",
-    invoice: "#4224",
-    price: "$74.65",
-    status: "cancled",
-  },
+
+  
+];
+
+
+export const recetOrderSueperGa = [
   {
     user: {
       name: "Esther Howard",
@@ -1525,174 +1511,6 @@ export const recetOrder = [
     price: "$90.99",
     status: "paid",
   },
-  {
-    user: {
-      name: "Guy Hawkins",
-      image: user2,
-    },
-    product: "Headphone",
-    invoice: "#4224",
-    price: "$78.65",
-    status: "due",
-  },
-  {
-    user: {
-      name: "Bessie Cooper",
-      image: user3,
-    },
-    product: "Headphone",
-    invoice: "#4224",
-    price: "$78.65",
-    status: "pending",
-  },
-  {
-    user: {
-      name: "Kathryn Murphy",
-      image: user4,
-    },
-    product: "Headphone",
-    invoice: "#4224",
-    price: "$38.65",
-    status: "cancled",
-  },
-  {
-    user: {
-      name: "Darrell Steward",
-      image: user5,
-    },
-    product: "Headphone",
-    invoice: "#4224",
-    price: "$178.65",
-    status: "shipped",
-  },
-  {
-    user: {
-      name: "Darrell Steward",
-      image: user6,
-    },
-    product: "Headphone",
-    invoice: "#4224",
-    price: "$74.65",
-    status: "cancled",
-  },
-  {
-    user: {
-      name: "Esther Howard",
-      image: user1,
-    },
-    product: "Headphone",
-    invoice: "#324567",
-    price: "$90.99",
-    status: "paid",
-  },
-  {
-    user: {
-      name: "Guy Hawkins",
-      image: user2,
-    },
-    product: "Headphone",
-    invoice: "#4224",
-    price: "$78.65",
-    status: "due",
-  },
-  {
-    user: {
-      name: "Bessie Cooper",
-      image: user3,
-    },
-    product: "Headphone",
-    invoice: "#4224",
-    price: "$78.65",
-    status: "pending",
-  },
-  {
-    user: {
-      name: "Kathryn Murphy",
-      image: user4,
-    },
-    product: "Headphone",
-    invoice: "#4224",
-    price: "$38.65",
-    status: "cancled",
-  },
-  {
-    user: {
-      name: "Darrell Steward",
-      image: user5,
-    },
-    product: "Headphone",
-    invoice: "#4224",
-    price: "$178.65",
-    status: "shipped",
-  },
-  {
-    user: {
-      name: "Darrell Steward",
-      image: user6,
-    },
-    product: "Headphone",
-    invoice: "#4224",
-    price: "$74.65",
-    status: "cancled",
-  },
-  {
-    user: {
-      name: "Esther Howard",
-      image: user1,
-    },
-    product: "Headphone",
-    invoice: "#324567",
-    price: "$90.99",
-    status: "paid",
-  },
-  {
-    user: {
-      name: "Guy Hawkins",
-      image: user2,
-    },
-    product: "Headphone",
-    invoice: "#4224",
-    price: "$78.65",
-    status: "due",
-  },
-  {
-    user: {
-      name: "Bessie Cooper",
-      image: user3,
-    },
-    product: "Headphone",
-    invoice: "#4224",
-    price: "$78.65",
-    status: "pending",
-  },
-  {
-    user: {
-      name: "Kathryn Murphy",
-      image: user4,
-    },
-    product: "Headphone",
-    invoice: "#4224",
-    price: "$38.65",
-    status: "cancled",
-  },
-  {
-    user: {
-      name: "Darrell Steward",
-      image: user5,
-    },
-    product: "Headphone",
-    invoice: "#4224",
-    price: "$178.65",
-    status: "shipped",
-  },
-  {
-    user: {
-      name: "Darrell Steward",
-      image: user6,
-    },
-    product: "Headphone",
-    invoice: "#4224",
-    price: "$74.65",
-    status: "cancled",
-  },
+
+  
 ];

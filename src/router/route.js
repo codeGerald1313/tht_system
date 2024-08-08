@@ -152,14 +152,7 @@ const routes = [
           groupParent: "components",
         },
       },
-      {
-        path: "tab-accordion",
-        name: "tab-accordion",
-        component: () => import("@/views/components/tab-accordion/index.vue"),
-        meta: {
-          groupParent: "components",
-        },
-      },
+  
       {
         path: "badges",
         name: "badges",
@@ -762,12 +755,54 @@ const routes = [
     children: [
       {
         path: "home-guaros",
-        name: "home-guaross",
-        component: () => import("@/views/home/crm.vue"),
+        name: "home-guaros",
+        component: () => import("@/views/home/project.vue"),
         meta: {
           hide: true,
         },
       },
+
+      {
+        path: "guaros-info",
+        name: "guaros-info",
+        component: () => import("@/views/app/guaros-info"),
+        meta: {
+          hide: true,
+        },
+      },
+      {
+        path: "tours",
+        name: "tours",
+        component: () => import("@/views/components/tours/index.vue"),
+        meta: {
+          hide: true,
+        },
+      },
+      {
+        path: "tours-caracteristicas",
+        name: "tours-caracteristicas",
+        component: () => import("@/views/components/tours-caracteristicas/index.vue"),
+        meta: {
+          hide: true,
+        },
+      },
+      {
+        path: "packs",
+        name: "packs",
+        component: () => import("@/views/components/packs/index.vue"),
+        meta: {
+          hide: true,
+        },
+      },
+      {
+        path: "sobre-nosotros",
+        name: "sobre-nosotros",
+        component: () => import("@/views/components/sobre-nosotros/index.vue"),
+        meta: {
+          hide: true,
+        },
+      },
+
       // otras rutas específicas de guaros
     ],
   },

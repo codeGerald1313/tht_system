@@ -9,6 +9,9 @@ export const useProjectStore = defineStore("project", {
     return {
       addmodal: false,
       addmodal2: false,
+      addCaracteristicaaddmodal: false,
+      addCaracteristicaeditModal: false,
+      addSliderPhotosToutsaddmodal: false,
       addmodal3: false,
       addmodalTrasnfer: false,
       addmodalTrasnfer2: false,
@@ -142,6 +145,16 @@ export const useProjectStore = defineStore("project", {
       this.addmodal = true;
     },
 
+    openCaracteristicaAdd() {
+      this.addCaracteristicaaddmodal = true;
+    },
+    openSlidersPhotosAdd() {
+      this.addCaracteristicaaddmodal = true;
+    },
+    openCaracteristicaEdit() {
+      this.addCaracteristicaeditModal = true;
+    },
+
     // openProject
     openTransfer() {
       this.addmodalTrasnfer = true;
@@ -179,5 +192,10 @@ export const useProjectStore = defineStore("project", {
     closeEditModal() {
       this.editModal = false;
     },
+   // closeEditModal
+   closeEditToursModal() {
+    this.addCaracteristicaeditModal = false;
+  },
+    
   },
 });

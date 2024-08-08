@@ -61,9 +61,9 @@
 <script>
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "../components/Footer";
-import Header from "../components/Header";
+import Header from "../components/HeaderGuarosAdmin";
 import Settings from "../components/Settings";
-import Sidebar from "../components/Sidebar/";
+import Sidebar from "../components/SidebarGuarosAdmin/";
 import window from "@/mixins/window";
 import MobileSidebar from "@/components/Sidebar/MobileSidebar.vue";
 import FooterMenu from "@/components/Footer/FooterMenu.vue";

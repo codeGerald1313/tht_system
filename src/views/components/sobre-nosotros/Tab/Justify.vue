@@ -1,6 +1,6 @@
 <template>
   <TabGroup>
-    <TabList class="lg:space-x-8 md:space-x-4 space-x-0 rtl:space-x-reverse">
+    <TabList class="lg:space-x-6 md:space-x-3 space-x-0 rtl:space-x-reverse">
       <Tab
         v-slot="{ selected }"
         as="template"
@@ -10,14 +10,12 @@
         <button
           :class="[
             selected
-              ? 'text-primary-500 before:w-full'
-              : 'text-slate-500 before:w-0 dark:text-slate-300',
+              ? 'text-white bg-primary-500 '
+              : 'text-slate-500 bg-white dark:bg-slate-700 dark:text-slate-300',
           ]"
-          class="inline-flex items-start text-sm font-medium mb-7 capitalize bg-white dark:bg-slate-800 ring-0 foucs:ring-0 focus:outline-none px-2 transition duration-150 before:transition-all before:duration-150 relative before:absolute before:left-1/2 before:bottom-[-6px] before:h-[1.5px] before:bg-primary-500 before:-translate-x-1/2"
+          class="text-sm font-medium mb-7 last:mb-0 capitalize ring-0 foucs:ring-0 focus:outline-none px-6 rounded-md py-2 transition duration-150"
         >
-          <span class="text-base relative top-[1px] ltr:mr-1 rtl:ml-1"
-            ><Icon :icon="item.icon" /></span
-          >{{ item.title }}
+          {{ item.title }}
         </button>
       </Tab>
     </TabList>
@@ -55,23 +53,10 @@
 
 <script setup>
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
-import Icon from "@/components/Icon";
 const buttons = [
   {
-    title: "Home",
-    icon: "heroicons-outline:home",
+    title: "Nuevo Sector",
   },
-  {
-    title: "Profile",
-    icon: "heroicons-outline:user",
-  },
-  {
-    title: "Messages",
-    icon: "heroicons-outline:chat-alt-2",
-  },
-  {
-    title: "Settings",
-    icon: "heroicons-outline:cog",
-  },
+
 ];
 </script>

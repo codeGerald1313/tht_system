@@ -14,13 +14,10 @@ export const menuItems = [
     icon: "heroicons-outline:chart-bar",
     isOpen: true,
     child: [
-
       {
         childtitle: "General Tht",
         childlink: "home",
       },
-
-
     ],
   },
   {
@@ -60,7 +57,6 @@ export const menuItems = [
         childtitle: "Recibidos & Traspasos",
         childlink: "/app/wishlist",
       },
-
     ],
   },
 
@@ -166,7 +162,6 @@ export const menuItems = [
     ],
   },
 
-  
   {
     isHeadr: true,
     title: "reports",
@@ -200,6 +195,119 @@ export const menuItems = [
   },
 ];
 
+export const menuItemsAdminGuaros = [
+  {
+    isHeadr: true,
+    title: "menu",
+  },
+
+  {
+    title: "Panel",
+    icon: "heroicons-outline:desktop-computer", // Icono relacionado con un panel o sistema
+    isOpen: true,
+    child: [
+      {
+        childtitle: "General Guaros",
+        childlink: "home-guaros",
+      },
+    ],
+  },
+  {
+    isHeadr: true,
+    title: "empresa",
+  },
+
+  {
+    title: "Mi Empresa",
+    icon: "heroicons-outline:office-building", // Ícono relacionado con una empresa/edificio
+    link: "#",
+    child: [
+      {
+        childtitle: "Informacion",
+        childlink: "guaros-info",
+      },
+    ],
+  },
+
+  {
+    isHeadr: true,
+    title: "follow-up",
+  },
+
+  {
+    title: "Reservas",
+    icon: "heroicons-outline:clipboard-check", // Icono que representa reservas o confirmaciones
+    link: "#",
+    child: [
+      {
+        childtitle: "Reservas Túristicas",
+        childlink: "/app/products",
+      },
+      {
+        childtitle: "Reserva de Hotel",
+        childlink: "/app/reservas-hotel",
+      },
+    ],
+  },
+
+  {
+    isHeadr: true,
+    title: "web page",
+  },
+
+  {
+    title: "Tours",
+    icon: "heroicons-outline:globe-alt", // Ícono de mapa para representar viajes y tours
+    link: "#",
+    child: [
+      {
+        childtitle: "Gestión de Tours",
+        childlink: "tours",
+      },
+      {
+        childtitle: "Caracteristicas",
+        childlink: "tours-caracteristicas",
+      },
+    ],
+  },
+  {
+    title: "Hospedajes",
+    icon: "heroicons-outline:map", // Ícono de edificio que se relaciona más con hoteles
+    link: "#",
+    child: [
+      {
+        childtitle: "Gestión de Hoteles",
+        childlink: "/app/cronograma",
+      },
+      {
+        childtitle: "Detalles",
+        childlink: "/app/cronograma",
+      },
+    ],
+  },
+  {
+    title: "Paquetes",
+    icon: "heroicons-outline:briefcase", // Ícono relacionado con paquetes de viajes o servicios
+    link: "#",
+    child: [
+      {
+        childtitle: "Armado de Paquetes",
+        childlink: "packs",
+      },
+    ],
+  },
+  {
+    title: "Nosotros",
+    icon: "heroicons-outline:information-circle", // Ícono relacionado con información/nosotros
+    link: "#",
+    child: [
+      {
+        childtitle: "Sobre Nosotros",
+        childlink: "sobre-nosotros",
+      },
+    ],
+  },
+];
 // menuseetins
 
 export const ProfileMenu = [
@@ -751,7 +859,6 @@ export const alertType4 = [
     type: "dark-light",
     icon: "fluent:target-20-regular",
   },
-
 ];
 export const alertType5 = [
   {

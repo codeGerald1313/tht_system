@@ -95,7 +95,7 @@ function setupStores() {
 
 // Configura los stores antes de montar la aplicación
 setupStores();
-app.mount("#app");
+app.mount("#app"); 
 app.use(VueQueryPlugin);
 
 

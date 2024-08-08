@@ -156,6 +156,261 @@ export const shapeLine2 = {
     },
   },
 };
+
+export const basicArea = {
+  series: [
+    {
+      data: [90, 70, 85, 60, 80, 70, 90, 75, 60, 80],
+    },
+  ],
+  chartOptions: {
+    chart: {
+      toolbar: {
+        show: false,
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: "smooth",
+      width: 4,
+    },
+    colors: ["#4669FA"],
+    tooltip: {
+      theme: "dark",
+    },
+    grid: {
+      show: true,
+      borderColor: "#E2E8F0",
+      strokeDashArray: 10,
+      position: "back",
+    },
+    fill: {
+      type: "gradient",
+      colors: "#4669FA",
+      gradient: {
+        shadeIntensity: 1,
+        opacityFrom: 0.4,
+        opacityTo: 0.5,
+        stops: [0, 100, 0],
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: "#475569",
+          fontFamily: "Inter",
+        },
+      },
+    },
+
+    xaxis: {
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      labels: {
+        style: {
+          colors: "#475569",
+          fontFamily: "Inter",
+        },
+      },
+    },
+    padding: {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+    },
+  },
+};
+export const basicAreaDark = {
+  series: [
+    {
+      data: [90, 70, 85, 60, 80, 70, 90, 75, 60, 80],
+    },
+  ],
+  chartOptions: {
+    chart: {
+      toolbar: {
+        show: false,
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: "smooth",
+      width: 4,
+    },
+    colors: ["#4669FA"],
+    tooltip: {
+      theme: "dark",
+    },
+    grid: {
+      show: true,
+      borderColor: "#334155",
+      strokeDashArray: 10,
+      position: "back",
+    },
+    fill: {
+      type: "gradient",
+      colors: "#4669FA",
+      gradient: {
+        shadeIntensity: 1,
+        opacityFrom: 0.4,
+        opacityTo: 0.5,
+        stops: [50, 100, 0],
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: "#CBD5E1",
+          fontFamily: "Inter",
+        },
+      },
+    },
+    xaxis: {
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      labels: {
+        style: {
+          colors: "#CBD5E1",
+          fontFamily: "Inter",
+        },
+      },
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
+      },
+    },
+    padding: {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+    },
+  },
+};
+
+
+
+export const pieChart = {
+  series: [44, 55, 30],
+
+  chartOptions: {
+    labels: ["70% Sent", "18% Opend", "12% Rejected"],
+    dataLabels: {
+      enabled: true,
+    },
+
+    colors: [colors.success, colors.warning, colors.purple],
+    legend: {
+      position: "bottom",
+      fontSize: "12px",
+      fontFamily: "Inter",
+      fontWeight: 400,
+      labels: {
+        colors: "#475569",
+      },
+      markers: {
+        width: 6,
+        height: 6,
+        offsetY: -1,
+        offsetX: -5,
+        radius: 12,
+      },
+      itemMargin: {
+        horizontal: 10,
+        vertical: 0,
+      },
+    },
+
+    responsive: [
+      {
+        breakpoint: 480,
+        options: {
+          legend: {
+            position: "bottom",
+          },
+        },
+      },
+    ],
+  },
+};
+
+export const pieChartDark = {
+  series: [44, 55, 30],
+
+  chartOptions: {
+    labels: ["70% Sent", "18% Opend", "12% Rejected"],
+    dataLabels: {
+      enabled: true,
+    },
+
+    colors: [colors.success, colors.warning, colors.purple],
+    legend: {
+      position: "bottom",
+      fontSize: "12px",
+      fontFamily: "Inter",
+      fontWeight: 400,
+      labels: {
+        colors: "#CBD5E1",
+      },
+      markers: {
+        width: 6,
+        height: 6,
+        offsetY: -1,
+        offsetX: -5,
+        radius: 12,
+      },
+      itemMargin: {
+        horizontal: 10,
+        vertical: 0,
+      },
+    },
+
+    responsive: [
+      {
+        breakpoint: 480,
+        options: {
+          legend: {
+            position: "bottom",
+          },
+        },
+      },
+    ],
+  },
+};
+
+
+
 export const shapeLine3 = {
   series: [
     {

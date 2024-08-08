@@ -114,7 +114,8 @@ const save = () => {
   // console.log(object.value);
   axios.post(`${import.meta.env.VITE_API_URL}/transfers-moneyboxes/transfer-caja-principal`, {
     amount: object.value.description,
-    paymentmethod_id: selectedPaymentType.value
+    paymentmethod_id: selectedPaymentType.value,
+    accountbank_id: selectedBankAccount.value
   }, {
     ...headers
   })

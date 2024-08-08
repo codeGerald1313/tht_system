@@ -469,7 +469,7 @@
 
           <template v-if="selectedPaymentType === 'account_deposit'">
             <div class="flex items-center">
-              <FromGroup label="Cuenta destino" class="flex-1">
+              <FromGroup label="Cuenta Origen" class="flex-1">
                 <Select :options="accountOptions" v-model="selectedAccount" class="cuentadestino-select"
                   placeholder="Seleccione" />
               </FromGroup>

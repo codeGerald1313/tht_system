@@ -106,14 +106,7 @@
         </ul>
       </Transition>
     </li>
-    <li class="single-sidebar-menu">
-      <a
-        href="https://dashcode-doc.codeshaper.tech/"
-        target="_blank"
-        class="menu-link"
-      >
-      </a>
-    </li>
+ 
   </ul>
 </template>
 <script>

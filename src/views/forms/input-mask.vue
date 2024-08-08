@@ -205,7 +205,7 @@
       <div class="w-full"> <!-- Contenedor para List con ancho completo -->
 
         <!-- Mostrar solo si applyForEntireMonth es false -->
-        <ListIngresoEgreso v-if="applyForEntireMonth && !applyForHistory" class="mt-5" />
+        <ListIngresoEgreso v-if="applyForEntireMonth && !applyForHistory"  class="mt-5" />
         <CajaHistorialA v-if="applyForHistory" class="mt-5" />
 
         <!-- Mostrar solo si applyForEntireMonth es true -->

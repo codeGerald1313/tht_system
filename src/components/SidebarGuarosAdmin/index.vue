@@ -116,7 +116,7 @@
         "
         ref="shadowbase"
       >
-        <Navmenu :items="menuItems" />
+        <Navmenu :items="menuItemsAdminGuaros" />
         <Transition @enter="enterWidget" @leave="leaveWidget">
         </Transition>
       </perfect-scrollbar>
@@ -126,7 +126,7 @@
 <script>
 // import { Icon } from "@iconify/vue";
 import { defineComponent } from "vue";
-import { menuItems } from "../../constant/data";
+import { menuItemsAdminGuaros } from "../../constant/data";
 import Navmenu from "./Navmenu";
 import { gsap } from "gsap";
 import simplebar from "simplebar-vue";
@@ -140,7 +140,7 @@ export default defineComponent({
   },
   data() {
     return {
-      menuItems,
+      menuItemsAdminGuaros,
       openClass: "w-[248px]",
       closeClass: "w-[72px] close_sidebar",
     };
