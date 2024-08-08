@@ -415,8 +415,8 @@
 
           <template v-if="showBlock">
             <div class="flex items-center">
-              <FromGroup label="Cuenta destino" class="flex-1">
-                <Select :options="accountOptions" v-model="selectedAccount" disabled class="cuentadestino-select"
+              <FromGroup label="Cuenta Origen" class="flex-1">
+                <Select :options="accountOptions" v-model="selectedAccount" class="cuentadestino-select"
                   placeholder="Seleccione" />
               </FromGroup>
               <!--button @click="openModaalBanckAccount" class="ml-2 mt-7 p-2 btn-outline-dark">+</button-->

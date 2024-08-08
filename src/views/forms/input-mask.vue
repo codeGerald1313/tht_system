@@ -73,38 +73,39 @@
 
                 </div>
                 <div class="flex justify-center mt-6">
-                <!-- Texto "Caja inicial S/. 325.20" -->
-                <span class="font-bold mr-5 text-slate-600 dark:text-slate-300">Caja inicial S/ {{ cajaInicial }}</span>
+                  <!-- Texto "Caja inicial S/. 325.20" -->
+                  <span class="font-bold mr-5 text-slate-600 dark:text-slate-300">Caja inicial S/ {{ cajaInicial
+                    }}</span>
 
-                <!-- Botones -->
-                <button
-                  class="inline-flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-teal-500 hover:bg-teal-600 mr-5"
-                  @click.prevent="handleVerDocumento()">
-                  <span class="text-lg">
-                    <Icon icon="heroicons:arrow-down-tray" />
-                  </span>
-                  <span class="ml-2">Arquero</span>
-                </button>
-                <button
-                  class="inline-flex items-center justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-orange-500 hover:bg-orange-600 mr-5"
-                  @click.prevent="openBoxClosed()">
-                  <span class="text-lg">
-                    <Icon icon="heroicons:lock-closed" />
-                  </span>
-                  <span class="ml-2">Cerrar Caja</span>
-                </button>
+                  <!-- Botones -->
+                  <button
+                    class="inline-flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-teal-500 hover:bg-teal-600 mr-5"
+                    @click.prevent="handleVerDocumento()">
+                    <span class="text-lg">
+                      <Icon icon="heroicons:arrow-down-tray" />
+                    </span>
+                    <span class="ml-2">Arquero</span>
+                  </button>
+                  <button
+                    class="inline-flex items-center justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-orange-500 hover:bg-orange-600 mr-5"
+                    @click.prevent="openBoxClosed()">
+                    <span class="text-lg">
+                      <Icon icon="heroicons:lock-closed" />
+                    </span>
+                    <span class="ml-2">Cerrar Caja</span>
+                  </button>
 
-                <!-- Nuevo botón -->
-                <button
-                  class="inline-flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600"
-                  @click.prevent="transferirCajaGeneral()">
-                  <span class="text-lg">
-                    <!-- Puedes cambiar el icono según lo necesites -->
-                    <Icon icon="heroicons:currency-dollar" />
-                  </span>
-                  <span class="ml-2">Transferir a Caja Principal</span>
-                </button>
-              </div>
+                  <!-- Nuevo botón -->
+                  <button
+                    class="inline-flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600"
+                    @click.prevent="transferirCajaGeneral()">
+                    <span class="text-lg">
+                      <!-- Puedes cambiar el icono según lo necesites -->
+                      <Icon icon="heroicons:currency-dollar" />
+                    </span>
+                    <span class="ml-2">Transferir a Caja Principal</span>
+                  </button>
+                </div>
               </Card>
             </div>
           </template>
@@ -179,7 +180,7 @@
       </div>
 
       <CityTouristicAddModal @guardadoExitoso="handleGuardadoExitoso" />
-      <TransferirCajaModal :id="id"   @guardadoExitoso="handleGuardadoExitosoTransferCajaPrincipal"/>
+      <TransferirCajaModal :id="id" @guardadoExitoso="handleGuardadoExitosoTransferCajaPrincipal" />
 
       <ClientAddModal />
       <ClientEditModal />
@@ -194,19 +195,28 @@
 
     <div class="mt-3 flex justify-start items-start">
       <div class="mr-5">
-
+        <!-- Switch para Ver Historial -->
         <Switch label="Ver Historial" v-model="applyForHistory" class="mr-2" @change="handleSwitchChange" />
       </div>
+      <div class="mr-5">
+        <!-- Switch para Ingresos -->
+        <Switch label="Ver Ingresos" v-model="applyForIncomes" class="mr-2" @change="handleIngresosSwitchChange" />
+      </div>
 
-
+      <div class="mr-5">
+        <!-- Switch para Ingresos -->
+        <Switch label="Ver Egresos" v-model="applyForIncomes" class="mr-2" @change="handleIngresosSwitchChange" />
+      </div>
     </div>
 
     <div class="mt-3 flex justify-between items-start">
       <div class="w-full"> <!-- Contenedor para List con ancho completo -->
 
         <!-- Mostrar solo si applyForEntireMonth es false -->
-        <ListIngresoEgreso v-if="applyForEntireMonth && !applyForHistory"  class="mt-5" />
+        <ListIngresoEgreso v-if="applyForEntireMonth && !applyForHistory" class="mt-5" />
         <CajaHistorialA v-if="applyForHistory" class="mt-5" />
+        <List v-if="applyForIncomes" class="mt-5" />
+        <ListEgreso v-if="applyForIncomes" class="mt-5" />
 
         <!-- Mostrar solo si applyForEntireMonth es true -->
       </div>
@@ -298,6 +308,7 @@ export default {
       authStore: useAuth(),
       applyForEntireMonth: true,
       applyForHistory: false,
+      applyForIncomes: false,
       idBoxed: "1",
       showModalCierre: false,
       cards: [
@@ -376,6 +387,11 @@ export default {
       // Al cambiar el switch, actualiza applyForEntireMonth según applyForHistory
       this.applyForEntireMonth = !this.applyForHistory;
     },
+    handleIngresosSwitchChange() {
+      // Aquí puedes manejar el cambio de applyForIngresos si es necesario
+      // Por ejemplo, podrías agregar lógica para actualizar otros estados
+      this.applyForEntireMonth = !this.applyForIncomes;
+    },
     handleVerDocumento() {
       axios.get(`${import.meta.env.VITE_API_URL}/list-box-cuadre-akemy/${this.id}`)
         .then(response => {
@@ -449,11 +465,11 @@ export default {
       }
     },
     handleGuardadoExitosoTransferCajaPrincipal() {
-  // Aquí puedes realizar cualquier lógica adicional con el ID capturado
-  
-  // Forzar la recarga de la página
-  location.reload(true); // El parámetro true fuerza la recarga desde el servidor
-},
+      // Aquí puedes realizar cualquier lógica adicional con el ID capturado
+
+      // Forzar la recarga de la página
+      location.reload(true); // El parámetro true fuerza la recarga desde el servidor
+    },
 
     handleGuardadoExitoso(data) {
       // console.log('Datos guardados exitosamente en el componente padre:', data);
@@ -479,34 +495,34 @@ export default {
   },
 
   mounted() {
-// Realizar la solicitud HTTP GET para obtener el último ID con owner_type = 'other'
-axios.get(`${import.meta.env.VITE_API_URL}/moneyboxes-akemy/last-id-with-socia-owner`, headers)
-  .then(response => {
-    // Obtener el último ID y el estado de has_null_date_closing desde la respuesta
-    const { last_id, has_null_date_closing } = response.data;
+    // Realizar la solicitud HTTP GET para obtener el último ID con owner_type = 'other'
+    axios.get(`${import.meta.env.VITE_API_URL}/moneyboxes-akemy/last-id-with-socia-owner`, headers)
+      .then(response => {
+        // Obtener el último ID y el estado de has_null_date_closing desde la respuesta
+        const { last_id, has_null_date_closing } = response.data;
 
-    // Asignar el último ID obtenido del backend a this.id
-    this.id = last_id;
+        // Asignar el último ID obtenido del backend a this.id
+        this.id = last_id;
 
-    // console.log(this.id);
+        // console.log(this.id);
 
-    // Activar el método correspondiente según el estado de has_null_date_closing
-    if (has_null_date_closing) {
-      // Llamar al método para obtener los datos del backend con el ID proporcionado
-      this.fetchSummaryPaymethods(this.id);
-    } else {
-      // Llamar al método para obtener los datos del backend sin un ID específico
-      this.id = null;
+        // Activar el método correspondiente según el estado de has_null_date_closing
+        if (has_null_date_closing) {
+          // Llamar al método para obtener los datos del backend con el ID proporcionado
+          this.fetchSummaryPaymethods(this.id);
+        } else {
+          // Llamar al método para obtener los datos del backend sin un ID específico
+          this.id = null;
 
-      this.fetchSummaryPaymethodsInit();
-    }
-  })
-  .catch(error => {
-    console.error('Error al obtener el último ID:', error);
-    // Asignar this.id = null y llamar al método para obtener los datos del backend sin un ID específico
-    this.id = null;
-    this.fetchSummaryPaymethodsInit();
-  });
+          this.fetchSummaryPaymethodsInit();
+        }
+      })
+      .catch(error => {
+        console.error('Error al obtener el último ID:', error);
+        // Asignar this.id = null y llamar al método para obtener los datos del backend sin un ID específico
+        this.id = null;
+        this.fetchSummaryPaymethodsInit();
+      });
 
 
   },
