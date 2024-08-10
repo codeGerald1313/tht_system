@@ -83,14 +83,15 @@
 
             </div>
           </span>
-
           <span v-if="props.column.field == 'payment_method'">
             <div class="flex space-x-3 items-center text-left rtl:space-x-reverse">
-              {{ props.row.payment_method?.description }}
-
-
+              <div>
+                <span class="font-bold">{{ props.row.payment_method?.description }}</span>
+                <span class="text-gray-600">({{ props.row.account_bank?.name }})</span>
+              </div>
             </div>
           </span>
+
 
           <div v-if="props.column.field == 'action'" class="action-btn text-end mr-3">
 
