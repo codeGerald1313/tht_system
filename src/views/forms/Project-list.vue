@@ -11,9 +11,12 @@
 
 
 
-          <FromGroup name="d1">
-            <flat-pickr v-model="dateDefault" class="form-control" id="d1" placeholder="yyyy, dd M" />
-          </FromGroup>
+            <FromGroup name="d1">
+
+<div class="w-[370px]">
+  <VueTailwindDatePicker v-model="dateValue" input-classes="form-control " />
+</div>
+</FromGroup>
 
           <InputGroup v-model="searchTerm" placeholder="Ingrese N° de recibo para buscar" type="text"
             prependIcon="heroicons-outline:search" merged class="ml-3  w-[280px]" />
@@ -166,6 +169,7 @@ import { useAuth } from "@/store/auth"
 import { useToast } from "vue-toastification";
 import axios from "axios";
 
+import VueTailwindDatePicker from "vue-tailwind-datepicker";
 
 const headers = useAuth().headers(); // Obtiene los encabezados de autenticación
 function obtenerFechaActual() {
@@ -184,12 +188,32 @@ export default {
     Dropdown,
     Icon,
     EditProject,
+    VueTailwindDatePicker,
     MenuItem,
     Card,
     ProgressBar,
   },
 
   data() {
+
+    const timeZoneOffset = -5 * 60; // Esto representa UTC-5 (en minutos)
+    const now = new Date();
+    const currentDateTimePeru = new Date(now.getTime() + timeZoneOffset * 60000);
+
+    // Formatear la fecha en el formato deseado (por ejemplo, YYYY-MM-DD)
+    const formattedDate = currentDateTimePeru.toISOString().split('T')[0];
+
+    const currentDate = new Date();
+
+    // Obtener el primer día del mes actual
+    const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const formattedFirstDay = firstDayOfMonth.toISOString().split('T')[0] + " 00:00:00";
+
+    // Obtener el último día del mes actual
+    const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+    const formattedLastDay = lastDayOfMonth.toISOString().split('T')[0] + " 23:59:59";
+
+    
     return {
       searchTerm: "",
       ingresoData: {},
@@ -197,7 +221,10 @@ export default {
       current: 1,
       perpage: 10,
       dateDefault: obtenerFechaActual(), // Inicializa con la fecha actual en formato 'yyyy-mm-dd' (hora local de Perú)
-
+      dateValue: {
+        startDate: formattedFirstDay,
+        endDate: formattedLastDay
+      },
       pageRange: 10,
       actions: [
         {
@@ -350,8 +377,9 @@ export default {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/moneys-akemy/list`, {
           params: {
-            date: this.dateDefault
-          },
+          start_date: this.dateValue.startDate,
+          end_date: this.dateValue.endDate
+        },
           ...headers
         });
 
@@ -400,12 +428,13 @@ export default {
 
   },
   watch: {
-    async dateDefault(newValue, oldValue) {
+    async dateValue(newValue, oldValue) {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/moneys-akemy/list`, {
           params: {
-            date: newValue
-          },
+          start_date: this.dateValue.startDate,
+          end_date: this.dateValue.endDate
+        },
           ...headers
         });
 

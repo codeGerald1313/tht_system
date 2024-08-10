@@ -12,13 +12,16 @@
 
 
           <FromGroup name="d1">
-            <flat-pickr v-model="dateDefault" class="form-control" id="d1" placeholder="yyyy, dd M" />
+
+            <div class="w-[370px]">
+              <VueTailwindDatePicker v-model="dateValue" input-classes="form-control " />
+            </div>
           </FromGroup>
 
           <InputGroup v-model="searchTerm" placeholder="Ingrese N° de recibo para buscar" type="text"
             prependIcon="heroicons-outline:search" merged class="ml-3  w-[280px]" />
 
-            <Button icon="heroicons-outline:download" btnClass="bg-green-700 text-white ml-4 text-sm" iconClass="text-lg"
+          <Button icon="heroicons-outline:download" btnClass="bg-green-700 text-white ml-4 text-sm" iconClass="text-lg"
             @click.prevent="downloadFile2" />
         </div>
       </div>
@@ -152,6 +155,7 @@ import ProgressBar from "@/components/ProgressBar";
 import Tooltip from "@/components/Tooltip";
 
 import EditProject from "./ClientEditModal-Egreso-A.vue";
+import VueTailwindDatePicker from "vue-tailwind-datepicker";
 
 import { MenuItem } from "@headlessui/vue";
 import { mapState, mapActions } from "pinia";
@@ -179,6 +183,7 @@ export default {
   components: {
     InputGroup,
     Tooltip,
+    VueTailwindDatePicker,
     FromGroup,
     Button,
     Pagination,
@@ -191,14 +196,37 @@ export default {
   },
 
   data() {
+
+
+    const timeZoneOffset = -5 * 60; // Esto representa UTC-5 (en minutos)
+    const now = new Date();
+    const currentDateTimePeru = new Date(now.getTime() + timeZoneOffset * 60000);
+
+    // Formatear la fecha en el formato deseado (por ejemplo, YYYY-MM-DD)
+    const formattedDate = currentDateTimePeru.toISOString().split('T')[0];
+
+    const currentDate = new Date();
+
+    // Obtener el primer día del mes actual
+    const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const formattedFirstDay = firstDayOfMonth.toISOString().split('T')[0] + " 00:00:00";
+
+    // Obtener el último día del mes actual
+    const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+    const formattedLastDay = lastDayOfMonth.toISOString().split('T')[0] + " 23:59:59";
+
     return {
       searchTerm: "",
       egresoData: {},
       showEditModal: false,  // Nueva propiedad para controlar el modal de edición
       current: 1,
       dateDefault: obtenerFechaActual(), // Inicializa con la fecha actual en formato 'yyyy-mm-dd' (hora local de Perú)
-      perpage: 3,
+      perpage: 10,
       pageRange: 10,
+      dateValue: {
+        startDate: formattedFirstDay,
+        endDate: formattedLastDay
+      },
       actions: [
         {
           name: "edit",
@@ -293,11 +321,12 @@ export default {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/moneys-akemy/list-expense`, {
           params: {
-            date: this.dateDefault
+            start_date: this.dateValue.startDate,
+            end_date: this.dateValue.endDate
           },
           ...headers
-        });        
-        
+        });
+
         this.projects = response.data;
 
         // console.log(this.projects);
@@ -383,14 +412,15 @@ export default {
     }
   },
   watch: {
-    async dateDefault(newValue, oldValue) {
+    async dateValue(newValue, oldValue) {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/moneys-akemy/list-expense`, {
           params: {
-            date: newValue
+            start_date: this.dateValue.startDate,
+            end_date: this.dateValue.endDate
           },
           ...headers
-        });     
+        });
 
 
         this.projects = response.data;

@@ -205,7 +205,7 @@
 
       <div class="mr-5">
         <!-- Switch para Ingresos -->
-        <Switch label="Ver Egresos" v-model="applyForIncomes" class="mr-2" @change="handleIngresosSwitchChange" />
+        <Switch label="Ver Egresos" v-model="applyForExpenses" class="mr-2" @change="handleExpensesSwitchChange" />
       </div>
     </div>
 
@@ -216,7 +216,7 @@
         <ListIngresoEgreso v-if="applyForEntireMonth && !applyForHistory" class="mt-5" />
         <CajaHistorialA v-if="applyForHistory" class="mt-5" />
         <List v-if="applyForIncomes" class="mt-5" />
-        <ListEgreso v-if="applyForIncomes" class="mt-5" />
+        <ListEgreso v-if="applyForExpenses" class="mt-5" />
 
         <!-- Mostrar solo si applyForEntireMonth es true -->
       </div>
@@ -309,6 +309,7 @@ export default {
       applyForEntireMonth: true,
       applyForHistory: false,
       applyForIncomes: false,
+      applyForExpenses: false,
       idBoxed: "1",
       showModalCierre: false,
       cards: [
@@ -391,6 +392,11 @@ export default {
       // Aquí puedes manejar el cambio de applyForIngresos si es necesario
       // Por ejemplo, podrías agregar lógica para actualizar otros estados
       this.applyForEntireMonth = !this.applyForIncomes;
+    },
+    handleExpensesSwitchChange() {
+      // Aquí puedes manejar el cambio de applyForIngresos si es necesario
+      // Por ejemplo, podrías agregar lógica para actualizar otros estados
+      this.applyForEntireMonth = !this.applyForExpenses;
     },
     handleVerDocumento() {
       axios.get(`${import.meta.env.VITE_API_URL}/list-box-cuadre-akemy/${this.id}`)
