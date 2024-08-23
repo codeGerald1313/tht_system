@@ -154,9 +154,11 @@
                   <div class="overlay absolute left-0 top-0 w-full h-full z-[-1]" v-for="(item, i) in statistics"
                     :key="i">
                   </div>
+                  <span class="block mb-6 text-sm text-slate-900 dark:text-white font-bold">{{ item.title }}</span>
+
                   <span class="block mb- text-2xl text-slate-900 dark:text-white font-bold mb-14">
-  {{ item.title === 'Dolares' ? 'USD' : 'S/.' }} {{ item.count }}
-</span>                 
+                    {{ item.title === 'Dolares' ? 'USD' : 'S/.' }} {{ item.count }}
+                  </span>
                   <div class="flex space-x-2 rtl:space-x-reverse">
                     <div class="flex-none text-xl" :class="item.text">
                       <Icon :icon="item.icon" />
@@ -186,7 +188,7 @@
       <ClientEditModal />
 
       <ClientAddModalEgresoA :id="id" />
-      <ClientEditModalEgresoA   />
+      <ClientEditModalEgresoA />
 
       <ModalCierreCaja :activeModal="showModalCierre" :id="id" :monto="monto" @close="showModalCierre = false" />
 
