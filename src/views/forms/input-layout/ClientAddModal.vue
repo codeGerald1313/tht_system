@@ -384,14 +384,13 @@
 
 
         <div class="grid lg:grid-cols-2 gap-4 grid-cols-1">
-          <FromGroup name="d5" class="mt-1">
-            <label for="payment-type" class="block text-sm font-medium text-gray-700 flex items-center">
-              Método de pago
-              <span class="text-red-500 ml-1">*</span>
-            </label>
-            <Select id="payment-type" :options="paymentMethods" v-model="selectedPaymentType"
-              class="pago-select mt-2" />
-          </FromGroup>
+          <FromGroup name="d5" class="mt-1" v-if="conceptSelected !== '16'">
+  <label for="payment-type" class="block text-sm font-medium text-gray-700 flex items-center">
+    Método de pago
+    <span class="text-red-500 ml-1">*</span>
+  </label>
+  <Select id="payment-type" :options="paymentMethods" v-model="selectedPaymentType" class="pago-select mt-2" />
+</FromGroup>
 
 
 
@@ -737,21 +736,27 @@ const saveIngreso = () => {
 
   const selectElement2 = document.querySelector('.pago-select select');
 
-  if (selectElement) {
-    // Obtiene el índice del option seleccionado
-    const selectedIndex = selectElement2.selectedIndex;
+// Verifica si el elemento select existe
+if (selectElement2 && selectElement2.options.length > 0) {
+  // Obtiene el índice del option seleccionado
+  const selectedIndex = selectElement2.selectedIndex;
 
+  // Verifica si el índice es válido (mayor o igual a 0)
+  if (selectedIndex >= 0) {
     // Obtiene el texto del label seleccionado usando el índice
     const selectedLabel = selectElement2.options[selectedIndex].text;
 
     income.value.paymentmethod_id = selectedIndex;
     income.value.paymethod = selectedLabel;
 
-    // Imprime el label seleccionado
     // console.log('Label seleccionado:', selectedIndex, selectedLabel);
   } else {
-    // console.log('No se ha seleccionado ninguna opción.');
+  
   }
+} else {
+
+}
+
 
   // Accede al ID del concepto seleccionado desde conceptSelected
   const selectedConceptIdCliente = selectedCustomer.value;
@@ -955,7 +960,8 @@ const paymentMethods = [
   { value: "cash", label: "Efectivo" },
   { value: "visa", label: "Visa" },
   { value: "check", label: "Cheque" },
-  { value: "account_deposit", label: "Depósito a cuenta" }
+  { value: "account_deposit", label: "Depósito a cuenta" },
+  { value: "dolar", label: "Dolares" }
 ];
 
 
@@ -1246,7 +1252,11 @@ watch(() => selectedBox.value, (newValue, oldValue) => {
 
 watch(() => conceptSelected.value, (newValue, oldValue) => {
 
-
+  if (newValue === '16') {
+    // Si el concepto es '16', establecer selectedPaymentType en null
+    income.value.paymentmethod_id = 5;
+    income.value.paymethod = 'Dolares';
+  }
 });
 
 

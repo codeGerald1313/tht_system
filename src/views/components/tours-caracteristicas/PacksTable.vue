@@ -1,6 +1,6 @@
 <template>
   <div class="overflow-x-auto">
-    <vue-good-table :columns="columns" :rows="rows" :sort-options="{ enabled: false }" class="custom-table">
+    <vue-good-table :columns="columns" :rows="rows"  :sort-options="{ enabled: false }" class="custom-table">
       <template v-slot:table-row="props">
         <!-- Columna de Numeración -->
         <span v-if="props.column.field === 'number'"  class="flex items-center justify-center p-2">
@@ -28,16 +28,9 @@
           SI
         </span>
 
-        <!-- Columna de Pasaje -->
-        <span v-if="props.column.field === 'passage'" class="flex items-center justify-center p-2">
-          NO
-        </span>
+   
 
-        <!-- Columna de Precio -->
-        <span v-if="props.column.field === 'price'" class="flex items-center justify-center p-2">
-          299.00
-
-        </span>
+       
 
         <span v-if="props.column.field === 'action'" class="flex items-center justify-center p-2 space-x-2">
 

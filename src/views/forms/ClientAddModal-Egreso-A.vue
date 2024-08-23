@@ -480,9 +480,14 @@
               <Textinput type="text" placeholder="Ingrese N° de Operación" v-model.trim="income.reference_operation" />
             </FromGroup>
           </template>
+          <FromGroup v-if="showDollarTotal" label="Total en Dólares" class="text-center">
+      <div class="text-red-500 text-4xl font-bold text-center">
+        {{ dollarTotal }} USD
+      </div>
+    </FromGroup>
 
           <FromGroup label="Monto" name="d6">
-            <Textinput type="text" placeholder="Monto" v-model.trim="income.amount" />
+            <Textinput type="text" placeholder="Monto" v-model.trim="income.amount" @input="debouncedUpdateDollarTotal" />
             <span v-if="!isValidField('amount')" class="text-red-500">Por favor ingrese monto</span>
           </FromGroup>
         </div>
@@ -527,13 +532,20 @@ const toast = useToast();
 
 const show = ref(false);
 
+const props = defineProps({
+  id:  Number // Se espera que la data del empleado venga como objeto
+})
+
+
+
 const show2 = ref(false);
 const show3 = ref(false);
 
 const show4 = ref(false);
 
 const showCustomerSelect = ref(false);
-
+const dollarTotal = ref(''); // Supone que este valor lo obtienes de algún cálculo
+const showDollarTotal = ref(false);
 
 const departments = ref([]);
 const districts = ref([]);
@@ -917,7 +929,7 @@ const saveIngreso = () => {
     const selectedLabel = selectElement2.options[selectedIndex].text;
 
     income.value.paymentmethod_id = selectedIndex;
-    income.value.paymethod = selectedLabel;
+    // income.value.paymethod = selectedLabel;
 
     // Imprime el label seleccionado
     // console.log('Label seleccionado:', selectedIndex, selectedLabel);
@@ -969,8 +981,12 @@ const saveIngreso = () => {
   }
 
 
-  income.value.booking_id = income.value.booking_id.value;
-  income.value.collaborator_id = income.value.collaborator_id.value;
+// Si booking_id es undefined, se asigna null
+income.value.booking_id = income.value.booking_id?.value !== undefined ? income.value.booking_id.value : null;
+
+// Si collaborator_id es undefined, se asigna null
+income.value.collaborator_id = income.value.collaborator_id?.value !== undefined ? income.value.collaborator_id.value : null;
+
 
   console.log(income.value)
 
@@ -1027,6 +1043,14 @@ watch(selectedBooking, (newSelection) => {
   }
 });
 
+const fetchDollarTotal = async () => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/moneyboxes-akemy/total-dolares/${props.id}`, headers);
+    dollarTotal.value = response.data.total_dolares; // Asume que el total viene en la propiedad `total`
+  } catch (error) {
+    console.error('Error al obtener el total en dólares:', error);
+  }
+};
 
 
 const banks = ref([]);
@@ -1107,6 +1131,28 @@ let districtSelected = ref(null);
 let statusSelected = ref(null);
 let sexSelected = ref(null);
 
+const debounce = (fn, delay) => {
+  let timeoutId;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      fn(...args);
+    }, delay);
+  };
+};
+
+// Función para actualizar el total en dólares
+const updateDollarTotal = () => {
+  // Convertir income.amount a número y restarlo del dollarTotal
+  const amount = parseFloat(income.value.amount) || 0; // Asegúrate de que sea un número
+  const newDollarTotal = dollarTotal.value - amount;
+
+  // Evitar que el total sea negativo
+  dollarTotal.value = newDollarTotal >= 0 ? newDollarTotal : 0;
+};
+
+const debouncedUpdateDollarTotal = debounce(updateDollarTotal, 2500);
+
 
 let boxSelected = "";
 let boxSelectedError = "";
@@ -1138,7 +1184,9 @@ const paymentMethods = [
   { value: "cash", label: "Efectivo" },
   { value: "visa", label: "Visa" },
   { value: "check", label: "Cheque" },
-  { value: "account_deposit", label: "Depósito a cuenta" }
+  { value: "account_deposit", label: "Depósito a cuenta" },
+  { value: "dolar", label: "Dolares" }
+
 ];
 
 
@@ -1454,7 +1502,14 @@ watch(() => selectedProvider.value, (newValue, oldValue) => {
 });
 
 watch(() => selectedPaymentType.value, (newValue, oldValue) => {
-
+  // Si el tipo de pago es "dolar", mostrar el campo de total en dólares
+  if (newValue === 'dolar') {
+    console.log(props.id);
+    showDollarTotal.value = true;
+    fetchDollarTotal(); // Llama al backend
+  } else {
+    showDollarTotal.value = false;
+  }
 
 });
 

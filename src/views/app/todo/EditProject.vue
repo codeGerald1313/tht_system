@@ -2,7 +2,7 @@
   <div>
     <Modal
       :activeModal="store.editModal"
-      @close="store.closeEditModal()"dsdsd
+      @close="store.closeEditModal()"
       title="Update Project"
       centered
     >

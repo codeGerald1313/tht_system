@@ -21,22 +21,47 @@
           <div class="w-full md:w-1/2 p-4">
             <div class="space-y-4">
               <FromGroup label="Nombre Empresa">
-                <Textinput type="text" placeholder="texto cargando" id="nombre_empresa" name="nombre_empresa" />
+                <Textinput
+                  type="text"
+                  placeholder="Ingresar nombre de empresa"
+                  v-model="nosotros.nom_empresa" 
+                />
               </FromGroup>
               <FromGroup label="Nota">
-                <Textarea type="text" placeholder="texto cargando" id="nota" name="nota" />
+                <Textarea
+                  type="text"
+                  placeholder="Ingrese la nota"
+                  v-model="nosotros.nota" 
+                />
               </FromGroup>
               <FromGroup label="Misión">
-                <Textarea type="text" placeholder="texto cargando" id="mision" name="mision" />
+                <Textarea
+                  type="text"
+                  placeholder="Ingrese la misión"
+                  v-model="nosotros.mision"
+                />
               </FromGroup>
               <FromGroup label="Visión">
-                <Textarea type="text" placeholder="texto cargando" id="vision" name="vision" />
+                <Textarea
+                  type="text"
+                  placeholder="Ingrese la visión"
+                  v-model="nosotros.vision" 
+                />
               </FromGroup>
               <FromGroup label="Link Video">
-                <Textinput type="text" placeholder="texto cargando" id="link_video" name="link_video" />
+                <Textinput
+                  type="text"
+                  placeholder="Ingrese el link del video"
+                  v-model="nosotros.video"
+                />
               </FromGroup>
               <div>
-                <Button type="button" text="Actualizar" btnClass="btn-success" />
+                <Button
+                  type="button"
+                  text="Actualizar"
+                  btnClass="btn-success"
+                  @click="updateRecord"
+                />
               </div>
             </div>
           </div>
@@ -54,36 +79,37 @@
 </template>
 
 <script setup>
+import { onMounted, computed } from 'vue';
+import { useNosotrosStore } from '@/store/nosotros';
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import Icon from "@/components/Icon";
 import Button from "@/components/Button";
 import Textinput from "@/components/Textinput";
 import Textarea from "@/components/Textarea";
-import Card from "@/components/Card";
 import Etable from "../Etable";
+import FromGroup from "@/components/FromGroup";
 
-import FromGroup from "@/components/FromGroup"; // Asegúrate de importar el componente FromGroup
+const store = useNosotrosStore();
+const nosotros = computed(() => store.nosotros); // Cambiado de `form` a `nosotros`
 
-// Define buttons for tabs
+const fetchData = async () => {
+  await store.getRecord();
+};
+
+onMounted(async () => {
+  await fetchData();
+});
+
+const updateRecord = () => {
+  store.updateRecord();
+};
+
 const buttons = [
   {
     title: "Nuevo Sector",
     icon: "heroicons-outline:information-circle",
   },
 ];
-
-// Mock data for table
-const tableData = [
-  { id: 1, image: "img/historia/team-guarostours.jpg" },
-  { id: 2, image: "img/historia/guarostour-equipo-guias-y-conductores.jpg" },
-  { id: 3, image: "img/historia/unidades-guarostours.jpg" },
-  { id: 4, image: "img/historia/nuevas-unidades-guarostours.jpg" },
-];
-
-const editItem = (item) => {
-  // Handle the edit action
-  console.log('Edit item:', item);
-};
 </script>
 
 <style scoped>

@@ -1,20 +1,29 @@
 <template>
   <div>
     <div class="flex flex-wrap justify-between items-center mb-4">
-      <div class="md:flex md:space-x-4 md:justify-end items-center rtl:space-x-reverse"
-        :class="width < 768 ? 'space-x-rb' : ''">
+      <div
+        class="md:flex md:space-x-4 md:justify-end items-center rtl:space-x-reverse"
+        :class="width < 768 ? 'space-x-rb' : ''"
+      >
+    
+ 
 
-
-        <Button icon="heroicons-outline:plus" text="Nuevo"
-          btnClass="btn-dark dark:bg-slate-800  h-min text-sm font-normal" iconClass=" text-lg" @click="openProject"
-          :isLoading="store.isLoading" />
+        <Button
+          icon="heroicons-outline:plus"
+          text="Nuevo"
+          btnClass="btn-dark dark:bg-slate-800  h-min text-sm font-normal"
+          iconClass=" text-lg"
+          @click="openProject"
+          :isLoading="store.isLoading"
+        />
       </div>
     </div>
 
+    <TableSkeltion :count="projects.length" v-if="isSkeletionList" />
     <Grid v-if="fillter === 'grid' && !isSkeletionGrid" />
     <List v-if="fillter === 'list' && !isSkeletionList" />
 
-    <TransportAddModal @updateTransportList="reloadCaracteristicasTable" />
+    <TransportAddModal />
     <TransportEditModal />
   </div>
 </template>
@@ -29,25 +38,14 @@ import Grid from "./Projects-grid";
 import { useProjectStore } from "@/store/project";
 import TransportEditModal from "./TransportEditModal.vue";
 import TransportAddModal from "./TransportAddModal.vue";
-import { useCaracteristicaStore } from "@/store/useCaracteristicaStore";
 
 
-const store = useCaracteristicaStore();
-const store2 = useProjectStore();
+const store = useProjectStore();
 
 let fillter = ref("list"); // Inicia con 'list'
 const openProject = () => {
-  store2.openProject();
+  store.openProject();
 };
-
-const reloadCaracteristicasTable = () => {
-  try {
-    const store = useCaracteristicaStore();
-    store.listarCaracteristicas();
-  } catch (error) {
-    console.error('Error al recargar Características:', error);
-  }
-}
 
 const width = ref(0);
 const handleResize = () => {

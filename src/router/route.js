@@ -778,6 +778,16 @@ const routes = [
           hide: true,
         },
       },
+
+
+    {
+      path: "hotels",
+      name: "hotels",
+      component: () => import("@/views/components/tours copy/index.vue"),
+      meta: {
+        hide: true,
+      },
+    },
       {
         path: "tours-caracteristicas",
         name: "tours-caracteristicas",

@@ -277,11 +277,11 @@ export const menuItemsAdminGuaros = [
     child: [
       {
         childtitle: "Gestión de Hoteles",
-        childlink: "/app/cronograma",
+        childlink: "hotels",
       },
       {
         childtitle: "Detalles",
-        childlink: "/app/cronograma",
+        childlink: "hotel-details",
       },
     ],
   },
