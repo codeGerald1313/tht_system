@@ -534,8 +534,8 @@
           <span v-if="props.column.field == 'empresa'">
             <span>{{ props.row.collaborator.partnercompany }} </span>
           </span>
-          <span v-if="props.column.field == 'fechacomision'">
-            {{ props.row.date_commision }}
+          <span v-if="props.column.field == 'fechacomision'"  class="font-bold">
+            {{ props.row.formatted_date_commision }}
           </span>
 
 
@@ -577,7 +577,7 @@
       @commissionProcessed="fetchData" :code="code" :idBooking="idBooking" @close="showComisionar = false">
     </ComisionarModal>
 
-    <ResumenPagosModal :activeModal="showResumenPagos" :selectedRow="selectedRow" @commissionProcessed="fetchData"
+    <ResumenPagosModal :activeModal="showResumenPagos" :selectedRow="selectedRow" @pagosProcesados="fetchData"
       :idBooking="idBooking" @close="showResumenPagos = false">
     </ResumenPagosModal>
 

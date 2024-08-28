@@ -89,6 +89,7 @@ export default defineComponent({
                 const result = await paymentStore.updatePaymentSummary();
                 // Maneja el resultado, muestra un mensaje o redirige según sea necesario
                 console.log('Update successful:', result);
+                emit('pagosProcesados'); // Emite el evento con el nombre adecuado
                 emit('close'); // Cierra el modal si el envío es exitoso
             } catch (error) {
                 console.error('Update failed:', error);
