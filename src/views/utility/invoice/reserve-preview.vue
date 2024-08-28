@@ -388,43 +388,41 @@
         </div>
       </div>
 
-      <vue-good-table 
-  :columns="columnsReservasAlojamiento"
-  styleClass="vgt-table table-head bordered v-middle striped listview" 
-  :rows="reservasInfo"
-  :sort-options="{ enabled: false }"
->
-  <template v-slot:table-row="props">
-    <!-- Codigo -->
-    <span v-if="props.column.field == 'codigo'" class="text-blue-900 font-bold">
-      {{ props.row.hotelsbooking.code }}
-    </span>
+      <vue-good-table :columns="columnsReservasAlojamiento"
+        styleClass="vgt-table table-head bordered v-middle striped listview" :rows="reservasInfo"
+        :sort-options="{ enabled: false }">
+        <template v-slot:table-row="props">
+          <!-- Codigo -->
+          <span v-if="props.column.field == 'codigo'" class="text-blue-900 font-bold">
+            {{ props.row.hotelsbooking.code }}
+          </span>
 
-    <!-- Nombre del Hotel -->
-    <span v-if="props.column.field == 'nombreHotel'" class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
-      <span class="font-bold">{{ props.row.hotel?.tradename }}</span> 
-      ({{ props.row.hotel?.citie_turistic?.description }})
-      <br>
-      Cell: {{ props.row.hotel?.cellphone }}
-    </span>
+          <!-- Nombre del Hotel -->
+          <span v-if="props.column.field == 'nombreHotel'"
+            class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
+            <span class="font-bold">{{ props.row.hotel?.tradename }}</span>
+            ({{ props.row.hotel?.citie_turistic?.description }})
+            <br>
+            Cell: {{ props.row.hotel?.cellphone }}
+          </span>
 
-    <!-- Detalle del Hotel -->
-    <span v-if="props.column.field == 'detallehotel'" 
-          class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
-          {{ `${props.row.typebedroom.description} (${props.row.quantity} hab. x ${props.row.nights} noches)` }}
+          <!-- Detalle del Hotel -->
+          <span v-if="props.column.field == 'detallehotel'"
+            class="text-slate-500 dark:text-slate-400 block min-w-[108px]">
+            {{ `${props.row.typebedroom.description} (${props.row.quantity} hab. x ${props.row.nights} noches)` }}
 
-    </span>
+          </span>
 
-    <!-- Acciones -->
-    <template v-if="props.column.field === 'action'">
-      <div class="action-btn text-end mr-3">
-        <div class="text-xl">
-          <Icon icon="heroicons-outline:trash" class="text-danger-500" @click="confirmDelete(props.row.id)" />
-        </div>
-      </div>
-    </template>
-  </template>
-</vue-good-table>
+          <!-- Acciones -->
+          <template v-if="props.column.field === 'action'">
+            <div class="action-btn text-end mr-3">
+              <div class="text-xl">
+                <Icon icon="heroicons-outline:trash" class="text-danger-500" @click="confirmDelete(props.row.id)" />
+              </div>
+            </div>
+          </template>
+        </template>
+      </vue-good-table>
 
 
 
@@ -458,6 +456,13 @@
           <span v-if="props.column.field == 'facturado'">
             <span>{{ props.row.facturado }}</span>
           </span>
+
+          <!-- Nuevo campo para el botón de edición usando heroicons -->
+          <span v-if="props.column.field == 'opciones'">
+            <button @click="editRow(props.row)" class="btn btn-icon">
+              <Icon icon="heroicons-outline:pencil-alt" class="h-7 w-7 text-gray-500" />
+            </button>
+          </span>
         </template>
       </vue-good-table>
 
@@ -477,27 +482,28 @@
         <template v-slot:table-row="props">
           <span v-if="props.column.field == 'tipocomprobante'">
             <span>{{ props.row.voucher.description }}</span>
-
           </span>
 
           <span v-if="props.column.field == 'ncomprobante'">
             <span>{{ props.row.nro_voucher }} </span>
-
           </span>
+
           <span v-if="props.column.field == 'fecha'">
             <span>{{ props.row.date_movement }} </span>
-
           </span>
+
           <span v-if="props.column.field == 'metodopago'">
             <span>{{ props.row.payment_method.description }} </span>
           </span>
+
           <span v-if="props.column.field == 'pagadoc'">
             <span>{{ props.row.amount }}</span>
-
           </span>
 
 
+
         </template>
+
 
       </vue-good-table>
 
@@ -543,7 +549,7 @@
 
           </span>
 
-          
+
           <span class="font-bold" v-if="props.column.field == 'branch.description'">
             {{ props.row.branch?.description }}
 
@@ -571,6 +577,10 @@
       @commissionProcessed="fetchData" :code="code" :idBooking="idBooking" @close="showComisionar = false">
     </ComisionarModal>
 
+    <ResumenPagosModal :activeModal="showResumenPagos" :selectedRow="selectedRow" @commissionProcessed="fetchData"
+      :idBooking="idBooking" @close="showResumenPagos = false">
+    </ResumenPagosModal>
+
 
     <AmortizarModal :activeModal="showAmortizar" title="Actualizar Registro de Colaborador" @form-submitted="fetchData"
       :idCliente="idCliente" :code="code" :idBooking="idBooking" :totalBooking="deuda" @close="showAmortizar = false">
@@ -595,6 +605,8 @@ import { MenuItem } from "@headlessui/vue";
 import { format } from 'date-fns'; // Importa la función format de date-fns
 
 import ComisionarModal from "./ComisionarAddModal";
+import ResumenPagosModal from "./ResumenPagosModal";
+
 import AmortizarModal from "./AmortizarAddAmodal";
 
 import EditProject2 from "./ModalAddReserve";
@@ -618,6 +630,7 @@ export default {
     AmortizarModal,
     FromGroup,
     Button,
+    ResumenPagosModal,
     EditProject2,
     Dropdown,
     InputGroup,
@@ -862,19 +875,19 @@ export default {
 
           this.projects = data.tours;
           if (data.hotels != null && data.hotels.length > 0) {
-    // Si hay hoteles en data.hotels y no es null
-    this.reservasInfo = []; // Inicializar reservasInfo como un array vacío
+            // Si hay hoteles en data.hotels y no es null
+            this.reservasInfo = []; // Inicializar reservasInfo como un array vacío
 
-    // Iterar sobre cada hotel en data.hotels
-    data.hotels.forEach(hotel => {
-        // Agregar cada detailbedrooms del hotel a this.reservasInfo
-        if (hotel.detailbedrooms && hotel.detailbedrooms.length > 0) {
-            this.reservasInfo.push(...hotel.detailbedrooms);
-        }
-    });
-} else {
-    this.reservasInfo = []; // Si no hay hoteles en data.hotels, asignar un array vacío
-}
+            // Iterar sobre cada hotel en data.hotels
+            data.hotels.forEach(hotel => {
+              // Agregar cada detailbedrooms del hotel a this.reservasInfo
+              if (hotel.detailbedrooms && hotel.detailbedrooms.length > 0) {
+                this.reservasInfo.push(...hotel.detailbedrooms);
+              }
+            });
+          } else {
+            this.reservasInfo = []; // Si no hay hoteles en data.hotels, asignar un array vacío
+          }
 
 
           this.movimientosInfo = data.movements;
@@ -894,6 +907,12 @@ export default {
     fetchDataEditGrupo() {
       const id = this.$route.params.id;
 
+    },
+    editRow(row) {
+      console.log('Editar fila:', row);
+      this.selectedRow = { ...row }; // Guardamos una copia de la fila seleccionada
+      this.showResumenPagos = true;
+      // Aquí puedes agregar la lógica para abrir un modal o realizar la acción de edición
     },
     fetchEditData() {
       const id = this.$route.params.id;
@@ -919,10 +938,11 @@ export default {
       movimientosInfo: [],
       code: null,
       idBooking: null,
+      selectedRow: null,
       commisionInfo: [],
       otherData: {},  // Declara otherData en los datos del componente
       otherData2: {},  // Declara otherData en los datos del componente
-
+      showResumenPagos: false,
       idCliente: null,
       showReserveModal: false,  // Nueva propiedad para controlar el modal de edición
       deuda: null,
@@ -1224,6 +1244,10 @@ export default {
           label: "FACTURADO",
           field: "facturado",
         },
+        {
+          label: "Opciones",
+          field: "opciones",
+        },
       ],
 
       columnsReservaHotelExpense: [
@@ -1311,6 +1335,7 @@ export default {
           label: "",
           field: "filedocumentcomrobante",
         },
+
       ],
 
       columnsComisiones: [
