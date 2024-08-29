@@ -92,7 +92,7 @@
                 </span>
                 <template v-slot:menus>
                   <MenuItem v-for="(item, i) in actions" :key="i">
-                  <div @click="item.doit(props.row.id)"
+                  <div @click="item.doit(props.row)"
                     :class="`
             ${item.name === 'anular'
                         ? 'bg-danger-500 text-danger-500 bg-opacity-30 hover:bg-opacity-100 hover:text-white'
@@ -184,22 +184,30 @@ export default {
       actions: [
 
 
-        {
-          name: "anular",
-          icon: "heroicons-outline:trash",
-          doit: (id) => {
-            axios.delete(`${import.meta.env.VITE_API_URL}/moneys/delete/${id}`, headers)
-              .then(response => {
+      {
+  name: "anular",
+  icon: "heroicons-outline:trash",
+  doit: (row) => {
+    // Obtener id y booking_id desde el objeto row
+    const id = row.id;
+    const booking_id = row.booking_id;
 
-                this.toast.success(response.data.message);
-              })
-              .catch(error => {
-                // Manejar cualquier error que ocurra durante la eliminación
-                console.error("Error al eliminar el elemento", error);
-              });
+    // Realizar la petición DELETE con id en la ruta y booking_id en el cuerpo
+    axios.delete(`${import.meta.env.VITE_API_URL}/moneys/delete/${id}`, {
+      ...headers, // Aquí puedes incluir tus cabeceras si son necesarias
+      data: { booking_id } // El cuerpo del request con booking_id
+    })
+    .then(response => {
+      // Mostrar éxito en la respuesta
+      this.toast.success(response.data.message);
+    })
+    .catch(error => {
+      // Manejar cualquier error durante la eliminación
+      console.error("Error al eliminar el elemento", error);
+    });
+  },
+}
 
-          },
-        },
 
 
       ],
