@@ -417,7 +417,7 @@
           <template v-if="props.column.field === 'action'">
             <div class="action-btn text-end mr-3">
               <div class="text-xl">
-                <Icon icon="heroicons-outline:trash" class="text-danger-500" @click="confirmDelete(props.row.id)" />
+                <Icon icon="heroicons-outline:trash" class="text-danger-500" @click="confirmDelete(props.row.hotelsbooking_id)" />
               </div>
             </div>
           </template>
@@ -883,6 +883,8 @@ export default {
               // Agregar cada detailbedrooms del hotel a this.reservasInfo
               if (hotel.detailbedrooms && hotel.detailbedrooms.length > 0) {
                 this.reservasInfo.push(...hotel.detailbedrooms);
+
+                console.log(this.reservasInfo);
               }
             });
           } else {

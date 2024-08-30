@@ -241,7 +241,7 @@
                 <div class="action-btn text-end mr-3">
                   <div class="text-xl">
                     <Icon icon="heroicons-outline:trash" class="text-danger-500"
-                      @click.prevent="deleteItem(props.row.id)" />
+                      @click.prevent="deleteItem(props.row.hotelsbooking_id)" />
                   </div>
                 </div>
               </template>
@@ -842,12 +842,15 @@ export default {
         this.tour.totalTour = otherData.subtotal_tour;
         // Verificar si otherData.hotelsbookings tiene al menos un elemento
         if (otherData.hotelsbookings && otherData.hotelsbookings.length > 0) {
-          // Obtener el total del primer elemento como un número flotante
-          const firstHotelBookingTotal = parseFloat(otherData.hotelsbookings[0].total);
+          // Sumar el total de todos los elementos del array como números flotantes
+          const totalHotelsBookingSum = otherData.hotelsbookings.reduce((accumulator, hotelBooking) => {
+            return accumulator + parseFloat(hotelBooking.total) || 0; // Sumar cada total, asegurando que sea un número
+          }, 0); // Valor inicial del acumulador es 0
 
-          // Asignar el total del primer elemento a this.totalHotelValue
-          this.totalHotelValue = firstHotelBookingTotal || 0; // Si es NaN, asignar 0
-        } else {
+          // Asignar la suma total a this.totalHotelValue
+          this.totalHotelValue = totalHotelsBookingSum;
+        }
+        else {
           // Manejar el caso donde otherData.hotelsbookings está vacío o no existe
           this.totalHotelValue = 0; // O algún valor predeterminado apropiado
         }
@@ -965,13 +968,20 @@ export default {
 
             // Eliminar el elemento del array this.reservasHotel
             this.reservasHotel.splice(index, 1);
+            console.log("1", this.reservasHotel);
 
             // Recalcular this.totalHotelValue
             let totalSum = 0;
             this.reservasHotel.forEach(reserva => {
-              totalSum += parseFloat(reserva.total);
+              if (reserva.hotelsbooking && reserva.hotelsbooking.total) {
+                console.log("ReservasHotel: " + reserva.hotelsbooking.total);
+                totalSum += parseFloat(reserva.hotelsbooking.total); // Acceder al total dentro del objeto hotelsbooking
+              }
             });
             this.totalHotelValue = totalSum;
+
+
+            console.log("2", this.reservasHotel);
 
             // Una vez eliminado el elemento, mostrar un toast de éxito
             const toast = useToast();
@@ -992,6 +1002,7 @@ export default {
     },
 
     handlePostComplete(data) {
+      console.log(data);
       // Variable para almacenar la suma de los totales de las reservas de hotel
       let totalSum = 0;
 
