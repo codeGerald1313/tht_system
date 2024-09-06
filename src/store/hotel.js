@@ -10,7 +10,7 @@ export const useHotelStore = defineStore("hotel", {
     hotel: {
       nombre: "",
       direccion: "",
-      ciudad: "",
+      tourismcitie_id: "",
       telefono: "",
       email: "",
       sitio_web: "",
@@ -35,11 +35,14 @@ export const useHotelStore = defineStore("hotel", {
         );
         this.hotels = response.data.data;
         // Mostrar el mensaje de éxito proporcionado por el backend
-        toast.success(response.data.message || "Hoteles cargados exitosamente.");
+        toast.success(
+          response.data.message || "Hoteles cargados exitosamente."
+        );
         return this.hotels;
       } catch (error) {
         // Mostrar el mensaje de error proporcionado por el backend
-        this.error = error.response?.data?.message || "Error al cargar los hoteles";
+        this.error =
+          error.response?.data?.message || "Error al cargar los hoteles";
         toast.error(this.error);
         throw error;
       } finally {
@@ -60,11 +63,15 @@ export const useHotelStore = defineStore("hotel", {
           }
         }
 
-        const response = await axios.post("/api/hotels", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL_MAIN}/hotels/create/`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
 
         this.hotels.push(response.data.data);
         // Mostrar el mensaje de éxito proporcionado por el backend
@@ -72,11 +79,47 @@ export const useHotelStore = defineStore("hotel", {
         return response.data;
       } catch (error) {
         // Mostrar el mensaje de error proporcionado por el backend
-        this.error = error.response?.data?.message || "Error al guardar el hotel";
+        this.error =
+          error.response?.data?.message || "Error al guardar el hotel";
         toast.error(this.error);
         throw error;
       } finally {
         this.loading = false;
+      }
+    },
+    async updateHotel(hotel) {
+      try {
+        const formData = new FormData();
+        Object.keys(hotel).forEach((key) => {
+          formData.append(key, hotel[key]);
+        });
+
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL_MAIN}/hotels/create/`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        if (response.data.status === "success") {
+          this.hotel = response.data.data;
+        }
+      } catch (error) {
+        console.error("Error al actualizar el hotel:", error);
+        throw error;
+      }
+    },
+    async deleteHotel(id) {
+      try {
+        await axios.delete(`${import.meta.env.VITE_API_URL_MAIN}/hotels/delete/${id}`);
+        this.hotels = this.hotels.filter(hotel => hotel.id !== id);
+        return { success: true, message: 'Hotel eliminado exitosamente' };
+      } catch (error) {
+        console.error('Error al eliminar el hotel:', error);
+        return { success: false, message: 'Error al eliminar el hotel' };
       }
     },
 

@@ -43,10 +43,10 @@
           </div>
 
           <div class="flex justify-end mt-4">
-            <Button text="Eliminar" btnClass="btn-red" @click.prevent="removeTypeBedroom(index)" />
+            <Button text="Eliminar" btnClass="bg-red-500 text-white" @click.prevent="removeTypeBedroom(index)" />
           </div>
         </div>
-
+  
         <!-- Botón para Agregar Nuevos Tipos de Habitación -->
         <div class="text-right mt-4">
           <Button text="Agregar Tipo de Habitación" btnClass="btn-dark" @click.prevent="addTypeBedroom" />
@@ -66,7 +66,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted  } from 'vue';
+import { ref, watch  } from 'vue';
 import Button from '@/components/Button';
 import FromGroup from '@/components/FromGroup';
 import InputGroup from '@/components/InputGroup';
@@ -83,8 +83,15 @@ const optionStore = useOptionStore();
 
 const props = defineProps({
   activeModal: Boolean,
-  transportData: Object
+  idHotel: Number
 });
+
+// Emitir eventos para cerrar el modal y actualizar datos
+const emits = defineEmits(['close']);
+
+const close = () => {
+  emits('close');
+};
 
 const addTypeBedroom = () => {
   typeBedroomStore.addTypeBedroom();
@@ -103,20 +110,21 @@ const saveTypeBedrooms = async () => {
   }
 };
 
-const close = () => {
-  store.closeModal();
-};
-
-onMounted(async () => {
-  await optionStore.fetchOptions(); // Llama a fetchOptions cuando el componente se monte
-});
+watch(
+  () => props.activeModal,
+  async (isActive) => {
+    if (isActive) {
+      await optionStore.fetchOptions(); // Llama a fetchOptions solo cuando el modal se activa
+    }
+  }
+);
 
 // Watcher para escuchar cambios en transportData y actualizar el store
 watch(
-  () => props.transportData,
+  () => props.idHotel,
   (newData) => {
-    if (newData && newData.hotel_id) {
-      typeBedroomStore.typebedrooms.forEach(tb => tb.hotel_id = newData.hotel_id); // Establece el ID del hotel en cada tipo de habitación
+    if (newData) {
+      typeBedroomStore.typebedrooms.forEach(tb => tb.hotel_id = newData); // Establece el ID del hotel en cada tipo de habitación
     }
   },
   { immediate: true }

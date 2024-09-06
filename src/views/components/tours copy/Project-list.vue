@@ -2,7 +2,7 @@
   <div>
     <Card noborder>
       <div class="md:flex justify-between pb-6 md:space-y-0 space-y-3 items-center">
-        <h5>Todos los Tours</h5>
+        <h5>Todos los Hoteles</h5>
 
         <div class="flex items-center space-x-3"> <!-- Contenedor flex para alinear los elementos -->
           <Button icon="heroicons-outline:arrows-up-down"
@@ -20,56 +20,60 @@
         }" :sort-options="{ enabled: false }" class="custom-table">
           <template v-slot:table-row="props">
             <!-- Columna de Nombre -->
-            <span v-if="props.column.field === 'nombre'" class="flex items-center justify-center p-2">
+            <span v-if="props.column.field === 'nombre'">
               {{ props.row.nombre }}
             </span>
 
             <!-- Columna de Precio Online -->
-            <span v-if="props.column.field === 'direccion'" class="flex items-center justify-center p-2">
+            <span v-if="props.column.field === 'direccion'">
               {{ props.row.direccion }}
             </span>
 
             <!-- Columna de Precio Agencia -->
-            <span v-if="props.column.field === 'price_agencia'" class="flex items-center justify-center p-2">
-              {{ props.row.price_agencia }}
+            <span v-if="props.column.field === 'city_touristic'">
+              {{ props.row.city_touristic }}
             </span>
 
-            <!-- Columna de Tiempo -->
-            <span v-if="props.column.field === 'time'" class="flex items-center justify-center p-2">
-              {{ props.row.duracion }}
-            </span>
+
 
             <!-- Columna de Configuración -->
             <span v-if="props.column.field === 'action'" class="flex items-center justify-center p-2 space-x-2">
-              <!-- Botón de Agregar -->
+              <!-- Botón de Agregar Servicio -->
               <button type="button" class="bg-neutral-900 text-white p-3 rounded flex items-center justify-center"
                 @click="handleAddServices(props.row)">
-                <Icon icon="heroicons:plus" class="w-7 h-7" />
+                <Icon icon="heroicons:cog" class="w-7 h-7" />
+                <span class="ml-2">Agregar Servicio</span>
               </button>
+
 
               <!-- Botón de Editar -->
               <button type="button" class="bg-blue-500 text-white p-3 rounded flex items-center justify-center"
-                @click="handleEdit(props.row.id)">
+                @click="handleEdit(props.row)">
                 <Icon icon="heroicons:pencil-square" class="w-7 h-7" />
               </button>
 
               <!-- Botón de Imágenes -->
               <button type="button" class="bg-yellow-500 text-white p-3 rounded flex items-center justify-center"
                 @click="handleAddsurroundings(props.row)">
-                <Icon icon="heroicons:photo" class="w-7 h-7" />
-              </button>
+                <Icon icon="heroicons:map" class="w-7 h-7" />
+                <span class="ml-2">Registrar Alrededor</span>
 
-              <!-- Botón de Slider -->
+              </button>
+              <!-- Botón de Registrar Regla -->
               <button type="button" class="bg-green-500 text-white p-3 rounded flex items-center justify-center"
-                @click="handleAddRules(props.row.id)">
-                <Icon icon="heroicons:camera" class="w-7 h-7" />
+                @click="handleAddRules(props.row)">
+                <Icon icon="heroicons:document-text" class="w-7 h-7" />
+                <span class="ml-2">Registrar Regla</span>
               </button>
 
-              <!-- Botón de Detalles -->
+
+              <!-- Botón de Tipos de Habitación -->
               <button type="button" class="bg-purple-500 text-white p-3 rounded flex items-center justify-center"
-                @click="handleTypesBedrooms(props.row.id)">
-                <Icon icon="heroicons:information-circle" class="w-7 h-7" />
+                @click="handleTypesBedrooms(props.row)">
+                <Icon icon="heroicons:home" class="w-7 h-7" />
+                <span class="ml-2">Tipos de Habitación</span>
               </button>
+
 
               <!-- Botón de Eliminar -->
               <button type="button" class="bg-red-500 text-white p-3 rounded flex items-center justify-center"
@@ -81,11 +85,14 @@
         </vue-good-table>
 
         <!-- Modales para las diferentes acciones -->
-        <HotelsAddTypeBedroomModal :activeModal="addmodalTypeBedroom" @close="addmodalTypeBedroom = false" :idHotel="idHotel" />
-        <HotelsAddServices :activeModal="addmodalServices" @close="addmodalServices = false"  :idHotel="idHotel" />
-        <HotelsEditModal :activeModal="showEditModal" @close="showEditModal = false" @updateHotelsList="fetchHotels" />
-        <HotelsAddSurroundingsModal :activeModal="showAddSurroundingsModal" @close="showAddSurroundingsModal = false"  :idHotel="idHotel" />
-        <HotelsRulesAddModal :activeModal="showRulesAddModal" @close="showRulesAddModal = false" />
+        <HotelsAddTypeBedroomModal :activeModal="addmodalTypeBedroom" @close="addmodalTypeBedroom = false"
+          :idHotel="idHotel" />
+        <HotelsAddServices :activeModal="addmodalServices" @close="addmodalServices = false" :idHotel="idHotel" />
+        <HotelsEditModal :activeModal="showEditModal" @close="showEditModal = false" :dataEditModal="dataEditModal"
+          @updateHotelsList="fetchHotels" />
+        <HotelsAddSurroundingsModal :activeModal="showAddSurroundingsModal" @close="showAddSurroundingsModal = false" :hotelName="hotelName"
+          :idHotelSurroundingsModal="idHotelSurroundingsModal" />
+        <HotelsRulesAddModal :activeModal="showRulesAddModal" @close="showRulesAddModal = false" :idHotel="idHotel" />
       </div>
 
     </Card>
@@ -120,8 +127,10 @@ export default {
 
   data() {
     return {
-      rows: [],
       searchTerm: "",
+      hotelName: '',
+      idHotelSurroundingsModal: null,
+      dataEditModal: {},
       addmodalServices: false,
       addmodalTypeBedroom: false,
       showEditModal: false,
@@ -131,7 +140,7 @@ export default {
       columns: [
         { label: "Nombre", field: "nombre" },
         { label: "Dirección", field: "direccion" },
-        { label: "Ciudad", field: "city_touristic.description" },
+        { label: "Ciudad", field: "city_touristic" },
         { label: "Config", field: "action" },
       ],
     };
@@ -141,16 +150,20 @@ export default {
     this.fetchHotels();
   },
 
+  computed: {
+    rows() {
+      const store = useHotelStore();
+      return store.hotels;
+    },
+  },
   methods: {
     async fetchHotels() {
       const store = useHotelStore();
-      const hotels = await store.fetchHotels();
-      this.rows = hotels.map((hotel, index) => ({
-        ...hotel,
-        number: index + 1,
-      }));
-
-      // console.log(this.rows);
+      try {
+        await store.fetchHotels();
+      } catch (error) {
+        console.error('Error fetching hotels:', error);
+      }
     },
 
     handleAddServices(row) {
@@ -165,26 +178,50 @@ export default {
       this.fetchHotels();
     },
 
-    handleTypesBedrooms(id) {
+    handleTypesBedrooms(row) {
+      this.idHotel = row.id;
       this.addmodalTypeBedroom = true;
     },
 
-    handleEdit(id) {
+    handleEdit(row) {
+      this.dataEditModal = row; // Asigna los datos del empleado
       this.showEditModal = true;
     },
 
     handleAddsurroundings(row) {
-      console.log(row);
+      // console.log(row);
 
-      this.idHotel = row.id;
+      this.idHotelSurroundingsModal = row.id;
+      this.hotelName = row.nombre; // Asigna el nombre del hotel a una propiedad
       this.showAddSurroundingsModal = true;
     },
 
-    handleAddRules(id) {
+    handleAddRules(row) {
+      this.idHotel = row.id;
+
       this.showRulesAddModal = true;
     },
 
-    handleDelete(id) {
+    async handleDelete(id) {
+      const confirmation = window.confirm('¿Estás seguro de que deseas eliminar este hotel?');
+      if (confirmation) {
+        try {
+          const store = useHotelStore();
+
+          const result = await store.deleteHotel(id);
+          if (result.success) {
+            alert(result.message);
+            // Opcional: Emitir un evento o realizar una acción adicional después de la eliminación
+            // Ejemplo: this.$emit('updateHotelList');
+          } else {
+            alert(result.message);
+          }
+        } catch (error) {
+          console.error('Error al eliminar el hotel:', error);
+          alert('Error al eliminar el hotel');
+        }
+      }
+
       // Lógica para eliminar el registro con el ID proporcionado
     },
   },

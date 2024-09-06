@@ -56,7 +56,10 @@
           <div class="col-span-2 text-right">
             <div class="buttons-container">
               <Button text="Cancelar" btnClass="btn-light mr-2" @click.prevent="cancel" />
-              <Button text="Transferir" btnClass="btn-dark" />
+              <Button v-if="!loading" text="Transferir" btnClass="btn-dark" :disabled="loading" />
+    <div v-if="loading" class="spinner-overlay">
+      <div class="spinner"></div>
+    </div>
             </div>
           </div>
         </div>
@@ -89,6 +92,7 @@ const object = ref({
   totalAcumlado: ''
 });
 
+const loading = ref(false); // Variable de estado para el cargador
 
 const props = defineProps({
   id: String // Puedes ajustar el tipo de dato según el tipo esperado del prop 'id'
@@ -111,6 +115,11 @@ const showAmountInputs3 = ref(false);
 
 // Método para guardar los datos y realizar la solicitud POST
 const save = () => {
+  if (loading.value) return; // Si ya está cargando, no hacer nada
+
+loading.value = true; // Activar el cargador
+
+
   // console.log(object.value);
   axios.post(`${import.meta.env.VITE_API_URL}/transfers-moneyboxes/transfer-caja-principal`, {
     amount: object.value.description,
@@ -272,3 +281,37 @@ onMounted(() => {
 
 
 </script>
+<style scoped>
+.spinner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+  border-radius: 4px; /* Match the border-radius of the button */
+  z-index: 1; /* Ensure the spinner is on top of the button */
+  pointer-events: none; /* Prevent spinner from blocking interactions */
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>

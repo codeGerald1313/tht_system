@@ -1,6 +1,7 @@
 <template>
   <div>
-    <Modal :activeModal="store.addmodal" @close="store.closeModal" title="Registrar Nuevo Hotel" sizeClass="max-w-6xl" centered>
+    <Modal :activeModal="store.addmodal" @close="store.closeModal" title="Registrar Nuevo Hotel" sizeClass="max-w-6xl"
+      centered>
       <form name="form_hotels" id="form_hotels" autocomplete="off" class="space-y-4">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
@@ -15,9 +16,11 @@
           </FromGroup>
 
           <!-- Ciudad -->
-          <FromGroup label="Ciudad">
-            <InputGroup type="text" v-model.trim="hotelStore.hotel.ciudad" />
+          <FromGroup>
+            <Select v-model="hotelStore.hotel.tourismcitie_id" placeholder="Seleccionar Ciudad" class="w-full"
+              :options="cities" label="nombre" value="id" />
           </FromGroup>
+
 
         </div>
 
@@ -54,7 +57,7 @@
 
           <!-- Descripción -->
           <FromGroup label="Descripción">
-            <Textarea v-model.trim="hotelStore.hotel.descripcion" rows="3" />
+            <Textarea v-model.trim="hotelStore.hotel.descripcion" />
           </FromGroup>
 
         </div>
@@ -63,7 +66,7 @@
         <div class="form__footerBtn mt-4">
           <div class="text-right">
             <Button text="Cancelar" btnClass="btn-light mr-2" @click.prevent="close" />
-            <Button text="Guardar" btnClass="btn-dark" @click.prevent="hotelStore.saveHotel" />
+            <Button text="Guardar" btnClass="btn-dark" @click.prevent="saveHotel" />
           </div>
         </div>
 
@@ -86,8 +89,33 @@ import { useProjectStore } from "@/store/project";
 const store = useProjectStore();
 const hotelStore = useHotelStore();
 
+// Definir los eventos que se emitirán
+const emits = defineEmits(["close", "updateHotelList"]);
+
+// Lista de ciudades (puedes cargar esta lista dinámicamente desde una API)
+const cities = ref([
+  { value: 1, label: 'Tarapoto' },
+  { value: 2, label: 'Lima' },
+  { value: 3, label: 'Cusco' },
+  { value: 4, label: 'Arequipa' },
+]);
+
 const close = () => {
   store.closeModal();
+};
+// Función para guardar el hotel y emitir eventos después de guardar
+const saveHotel = async () => {
+  try {
+    await hotelStore.saveHotel();  // Usar el método saveHotel desde el store
+    close();
+
+    // Emitir evento para actualizar la lista de hoteles después de guardar
+    emits("updateHotelList");
+
+    
+  } catch (error) {
+    console.error("Error al guardar el hotel:", error);
+  }
 };
 
 const onFileChange = (event, key) => {

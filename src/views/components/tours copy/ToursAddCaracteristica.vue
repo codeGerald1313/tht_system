@@ -12,7 +12,7 @@
 
           <!-- Categoría del Servicio -->
           <FromGroup label="Categoría">
-            <Select :options="categories" v-model="serviceStore.service.category" />
+            <Select :options="categories" v-model="serviceStore.service.category" placeholder="Seleccionar Categoría" />
           </FromGroup>
 
         </div>
@@ -53,11 +53,22 @@ const serviceStore = useServiceStore();
 
 // Opciones de categoría
 const categories = ref([
-  { value: 'Spa', label: 'Spa' },
-  { value: 'Restaurante', label: 'Restaurante' },
-  { value: 'Piscina', label: 'Piscina' },
-  { value: 'Gimnasio', label: 'Gimnasio' },
-  { value: 'Servicio a la Habitación', label: 'Servicio a la Habitación' },
+  { value: 'Instalaciones de la habitación', label: 'Instalaciones de la habitación' },
+  { value: 'Actividades', label: 'Actividades' },
+  { value: 'Equipamiento audiovisual y tecnológico', label: 'Equipamiento audiovisual y tecnológico' },
+  { value: 'Comida y bebida', label: 'Comida y bebida' },
+  { value: 'Internet', label: 'Internet' },
+
+  { value: 'Aparcamiento', label: 'Aparcamiento' },
+  { value: 'Servicios de recepción', label: 'Servicios de recepción' },
+  { value: 'Oferta de ocio y servicios para familias', label: 'Oferta de ocio y servicios para familias' },
+  { value: 'Servicios de limpieza', label: 'Servicios de limpieza' },
+  { value: 'Instalaciones de negocios', label: 'Instalaciones de negocios' },
+
+  { value: 'Seguridad', label: 'Seguridad' },
+  { value: 'General', label: 'General' },
+  { value: 'Servicios de limpieza', label: 'Servicios de limpieza' },
+  { value: 'Idiomas que se hablan', label: 'Instalaciones de negocios' },
 ]);
 
 const props = defineProps({

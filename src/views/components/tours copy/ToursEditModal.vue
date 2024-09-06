@@ -1,92 +1,78 @@
 <template>
   <div>
-    <Modal :activeModal="props.activeModal" @close="closeModal" title="Editar Tour" sizeClass="max-w-6xl" centered>
-      <form name="form_tours" id="form_tours" autocomplete="off" class="space-y-4">
+    <Modal :activeModal="activeModal" @close="closeModal" title="Editar Registro de Hotel" sizeClass="max-w-6xl" centered>
+      <form name="form_hotels" id="form_hotels" autocomplete="off" class="space-y-4">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <!-- Nombre Tour -->
-          <FromGroup label="Nombre Tour">
-            <InputGroup type="text" v-model.trim="tourStore.tour.nombre" />
+
+          <!-- Nombre del Hotel -->
+          <FromGroup label="Nombre del Hotel">
+            <InputGroup type="text" v-model.trim="hotel.nombre" />
           </FromGroup>
 
-          <!-- Nombre Corto -->
-          <FromGroup label="Nombre Corto">
-            <InputGroup type="text" v-model.trim="tourStore.tour.nombre_corto" />
+          <!-- Dirección -->
+          <FromGroup label="Dirección">
+            <InputGroup type="text" v-model.trim="hotel.direccion" />
           </FromGroup>
 
-          <!-- Etiqueta Baja -->
-          <FromGroup label="Etiqueta Baja">
-            <InputGroup type="text" v-model.trim="tourStore.tour.etiqueta_al" />
-          </FromGroup>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <!-- Imagen Portada -->
-          <FromGroup label="Imagen Portada">
-            <InputGroup type="file" @change="onFileChange($event, 'imagen_portada')" />
+          <!-- Ciudad -->
+          <FromGroup>
+            <Select v-model="hotel.tourismcitie_id" placeholder="Seleccionar Ciudad" class="w-full"
+              :options="cities" label="nombre" value="id" />
           </FromGroup>
 
-          <!-- Imagen Perfil -->
-          <FromGroup label="Imagen Perfil">
-            <InputGroup type="file" @change="onFileChange($event, 'imagen_perfil')" />
-          </FromGroup>
-
-          <!-- Idioma -->
-          <FromGroup label="Idioma">
-            <InputGroup type="text" v-model.trim="tourStore.tour.idioma" value="Español - English" />
-          </FromGroup>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <!-- Texto Portada -->
-          <FromGroup label="Texto Portada">
-            <InputGroup type="text" v-model.trim="tourStore.tour.detail_portada" />
+
+          <!-- Imagen Principal -->
+          <FromGroup label="Imagen Principal">
+            <InputGroup type="file" @change="onFileChange($event, 'imagen_principal')" />
           </FromGroup>
 
-          <!-- Link Video -->
-          <FromGroup label="Link Video">
-            <InputGroup type="text" v-model.trim="tourStore.tour.link_video" />
+          <!-- Imagen Galería -->
+          <FromGroup label="Imagen Galería">
+            <InputGroup type="file" @change="onFileChange($event, 'imagen_galeria')" />
           </FromGroup>
 
-          <!-- Slug -->
-          <FromGroup label="Slug">
-            <InputGroup type="text" v-model.trim="tourStore.tour.slug" />
+          <!-- Teléfono -->
+          <FromGroup label="Teléfono">
+            <InputGroup type="text" v-model.trim="hotel.telefono" />
           </FromGroup>
+
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
-          <FromGroup label="Precio Online">
-            <InputGroup type="text" v-model.trim="tourStore.tour.price_agencia" />
-          </FromGroup>
-          <FromGroup label="Precio Oficina">
-            <InputGroup type="text" v-model.trim="tourStore.tour.price_online" />
-          </FromGroup>
-          <FromGroup label="Duración">
-            <Select :options="[{ label: 'Full Day', value: 'Full Day' }, { label: 'Part Day', value: 'Part Day' }]"
-              v-model="tourStore.tour.duracion" />
-          </FromGroup>
-          <FromGroup label="Agencia">
-            <Select :options="[{ label: 'Guaros Tours', value: '1' }]" v-model="tourStore.tour.id_company" />
-          </FromGroup>
-        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
-        <div class="grid grid-cols-1 gap-4">
-          <!-- Historia -->
-          <FromGroup label="Historia">
-            <Textarea v-model.trim="tourStore.tour.historia" rows="3" />
+          <!-- Email -->
+          <FromGroup label="Email">
+            <InputGroup type="email" v-model.trim="hotel.email" />
           </FromGroup>
+
+          <!-- Sitio Web -->
+          <FromGroup label="Sitio Web">
+            <InputGroup type="text" v-model.trim="hotel.sitio_web" />
+          </FromGroup>
+
+          <!-- Descripción -->
+          <FromGroup label="Descripción">
+            <Textarea v-model.trim="hotel.descripcion" />
+          </FromGroup>
+
         </div>
 
         <!-- Botones -->
         <div class="form__footerBtn mt-4">
           <div class="text-right">
             <Button text="Cancelar" btnClass="btn-light mr-2" @click.prevent="closeModal" />
-            <Button text="Guardar" btnClass="btn-dark" @click.prevent="saveTour" />
+            <Button text="Guardar" btnClass="btn-dark" @click.prevent="saveHotel" />
           </div>
         </div>
+
       </form>
     </Modal>
   </div>
 </template>
+
 <script setup>
 import { ref, watch } from 'vue';
 import Button from '@/components/Button';
@@ -95,34 +81,51 @@ import InputGroup from '@/components/InputGroup';
 import Modal from '@/components/Modal';
 import Textarea from '@/components/Textarea';
 import Select from '@/components/Select';
-import { useTourStore } from '@/store/tour';
-import { useProjectStore } from '@/store/project';
+import { useHotelStore } from '@/store/hotel';
 
 const props = defineProps({
   activeModal: Boolean,
-  transportData: Object
+  dataEditModal: Object
 });
 
-const store = useProjectStore();
-const tourStore = useTourStore();
+const emits = defineEmits(['close', 'updateHotelsList']);
+
+const hotelStore = useHotelStore();
+const cities = ref([
+  { value: 1, label: 'Tarapoto' },
+  { value: 2, label: 'Lima' },
+  { value: 3, label: 'Cusco' },
+  { value: 4, label: 'Arequipa' },
+]);
+
+const hotel = ref({ ...props.dataEditModal });
+
+watch(() => props.dataEditModal, (newValue) => {
+  hotel.value = { ...newValue };
+});
 
 const closeModal = () => {
-  store.closeModal();
+  emits('close');
 };
 
-const saveTour = () => {
-  tourStore.saveTour();
+const saveHotel = async () => {
+  try {
+   
+      await hotelStore.updateHotel(hotel.value);
+
+    closeModal();
+    emits('updateHotelsList');
+  } catch (error) {
+    console.error('Error al guardar el hotel:', error);
+  }
 };
 
 const onFileChange = (event, key) => {
   const file = event.target.files[0];
-  tourStore.tour[key] = file;
+  hotel.value[key] = file;
 };
-
-// Watcher to set values when transportData changes
-watch(() => props.transportData, (newData) => {
-  if (newData) {
-    tourStore.tour = { ...newData }; // Assuming transportData has the same structure as tourStore.tour
-  }
-}, { immediate: true });
 </script>
+
+<style scoped>
+/* Estilos personalizados */
+</style>

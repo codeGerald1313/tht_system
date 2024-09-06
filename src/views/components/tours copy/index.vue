@@ -23,7 +23,7 @@
     <Grid v-if="fillter === 'grid' && !isSkeletionGrid" />
     <List v-if="fillter === 'list' && !isSkeletionList" />
 
-    <TransportAddModal />
+    <TransportAddModal @updateHotelList="handleUpdateHotelList" />
     <TransportEditModal />
   </div>
 </template>
@@ -38,7 +38,23 @@ import Grid from "./Projects-grid";
 import { useProjectStore } from "@/store/project";
 import TransportEditModal from "./TransportEditModal.vue";
 import TransportAddModal from "./TransportAddModal.vue";
+import { useHotelStore } from "@/store/hotel";
 
+
+
+const hotelStore = useHotelStore();
+
+const fetchHotels = async () => {
+  try {
+    await hotelStore.fetchHotels();
+  } catch (error) {
+    console.error("Error al cargar los hoteles:", error);
+  }
+};
+
+const handleUpdateHotelList = async () => {
+  await fetchHotels();
+};
 
 const store = useProjectStore();
 
