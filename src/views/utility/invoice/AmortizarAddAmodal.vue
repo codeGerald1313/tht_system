@@ -67,9 +67,24 @@
                             <Textinput v-model="income.amount" type="text" placeholder="Comisión Tours" />
                         </FromGroup>
                         <span v-if="!income.amount" class="text-red-600">¡Ingresa un monto!</span>
+                        <!-- Mostrar el botón solo si el método de pago es en dólares -->
+                        <template v-if="income.paymentmethod_id === 5">
 
+                            <Button @click.prevent="convertToSoles" text="Convertir a soles"
+                                btnClass="btn-dark btn-md" />
+
+                        </template>
 
                     </div>
+                    <!-- Aquí se muestra el valor convertido a soles -->
+                    <div v-if="amountInSoles">
+                        <FromGroup label="Monto en soles" class="text-center">
+                            <span class="text-[32px] leading-10 font-medium text-green-800">
+                                S/ {{ amountInSoles }}
+                            </span>
+                        </FromGroup>
+                    </div>
+
                     <div>
                         <FromGroup label="TOTAL RESTANTE" class=" text-center">
                             <span class="text-[32px] leading-10 font-medium text-red-800">S/ {{ income.totalRestante
@@ -243,6 +258,7 @@ export default {
                 available_edit: null,
                 user_id: null,
                 concept_id: null,
+                valor_en_dolares: null,
                 paymentmethod_id: null,
                 currency_id: null,
                 voucher_id: null,
@@ -277,8 +293,11 @@ export default {
                 { value: 1, label: "Efectivo" },
                 { value: 2, label: "Visa" },
                 { value: 3, label: "Cheque" },
-                { value: 4, label: "Depósito a cuenta" }
+                { value: 4, label: "Depósito a cuenta" },
+                { value: 5, label: "Dólar" }
             ],
+            amountInSoles: null,
+
             clienteOptions: [
                 { value: 1, label: 'Cliente 1' },
                 { value: 2, label: 'Cliente 2' },
@@ -429,8 +448,13 @@ export default {
 
         submitForm() {
 
-
+            // Verifica si el método de pago es Dólar (por ejemplo, paymentmethod_id === 5)
+            if (this.income.paymentmethod_id === 5) {
+                // Si es Dólar, asigna el valor de amountInSoles a amount
+                this.income.amount = this.amountInSoles;
+            }
             this.income.paymentmethod_id = parseInt(this.income.paymentmethod_id);
+
 
             // console.log(this.income);
 
@@ -439,7 +463,7 @@ export default {
                 .then(response => {
 
                     const toast = useToast()
-            this.$emit('income-submitted', this.income);
+                    this.$emit('income-submitted', this.income);
 
 
                     this.$emit('form-submitted', response.data);
@@ -453,11 +477,11 @@ export default {
                     // Opcional: Realiza otras acciones después del éxito
 
 
-                    this.income.amount  =  null,
-                    this.income.paymentmethod_id=  null,
-                    this.income.observation =  null;
+                    this.income.amount = null,
+                        this.income.paymentmethod_id = null,
+                        this.income.observation = null;
 
-  
+
                 })
                 .catch(error => {
                     console.error('Error al guardar los datos:', error);
@@ -500,6 +524,34 @@ export default {
                 console.error('Error fetching departments:', error);
             }
         },
+        // Método para convertir el monto a soles solo cuando el método de pago es dólar
+        convertToSoles() {
+            const apiKey = 'eb6c32500a43070cccb3a47c70c56eb8';
+            const url = `https://apilayer.net/api/live?access_key=${apiKey}&currencies=PEN&source=USD&format=1`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const exchangeRate = data.quotes.USDPEN;
+                        const amountInDollars = this.income.amount;
+                        this.income.valor_en_dolares = amountInDollars;
+                        const amountInSoles = (amountInDollars * exchangeRate).toFixed(2);
+
+                        // Actualiza el monto en soles
+                        this.amountInSoles = amountInSoles;
+                        console.log(`Monto convertido: S/ ${amountInSoles}`);
+
+                        // Recalcula el totalRestante basándose en el valor convertido y limita a dos decimales
+                        this.income.totalRestante = (this.income.totalAPagar - amountInSoles).toFixed(2);
+                    } else {
+                        console.error('Error en la conversión:', data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al realizar la llamada a la API:', error);
+                });
+        }
     },
     mounted() {
         this.fetchAccountBanks();
@@ -511,11 +563,10 @@ export default {
 
     watch: {
         'income.amount': function (newAmount, oldAmount) {
-
-            // console.log(newAmount);
-            // Calcular el valor de TOTAL RESTANTE
-            this.income.totalRestante = this.income.totalAPagar - newAmount;
-
+            // Solo recalcula automáticamente si el método de pago no es dólar
+            if (this.income.paymentmethod_id !== 5) {
+                this.income.totalRestante = this.income.totalAPagar - newAmount;
+            }
         },
 
         idCliente: function (newIdClienteValue, oldIdClienteValue) {
@@ -543,12 +594,42 @@ export default {
             // console.log('El valor idBooking es', newValueIdBooking);
         },
         'income.paymentmethod_id': function (newVal, oldVal) {
-            // Verifica si el nuevo valor es una cadena no vacía
+            console.log(newVal);
+
+            /*
+            if (newVal === 5) {
+                // Realiza la llamada a la API para obtener el tipo de cambio de USD a PEN
+                const apiKey = 'eb6c32500a43070cccb3a47c70c56eb8';
+                const url = `https://apilayer.net/api/live?access_key=${apiKey}&currencies=PEN&source=USD&format=1`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const exchangeRate = data.quotes.USDPEN; // Tipo de cambio de USD a PEN
+                            console.log(`Tipo de cambio actual USD a PEN: ${exchangeRate}`);
+
+                            // Calcula el monto en soles con dos decimales
+                            const amountInDollars = this.income.amount;
+                            const amountInSoles = (amountInDollars * exchangeRate).toFixed(2);
+                            console.log(`Monto convertido: ${amountInSoles} soles`);
+
+                            // Asigna el valor convertido en soles con dos decimales
+                            this.amountInSoles = amountInSoles;
+                        } else {
+                            console.error('Error en la conversión:', data.error);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error al realizar la llamada a la API:', error);
+                    });
+            } */
+            // Convierte el nuevo valor a entero y asígnalo de nuevo a income.paymentmethod_id
             if (newVal !== null && newVal !== undefined && newVal !== '') {
-                // Convierte el nuevo valor a entero y asignalo de nuevo a income.paymentmethod_id
                 this.income.paymentmethod_id = parseInt(newVal);
             }
         }
+
     },
 
     computed: {

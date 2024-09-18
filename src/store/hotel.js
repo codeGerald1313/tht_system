@@ -105,7 +105,10 @@ export const useHotelStore = defineStore("hotel", {
         );
 
         if (response.data.status === "success") {
+          const toast = useToast();
+
           this.hotel = response.data.data;
+          toast.success(response.data.message);
         }
       } catch (error) {
         console.error("Error al actualizar el hotel:", error);
@@ -114,12 +117,14 @@ export const useHotelStore = defineStore("hotel", {
     },
     async deleteHotel(id) {
       try {
-        await axios.delete(`${import.meta.env.VITE_API_URL_MAIN}/hotels/delete/${id}`);
-        this.hotels = this.hotels.filter(hotel => hotel.id !== id);
-        return { success: true, message: 'Hotel eliminado exitosamente' };
+        await axios.delete(
+          `${import.meta.env.VITE_API_URL_MAIN}/hotels/delete/${id}`
+        );
+        this.hotels = this.hotels.filter((hotel) => hotel.id !== id);
+        return { success: true, message: "Hotel eliminado exitosamente" };
       } catch (error) {
-        console.error('Error al eliminar el hotel:', error);
-        return { success: false, message: 'Error al eliminar el hotel' };
+        console.error("Error al eliminar el hotel:", error);
+        return { success: false, message: "Error al eliminar el hotel" };
       }
     },
 
