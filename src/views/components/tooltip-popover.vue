@@ -352,7 +352,7 @@ export default {
         .then(response => {
           // console.log(response.data);
 
-          this.advancedTable = response.data.data.map(item => ({
+          this.advancedTable = response.data.data.data.map(item => ({
             ...item,
             formatted_created_at: dayjs(item.created_at).locale('es').format('DD MMM. YYYY')
           }));
@@ -402,7 +402,7 @@ export default {
             const toast = useToast();
             toast.success(response.data.message);
 
-            this.advancedTable = response.data.data.map(item => ({
+            this.advancedTable = response.data.data.data.map(item => ({
               ...item,
               formatted_created_at: dayjs(item.created_at).locale('es').format('DD MMM. YYYY')
             }));
@@ -436,7 +436,7 @@ export default {
         const toast = useToast();
         toast.success(response.data.message);
 
-        this.advancedTable = response.data.data.map(item => ({
+        this.advancedTable = response.data.data.data.map(item => ({
           ...item,
           formatted_created_at: dayjs(item.created_at).locale('es').format('DD MMM. YYYY')
         }));
