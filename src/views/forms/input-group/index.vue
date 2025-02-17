@@ -44,13 +44,14 @@
             </span>
 
 
-            <span v-if="props.column.field == 'concept'" class="font-medium" >
+            <span v-if="props.column.field == 'concept'" class="font-medium">
               {{ props.row.concept?.description }}
               <br>
 
             </span>
 
-            <div v-if="props.column.field == 'amount'" class="font-medium w-[100px]" :class="{ 'bg-red-100': props.row.is_visible === 0, 'text-red-600': props.row.is_visible === 0 }" >
+            <div v-if="props.column.field == 'amount'" class="font-medium w-[100px]"
+              :class="{ 'bg-red-100': props.row.is_visible === 0, 'text-red-600': props.row.is_visible === 0 }">
               <span>S/ {{ props.row.amount }}</span>
             </div>
 
@@ -184,29 +185,29 @@ export default {
       actions: [
 
 
-      {
-  name: "anular",
-  icon: "heroicons-outline:trash",
-  doit: (row) => {
-    // Obtener id y booking_id desde el objeto row
-    const id = row.id;
-    const booking_id = row.booking_id;
+        {
+          name: "anular",
+          icon: "heroicons-outline:trash",
+          doit: (row) => {
+            // Obtener id y booking_id desde el objeto row
+            const id = row.id;
+            const booking_id = row.booking_id;
 
-    // Realizar la petición DELETE con id en la ruta y booking_id en el cuerpo
-    axios.delete(`${import.meta.env.VITE_API_URL}/moneys/delete/${id}`, {
-      ...headers, // Aquí puedes incluir tus cabeceras si son necesarias
-      data: { booking_id } // El cuerpo del request con booking_id
-    })
-    .then(response => {
-      // Mostrar éxito en la respuesta
-      this.toast.success(response.data.message);
-    })
-    .catch(error => {
-      // Manejar cualquier error durante la eliminación
-      console.error("Error al eliminar el elemento", error);
-    });
-  },
-}
+            // Realizar la petición DELETE con id en la ruta y booking_id en el cuerpo
+            axios.delete(`${import.meta.env.VITE_API_URL}/moneys/delete/${id}`, {
+              ...headers, // Aquí puedes incluir tus cabeceras si son necesarias
+              data: { booking_id } // El cuerpo del request con booking_id
+            })
+              .then(response => {
+                // Mostrar éxito en la respuesta
+                this.toast.success(response.data.message);
+              })
+              .catch(error => {
+                // Manejar cualquier error durante la eliminación
+                console.error("Error al eliminar el elemento", error);
+              });
+          },
+        }
 
 
 
@@ -313,18 +314,17 @@ export default {
         },
       })
         .then(response => {
-          // Verificar si la respuesta contiene datos válidos
-          if (response.data && response.data && response.data.length > 0) {
-            // Actualiza los datos en el componente
-            this.advancedTable = response.data;
-            // console.log(this.advancedTable);
+          // Verificar si la respuesta es un array y tiene datos
+          if (Array.isArray(response.data) && response.data.length > 0) {
+            this.advancedTable = response.data; // Guardar los datos correctamente
             this.showSuccessToast('¡Registros de dinero obtenidos correctamente!');
           } else {
             // Si la respuesta está vacía o nula, mostrar mensaje informativo
-            this.advancedTable = []; // Asegurar que advancedTable esté vacío
+            this.advancedTable = []; // Evita errores al iterar en la vista
             this.showInfoToast('No se registraron movimientos de dinero para este día o aún no hay registros.');
           }
         })
+
         .catch(error => {
           console.error('Error al obtener los registros de dinero:', error);
           this.showErrorToast('Error al obtener los registros de dinero. Por favor, inténtalo de nuevo.');
