@@ -2,7 +2,7 @@ import auth from "@/middleware/auth";
 import guest from "@/middleware/guest";
 import { useAuth } from "../store/auth";
 
-const requireAuth = (to , from , next ) => {
+const requireAuth = (to, from, next) => {
   const { token, user } = useAuth();
   if (token && user) {
     next();
@@ -109,7 +109,7 @@ const routes = [
         name: "button",
         component: () => import("@/views/components/button/index.vue"),
         meta: {
-          hide: true
+          hide: true,
         },
       },
       {
@@ -117,7 +117,7 @@ const routes = [
         name: "alert",
         component: () => import("@/views/components/alert/index.vue"),
         meta: {
-          hide: true
+          hide: true,
         },
       },
       {
@@ -125,7 +125,7 @@ const routes = [
         name: "card",
         component: () => import("@/views/components/card/index.vue"),
         meta: {
-          hide: true
+          hide: true,
         },
       },
       {
@@ -152,7 +152,7 @@ const routes = [
           groupParent: "components",
         },
       },
-  
+
       {
         path: "badges",
         name: "badges",
@@ -174,7 +174,7 @@ const routes = [
         name: "typography",
         component: () => import("@/views/components/typography.vue"),
         meta: {
-          hide: true
+          hide: true,
         },
       },
       {
@@ -182,7 +182,7 @@ const routes = [
         name: "colors",
         component: () => import("@/views/components/colors.vue"),
         meta: {
-          hide: true
+          hide: true,
         },
       },
       {
@@ -249,7 +249,7 @@ const routes = [
         name: "Control de caja",
         component: () => import("@/views/forms/input"),
         meta: {
-          hide: true
+          hide: true,
         },
       },
       {
@@ -257,7 +257,7 @@ const routes = [
         name: "caja-ericka",
         component: () => import("@/views/forms/ericka-box/index"),
         meta: {
-          hide: true
+          hide: true,
         },
       },
       {
@@ -265,16 +265,16 @@ const routes = [
         name: "monexboxes",
         component: () => import("@/views/forms/input-mask"),
         meta: {
-          hide: true
-        }
+          hide: true,
+        },
       },
-      
+
       {
         path: "input-group",
         name: "input-group",
         component: () => import("@/views/forms/input-group"),
         meta: {
-          hide: true
+          hide: true,
         },
       },
       {
@@ -282,7 +282,7 @@ const routes = [
         name: "input-layout",
         component: () => import("@/views/forms/input-layout"),
         meta: {
-          hide: true
+          hide: true,
         },
       },
       {
@@ -290,7 +290,7 @@ const routes = [
         name: "form-validation",
         component: () => import("@/views/forms/form-validation"),
         meta: {
-          hide: true
+          hide: true,
         },
       },
       {
@@ -298,7 +298,7 @@ const routes = [
         name: "form-wizard",
         component: () => import("@/views/forms/form-wizard"),
         meta: {
-          hide: true
+          hide: true,
         },
       },
       {
@@ -522,7 +522,7 @@ const routes = [
         name: "invoice",
         component: () => import("@/views/utility/invoice"),
         meta: {
-          hide: true
+          hide: true,
         },
       },
       {
@@ -543,7 +543,6 @@ const routes = [
         },
       },
 
-
       {
         path: "traspaso-preview",
         name: "traspaso-preview",
@@ -559,7 +558,7 @@ const routes = [
         meta: {
           hide: true,
         },
-        props: true  // Permite que los parámetros de ruta se pasen como props al componente
+        props: true, // Permite que los parámetros de ruta se pasen como props al componente
       },
 
       {
@@ -569,14 +568,14 @@ const routes = [
         meta: {
           hide: true,
         },
-        props: true  // Permite que los parámetros de ruta se pasen como props al componente
+        props: true, // Permite que los parámetros de ruta se pasen como props al componente
       },
       {
         path: "invoice-add",
         name: "invoice-add",
         component: () => import("@/views/utility/invoice/invoice-add"),
         meta: {
-          hide: true
+          hide: true,
         },
       },
 
@@ -585,33 +584,28 @@ const routes = [
         name: "grupo-add",
         component: () => import("@/views/utility/invoice/grupo-add"),
         meta: {
-          hide: true
+          hide: true,
         },
       },
 
-
       {
-        path: '/grupo-edit/:group_id',
-        name: 'grupo-edit',
+        path: "/grupo-edit/:group_id",
+        name: "grupo-edit",
         component: () => import("@/views/utility/invoice/grupo-edit"),
         meta: {
           hide: true,
         },
-        props: true  // Permite que los parámetros de ruta se pasen como props al componente
-
+        props: true, // Permite que los parámetros de ruta se pasen como props al componente
       },
 
-      
       {
-        path: '/grupo-preview/:group_id',
+        path: "/grupo-preview/:group_id",
         name: "grupo-preview",
         component: () => import("@/views/utility/invoice/grupo-preview"),
         meta: {
           hide: true,
         },
       },
-
-
 
       {
         path: "cuadreshotel-edit",
@@ -655,8 +649,7 @@ const routes = [
         meta: {
           hide: true,
         },
-        props: true  // Permite que los parámetros de ruta se pasen como props al componente
-
+        props: true, // Permite que los parámetros de ruta se pasen como props al componente
       },
 
       {
@@ -675,15 +668,14 @@ const routes = [
         meta: {
           hide: true,
         },
-        props: true  // Permite que los parámetros de ruta se pasen como props al componente
-
+        props: true, // Permite que los parámetros de ruta se pasen como props al componente
       },
       {
         path: "Pricing",
         name: "pricing",
         component: () => import("@/views/utility/pricing"),
         meta: {
-          hide: true
+          hide: true,
         },
       },
       {
@@ -771,6 +763,14 @@ const routes = [
         },
       },
       {
+        path: "bookings",
+        name: "bookings",
+        component: () => import("@/views/app/email"),
+        meta: {
+          hide: true,
+        },
+      },
+      {
         path: "tours",
         name: "tours",
         component: () => import("@/views/components/tours/index.vue"),
@@ -779,19 +779,28 @@ const routes = [
         },
       },
 
-
-    {
-      path: "hotels",
-      name: "hotels",
-      component: () => import("@/views/components/tours copy/index.vue"),
-      meta: {
-        hide: true,
+      {
+        path: "hotels",
+        name: "hotels",
+        component: () => import("@/views/components/tours copy/index.vue"),
+        meta: {
+          hide: true,
+        },
       },
-    },
       {
         path: "tours-caracteristicas",
         name: "tours-caracteristicas",
-        component: () => import("@/views/components/tours-caracteristicas/index.vue"),
+        component: () =>
+          import("@/views/components/tours-caracteristicas/index.vue"),
+        meta: {
+          hide: true,
+        },
+      },
+      {
+        path: "hotels-details",
+        name: "hotels-details",
+        component: () =>
+          import("@/views/components/tours-caracteristicas copy/index.vue"),
         meta: {
           hide: true,
         },

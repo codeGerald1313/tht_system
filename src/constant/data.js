@@ -240,13 +240,10 @@ export const menuItemsAdminGuaros = [
     link: "#",
     child: [
       {
-        childtitle: "Reservas Túristicas",
-        childlink: "/app/products",
+        childtitle: "Gestión General ",
+        childlink: "bookings",
       },
-      {
-        childtitle: "Reserva de Hotel",
-        childlink: "/app/reservas-hotel",
-      },
+    
     ],
   },
 
@@ -281,7 +278,7 @@ export const menuItemsAdminGuaros = [
       },
       {
         childtitle: "Detalles",
-        childlink: "hotel-details",
+        childlink: "hotels-details",
       },
     ],
   },

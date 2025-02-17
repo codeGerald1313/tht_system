@@ -127,7 +127,26 @@ export const useHotelStore = defineStore("hotel", {
         return { success: false, message: "Error al eliminar el hotel" };
       }
     },
-
+    async storeImages(formData, hotelId) {
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL_MAIN}/hotels/${hotelId}/images`, // Cambia esta ruta según tu backend
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
+        const toast = useToast();
+        toast.success(response.data.message || "Imágenes guardadas exitosamente.");
+        return response.data;
+      } catch (error) {
+        console.error('Error al guardar las imágenes:', error);
+        throw error;
+      }
+    },
+    
     resetForm() {
       this.hotel = {
         nombre: "",

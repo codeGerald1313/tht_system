@@ -129,8 +129,20 @@ const closeModal = () => {
 
 const saveHotel = async () => {
   try {
-   
-      await hotelStore.updateHotel(hotel.value);
+    if (isManagingImages.value) {
+      // Gestionar las imágenes y llamamos al método del backend para guardar las imágenes
+      const formData = new FormData();
+      imageRows.forEach((row, index) => {
+        if (row.image) {
+          formData.append(`images[${index}]`, row.image);
+        }
+      });
+      await hotelStore.storeImages(formData, hotel.value.id); // Aquí llamamos al método storeImages
+
+    } else {
+      // Si no se gestionan imágenes, simplemente actualizamos el hotel
+      await hotelStore.updateHotel(hotel.value); 
+    }
 
     closeModal();
     emits('updateHotelsList');
@@ -138,6 +150,7 @@ const saveHotel = async () => {
     console.error('Error al guardar el hotel:', error);
   }
 };
+
 
 const onFileChange = (event, key) => {
   const file = event.target.files[0];

@@ -350,13 +350,17 @@ export default {
     async reloadCrmTable() {
       axios.get(`${import.meta.env.VITE_API_URL}/bookings/list?start_date=${this.dateValue.startDate}&end_date=${this.dateValue.endDate}`, headers)
         .then(response => {
-          // console.log(response.data);
+          console.log("API Response:", response.data); // 👈 Ver qué estructura tiene la respuesta
 
-          this.advancedTable = response.data.data.map(item => ({
-            ...item,
-            formatted_created_at: dayjs(item.created_at).locale('es').format('DD MMM. YYYY')
-          }));
-
+          if (response.data && Array.isArray(response.data.data)) {
+            this.advancedTable = response.data.data.map(item => ({
+              ...item,
+              formatted_created_at: dayjs(item.created_at).locale("es").format("DD MMM. YYYY")
+            }));
+          } else {
+            console.error("⚠️ La estructura de la API no es la esperada:", response.data);
+            this.advancedTable = []; // 👈 Evita errores si la API devuelve algo incorrecto
+          }
           const toast = useToast();
           toast.success(response.data.message);
           // console.log(response);
@@ -397,15 +401,17 @@ export default {
 
         axios.get(`${import.meta.env.VITE_API_URL}/bookings/list?start_date=${startDateOnly}&end_date=${endDateOnly}`, headers)
           .then(response => {
-            // console.log(response.data);
-            // Si la respuesta es exitosa, establecer la tabla avanzada con los datos recibidos
-            const toast = useToast();
-            toast.success(response.data.message);
+            console.log("API Response:", response.data); // 👈 Ver qué estructura tiene la respuesta
 
-            this.advancedTable = response.data.data.map(item => ({
-              ...item,
-              formatted_created_at: dayjs(item.created_at).locale('es').format('DD MMM. YYYY')
-            }));
+            if (response.data && Array.isArray(response.data.data)) {
+              this.advancedTable = response.data.data.map(item => ({
+                ...item,
+                formatted_created_at: dayjs(item.created_at).locale("es").format("DD MMM. YYYY")
+              }));
+            } else {
+              console.error("⚠️ La estructura de la API no es la esperada:", response.data);
+              this.advancedTable = []; // 👈 Evita errores si la API devuelve algo incorrecto
+            }
           })
           .catch(error => {
             console.error(error);
@@ -435,12 +441,17 @@ export default {
 
         const toast = useToast();
         toast.success(response.data.message);
+        console.log("API Response:", response.data); // 👈 Ver qué estructura tiene la respuesta
 
-        this.advancedTable = response.data.data.map(item => ({
-          ...item,
-          formatted_created_at: dayjs(item.created_at).locale('es').format('DD MMM. YYYY')
-        }));
-
+        if (response.data && Array.isArray(response.data.data)) {
+          this.advancedTable = response.data.data.map(item => ({
+            ...item,
+            formatted_created_at: dayjs(item.created_at).locale("es").format("DD MMM. YYYY")
+          }));
+        } else {
+          console.error("⚠️ La estructura de la API no es la esperada:", response.data);
+          this.advancedTable = []; // 👈 Evita errores si la API devuelve algo incorrecto
+        }
         // console.log(this.advancedTable);
       })
       .catch(error => {

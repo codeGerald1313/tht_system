@@ -136,6 +136,7 @@ import Blank from "./Blank.vue";
 import window from "@/mixins/window";
 import {mapActions, mapWritableState} from "pinia";
 import {useEmailStore} from "@/store/email";
+import { onMounted } from "vue";
 
 export default {
   mixins: [window],
@@ -143,6 +144,20 @@ export default {
     Icon,
     Tooltip,
     Blank,
+  },
+  setup() {
+    const emailStore = useEmailStore();
+
+    onMounted(() => {
+      // Llama a fetchBookings al montar el componente
+      emailStore.fetchBookings();
+    });
+
+    return {
+      emails: emailStore.emails,
+      isLoading: emailStore.isLoading,
+      error: emailStore.error,
+    };
   },
   props: {
     emails: {
@@ -156,7 +171,7 @@ export default {
     ...mapActions(useEmailStore, ["deleteEmail", "openSingle",]),
     isChecked(item) {
       item.checked = !item.checked;
-    },
+  },
     isFaviort(item) {
       item.isfav = !item.isfav;
     },
