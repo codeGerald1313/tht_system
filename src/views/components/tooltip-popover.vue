@@ -218,7 +218,7 @@ export default {
     return {
       advancedTable: [], // Inicializa la tabla vacía
       current: 1,
-      perpage: 60,
+      perpage: 25,
       show: false,
       startDateVariable: "",
       endDateVariable: "",
