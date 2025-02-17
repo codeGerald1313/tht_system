@@ -352,7 +352,7 @@ export default {
         .then(response => {
           console.log("API Response:", response.data); // 👈 Ver qué estructura tiene la respuesta
 
-          if (response.data && Array.isArray(response.data.data)) {
+          if (response.data) {
             this.advancedTable = response.data.data.map(item => ({
               ...item,
               formatted_created_at: dayjs(item.created_at).locale("es").format("DD MMM. YYYY")
@@ -403,7 +403,7 @@ export default {
           .then(response => {
             console.log("API Response:", response.data); // 👈 Ver qué estructura tiene la respuesta
 
-            if (response.data && Array.isArray(response.data.data)) {
+            if (response.data) {
               this.advancedTable = response.data.data.map(item => ({
                 ...item,
                 formatted_created_at: dayjs(item.created_at).locale("es").format("DD MMM. YYYY")
@@ -443,7 +443,7 @@ export default {
         toast.success(response.data.message);
         console.log("API Response:", response.data); // 👈 Ver qué estructura tiene la respuesta
 
-        if (response.data && Array.isArray(response.data.data)) {
+        if (response.data) {
           this.advancedTable = response.data.data.map(item => ({
             ...item,
             formatted_created_at: dayjs(item.created_at).locale("es").format("DD MMM. YYYY")
