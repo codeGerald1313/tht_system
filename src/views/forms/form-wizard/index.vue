@@ -243,17 +243,16 @@ export default {
 
   methods: {
     handleVerDocumento(id) {
-  axios.get(`${import.meta.env.VITE_API_URL}/list-box-cuadre/${id}`)
-    .then(response => {
-
-    })
-    .catch(error => {
-  console.error('Error al obtener la URL del PDF:', error);
-  // Abrir una nueva página con la URL capturada
-  window.open(error.config.url, '_blank');
-});
-
-},
+      axios.get(`${import.meta.env.VITE_API_URL}/list-box-cuadre/${id}`)
+        .then(response => {
+          throw new Error("Forzando error intencionalmente"); // Esto siempre hará que entre al catch
+        })
+        .catch(error => {
+          console.error('Error al obtener la URL del PDF:', error);
+          // Abrir una nueva página con la URL capturada
+          window.open(error.config?.url || `${import.meta.env.VITE_API_URL}/list-box-cuadre/${id}`, '_blank');
+        });
+    },
 async reloadCrmTable() {
       try {
         await this.fetchMoneyBoxes();
