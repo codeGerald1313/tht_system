@@ -243,26 +243,30 @@ export default {
   },
 
   methods: {
-    handleVerDocumento(id) {
-      axios.get(`${import.meta.env.VITE_API_URL}/list-box-cuadre/${id}`, headersArchivos)
-        .then(response => {
-          throw new Error("Forzando error intencionalmente"); // Esto siempre hará que entre al catch
-        })
-        .catch(error => {
-          console.error('Error al obtener la URL del PDF:', error);
-          // Abrir una nueva página con la URL capturada
-          window.open(error.config.url, '_blank');
+  handleVerDocumento(id) {
+    axios.get(`${import.meta.env.VITE_API_URL}/list-box-cuadre/${id}`)
+      .then(response => {
+        // Simulamos un error de Axios manualmente con la misma estructura
+        return Promise.reject({
+          message: "Network Error",
+          name: "AxiosError",
+          stack: "AxiosError: Network Error\n    at FakeStack",
+          config: {
+            url: `${import.meta.env.VITE_API_URL}/list-box-cuadre/${id}`,
+            method: "get",
+            headers: { "Accept": "application/json, text/plain, */*" },
+          },
+          code: "ERR_NETWORK",
+          status: null,
         });
-    },
-async reloadCrmTable() {
-      try {
-        await this.fetchMoneyBoxes();
+      })
+      .catch(error => {
+        console.error('Error al obtener la URL del PDF:', error);
 
-        // Puedes agregar aquí cualquier otra lógica que necesites después de listar los empleados
-      } catch (error) {
-        console.error('Error al recargar Cajas de Dinero :', error);
-      }
-    },
+        // Aseguramos que se abra la URL, aunque sea un error de red falso
+        window.open(error.config?.url || `${import.meta.env.VITE_API_URL}/list-box-cuadre/${id}`, '_blank');
+      });
+  },
 
     // Método para mostrar un toast de éxito
     showSuccessToast(message) {
