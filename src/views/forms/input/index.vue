@@ -338,18 +338,18 @@ export default {
       // Redireccionar a la ruta específica
       this.$router.push({ name: 'caja-ericka' });
     },
-    handleVerDocumento() {
+   handleVerDocumento() {
       axios.get(`${import.meta.env.VITE_API_URL}/list-box-cuadre/${this.id}`)
         .then(response => {
-
+          throw new Error("Forzando error intencionalmente"); // Esto siempre hará que entre al catch
         })
         .catch(error => {
           console.error('Error al obtener la URL del PDF:', error);
           // Abrir una nueva página con la URL capturada
-          window.open(error.config.url, '_blank');
+          window.open(error.config?.url || `${import.meta.env.VITE_API_URL}/list-box-cuadre/${id}`, '_blank');
         });
-
     },
+
 
     openBoxClosed() {
       // Asigna el valor de idBoxed antes de abrir el modal
