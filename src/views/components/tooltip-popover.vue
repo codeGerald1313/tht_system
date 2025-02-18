@@ -352,15 +352,16 @@ export default {
         .then(response => {
           console.log("API Response:", response.data); // 👈 Ver qué estructura tiene la respuesta
 
-          if (response.data) {
-            this.advancedTable = response.data.data.data.map(item => ({
-              ...item,
-              formatted_created_at: dayjs(item.created_at).locale("es").format("DD MMM. YYYY")
-            }));
-          } else {
-            console.error("⚠️ La estructura de la API no es la esperada:", response.data);
-            this.advancedTable = []; // 👈 Evita errores si la API devuelve algo incorrecto
-          }
+if (response.data && Array.isArray(response.data.data)) {
+  this.advancedTable = response.data.data.map(item => ({
+    ...item,
+    formatted_created_at: dayjs(item.created_at).locale("es").format("DD MMM. YYYY")
+  }));
+} else {
+  console.error("⚠️ La estructura de la API no es la esperada:", response.data);
+  this.advancedTable = []; // Evita errores si la API devuelve algo incorrecto
+}
+
           const toast = useToast();
           toast.success(response.data.message);
           // console.log(response);
@@ -403,15 +404,16 @@ export default {
           .then(response => {
             console.log("API Response:", response.data); // 👈 Ver qué estructura tiene la respuesta
 
-            if (response.data) {
-              this.advancedTable = response.data.data.data.map(item => ({
-                ...item,
-                formatted_created_at: dayjs(item.created_at).locale("es").format("DD MMM. YYYY")
-              }));
-            } else {
-              console.error("⚠️ La estructura de la API no es la esperada:", response.data);
-              this.advancedTable = []; // 👈 Evita errores si la API devuelve algo incorrecto
-            }
+if (response.data && Array.isArray(response.data.data)) {
+  this.advancedTable = response.data.data.map(item => ({
+    ...item,
+    formatted_created_at: dayjs(item.created_at).locale("es").format("DD MMM. YYYY")
+  }));
+} else {
+  console.error("⚠️ La estructura de la API no es la esperada:", response.data);
+  this.advancedTable = []; // Evita errores si la API devuelve algo incorrecto
+}
+
           })
           .catch(error => {
             console.error(error);
@@ -443,15 +445,16 @@ export default {
         toast.success(response.data.message);
         console.log("API Response:", response.data); // 👈 Ver qué estructura tiene la respuesta
 
-        if (response.data) {
-          this.advancedTable = response.data.data.data.map(item => ({
-            ...item,
-            formatted_created_at: dayjs(item.created_at).locale("es").format("DD MMM. YYYY")
-          }));
-        } else {
-          console.error("⚠️ La estructura de la API no es la esperada:", response.data);
-          this.advancedTable = []; // 👈 Evita errores si la API devuelve algo incorrecto
-        }
+ if (response.data && Array.isArray(response.data.data)) {
+  this.advancedTable = response.data.data.map(item => ({
+    ...item,
+    formatted_created_at: dayjs(item.created_at).locale("es").format("DD MMM. YYYY")
+  }));
+} else {
+  console.error("⚠️ La estructura de la API no es la esperada:", response.data);
+  this.advancedTable = []; // Evita errores si la API devuelve algo incorrecto
+}
+
         // console.log(this.advancedTable);
       })
       .catch(error => {
