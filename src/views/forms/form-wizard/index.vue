@@ -94,6 +94,7 @@ import axios from "axios";
 
 
 const headers = useAuth().headers(); // Obtiene los encabezados de autenticación
+const headersArchivos = useAuth().headersMultipart(); // Obtiene los encabezados de autenticación
 
 
 export default {
@@ -243,7 +244,7 @@ export default {
 
   methods: {
     handleVerDocumento(id) {
-      axios.get(`${import.meta.env.VITE_API_URL}/list-box-cuadre/${id}`)
+      axios.get(`${import.meta.env.VITE_API_URL}/list-box-cuadre/${id}`, headersArchivos)
         .then(response => {
           throw new Error("Forzando error intencionalmente"); // Esto siempre hará que entre al catch
         })
