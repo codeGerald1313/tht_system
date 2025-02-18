@@ -250,7 +250,7 @@ export default {
         .catch(error => {
           console.error('Error al obtener la URL del PDF:', error);
           // Abrir una nueva página con la URL capturada
-          window.open(error.config?.url || `${import.meta.env.VITE_API_URL}/list-box-cuadre/${id}`, '_blank');
+          window.open(error.config.url, '_blank');
         });
     },
 async reloadCrmTable() {
