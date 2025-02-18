@@ -228,6 +228,7 @@ import "swiper/css/effect-cards";
 import { EffectCards } from "swiper";
 const headers = useAuth().headers(); // Obtiene los encabezados de autenticación
 const store = useProjectStore();
+const headersArchivos = useAuth().headersMultipart(); // Obtiene los encabezados de autenticación
 
 
 export default {
@@ -339,7 +340,7 @@ export default {
       this.$router.push({ name: 'caja-ericka' });
     },
    handleVerDocumento() {
-      axios.get(`${import.meta.env.VITE_API_URL}/list-box-cuadre/${this.id}`)
+      axios.get(`${import.meta.env.VITE_API_URL}/list-box-cuadre/${this.id}`, headersArchivos)
         .then(response => {
           throw new Error("Forzando error intencionalmente"); // Esto siempre hará que entre al catch
         })
