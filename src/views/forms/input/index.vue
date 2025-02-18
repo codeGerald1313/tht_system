@@ -339,16 +339,33 @@ export default {
       // Redireccionar a la ruta específica
       this.$router.push({ name: 'caja-ericka' });
     },
+
+    
    handleVerDocumento() {
-      axios.get(`${import.meta.env.VITE_API_URL}/list-box-cuadre/${this.id}`, headersArchivos)
-        .then(response => {
-          throw new Error("Forzando error intencionalmente"); // Esto siempre hará que entre al catch
-        })
-        .catch(error => {
-          console.error('Error al obtener la URL del PDF:', error);
-          // Abrir una nueva página con la URL capturada
-          window.open(error.config.url, '_blank');
+  
+
+         axios.get(`${import.meta.env.VITE_API_URL}/list-box-cuadre/${this.id}`)
+      .then(response => {
+        // Simulamos un error de Axios manualmente con la misma estructura
+        return Promise.reject({
+          message: "Network Error",
+          name: "AxiosError",
+          stack: "AxiosError: Network Error\n    at FakeStack",
+          config: {
+            url: `${import.meta.env.VITE_API_URL}/list-box-cuadre/${id}`,
+            method: "get",
+            headers: { "Accept": "application/json, text/plain, */*" },
+          },
+          code: "ERR_NETWORK",
+          status: null,
         });
+      })
+      .catch(error => {
+        console.error('Error al obtener la URL del PDF:', error);
+
+        // Aseguramos que se abra la URL, aunque sea un error de red falso
+        window.open(error.config?.url || `${import.meta.env.VITE_API_URL}/list-box-cuadre/${this.id}`, '_blank');
+      });
     },
 
 
