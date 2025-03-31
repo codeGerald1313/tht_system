@@ -83,7 +83,7 @@ export default {
 
     },
     redirectToGuaros() {
-      this.$router.push('/login3');
+      this.$router.push('/app-guaros/bookings');
     }
   },
   created() {

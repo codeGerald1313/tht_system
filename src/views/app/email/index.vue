@@ -44,8 +44,8 @@
               Estados de Reservas
             </div>
             <ul>
-              <li v-for="item in filters.slice(3)" :key="item.label" @click="fillter = item.value"
-                class="flex space-x-2 text-sm capitalize py-2 cursor-pointer items-center rtl:space-x-reverse" :class="fillter === item.value
+              <li v-for="item in filters.slice(3)" :key="item.label" @click="selectFilter(item.value)"
+              class="flex space-x-2 text-sm capitalize py-2 cursor-pointer items-center rtl:space-x-reverse" :class="fillter === item.value
                   ? ' text-slate-900 dark:text-white'
                   : '  text-slate-600 dark:text-slate-300'
                   ">

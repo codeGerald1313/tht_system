@@ -204,6 +204,8 @@ export const useEmailStore = defineStore("email", {
               .includes(state.search.toLowerCase().replace(/\s+/g, ""));
           }),
   },
+
+
   actions: {
     //openEmail
     openEmail() {
@@ -214,15 +216,19 @@ export const useEmailStore = defineStore("email", {
       this.isLoading = true;
       this.error = null;
 
+
+
+      
       try {
-        const response = await axios.get('http://192.168.101.10:8001/api/v1/booking-client/list-type', {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL_MAIN}/booking-client/list-type`, {
           params: {
             booking_type: bookingType,
           }
         });
-
+        console.log("gAAAAAAA", bookingType);
+        
         if (response.data.status === 200) {
-          if (bookingType === "all" || bookingType === "fav" || bookingType === "hotel") {
+          if (bookingType === "all" || bookingType === "fav" || bookingType === "hotel" || bookingType === "attended" ) {
             this.emails = response.data.data.map((booking) => {
               return {
                 id: booking.id,
@@ -237,7 +243,7 @@ export const useEmailStore = defineStore("email", {
                 draft: false,
                 spam: false,
                 trash: false,
-                isProcess: false,
+                isProcess: bookingType === "attended",
                 personal: false,
                 social: false,
                 promotions: false,
@@ -255,10 +261,12 @@ export const useEmailStore = defineStore("email", {
           console.log(this.emails); // Ver los datos actualizados
         } else {
           this.error = response.data.message;
+          this.emails = []; // Limpiar los emails si hay un error
         }
       } catch (error) {
         this.error = 'Hubo un problema al obtener los datos.';
         console.error(error);
+        this.emails = []; // Limpiar los emails en caso de error
       } finally {
         this.isLoading = false;
       }
@@ -269,7 +277,7 @@ export const useEmailStore = defineStore("email", {
 
       try {
         // Llama al endpoint que devuelve todas las reservas
-        const response = await axios.get("http://192.168.101.10:8001/api/v1/booking-admin/listV2");
+        const response = await axios.get(`${import.meta.env.VITE_API_URL_MAIN}/booking-admin/listV2`);
         console.log(response);
 
         if (response.data.status === 200) {
@@ -322,7 +330,7 @@ export const useEmailStore = defineStore("email", {
       if (payload.isBookingHotel) bookingType = 'hotel';
       else if (payload.isTour) bookingType = 'tour';
       else if (payload.isPack) bookingType = 'pack';
-
+      else if (payload.isProcess) bookingType = 'tour';
       // Llamamos a la función que realiza la petición al backend, incluyendo el tipo de reserva
       this.fetchEmail(payload.id, bookingType);
     },
@@ -330,7 +338,7 @@ export const useEmailStore = defineStore("email", {
     async fetchEmail(id, bookingType) {
       try {
         // Enviar el tipo de reserva como un parámetro en la URL
-        const response = await axios.get(`http://192.168.101.10:8001/api/v1/booking-client/record/${id}`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL_MAIN}/booking-client/record/${id}`, {
           params: { booking_type: bookingType }
         });
         this.singleEmail = response.data.data;

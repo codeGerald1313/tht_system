@@ -1,16 +1,15 @@
 <template>
   <div>
-    <div
-      v-if="
-        (emails.length === 0 && this.search !== '') ||
-        emails.length === 0
-      "
-    >
-      <Badge
-        label="No Email Found"
-        badgeClass="bg-danger-500 text-white w-full block text-center mt-10 "
-      />
-    </div>
+    <div v-if="
+  (emails.filter(email => email.status_booking === 1).length === 0 && this.search !== '') || 
+  emails.filter(email => email.status_booking === 1).length === 0
+">
+  <Badge
+    label="No se encontraron registros."
+    badgeClass="bg-danger-500 text-white w-full block text-center mt-10"
+  />
+</div>
+
   </div>
 </template>
 <script>
