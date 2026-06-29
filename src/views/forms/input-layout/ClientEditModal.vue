@@ -151,10 +151,10 @@
                 <FromGroup label="Fecha de nacimiento">
                   <flat-pickr v-model="client.date_birthday" class="form-control" id="date_birthday"
                     placeholder="yyyy, dd M" :config="{
-      altInput: true,
-      altFormat: 'F j, Y',
-      dateFormat: 'Y-m-d',
-    }" />
+                      altInput: true,
+                      altFormat: 'F j, Y',
+                      dateFormat: 'Y-m-d',
+                    }" />
                 </FromGroup>
               </div>
               <div>
@@ -384,45 +384,51 @@
 
 
         <div class="grid lg:grid-cols-2 gap-4 grid-cols-1">
-          <FromGroup name="d5" class="mt-1">
-            <label for="payment-type" class="block text-sm font-medium text-gray-700 flex items-center">
-              Método de pago
-              <span class="text-red-500 ml-1">*</span>
-            </label>
-            <Select id="payment-type" :options="paymentMethods" v-model="selectedPaymentType"
-              class="pago-select mt-2" disabled />
-          </FromGroup>
 
-
-
-          <!-- Si se selecciona "Depósito a cuenta", se muestra el VueSelect y el FormGroup -->
+          <div class="lg:col-span-2">
+            <FromGroup name="d5" class="mt-1">
+              <label for="payment-type" class="block text-sm font-medium text-gray-700 flex items-center">
+                Método de pago
+                <span class="text-red-500 ml-1">*</span>
+              </label>
+              <Select id="payment-type" :options="paymentMethods" v-model="selectedPaymentType" class="pago-select mt-2"
+                disabled />
+            </FromGroup>
+          </div>
 
           <template v-if="showBlock">
+
+            <FromGroup label="Cuenta Origen">
+              <Select :options="sourceAccountOptions" v-model="selectedSourceAccount" class="cuentaorigen-select"
+                placeholder="Seleccione origen" />
+            </FromGroup>
             <div class="flex items-center">
               <FromGroup label="Cuenta destino" class="flex-1">
                 <Select :options="accountOptions" v-model="selectedAccount" class="cuentadestino-select"
                   placeholder="Seleccione" />
               </FromGroup>
-              <button @click="openModaalBanckAccount" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
+              <button type="button" @click="openModaalBanckAccount" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
             </div>
+
             <FromGroup label="N° de Operación">
               <Textinput type="text" v-model.trim="income.reference_operation" placeholder="Ingrese N° de Operación" />
             </FromGroup>
+
           </template>
 
+          <div class="flex items-center">
+            <div class="flex-1">
+              <FromGroup label="Monto" name="d6">
+                <Textinput type="text" placeholder="Monto" v-model.trim="income.amount" :disabled="!isModified" />
+                <span v-if="!isValidField('amount')" class="text-red-500 text-sm mt-1 block">Por favor ingrese
+                  monto</span>
+              </FromGroup>
+            </div>
+            <div class="ml-2 flex items-center">
+              <Checkbox active label="Modificar" class="font-bold" v-model="isModified" />
+            </div>
+          </div>
 
-<!-- Aquí cuadramos el checkbox con el campo de "Monto" -->
-<div class="flex items-center">
-    <div class="flex-1">
-      <FromGroup label="Monto" name="d6">
-        <Textinput type="text" placeholder="Monto" v-model.trim="income.amount" :disabled="!isModified" />
-        <span v-if="!isValidField('amount')" class="text-red-500">Por favor ingrese monto</span>
-      </FromGroup>
-    </div>
-    <div class="ml-2 flex items-center">
-      <Checkbox active label="Modificar" class="font-bold" v-model="isModified" />
-    </div>
-  </div>
         </div>
         <!-- Botones -->
         <div class="form-group col-lg-12 form__footerBtn mt-4">
@@ -475,6 +481,16 @@ const districts = ref([]);
 
 const provinces = ref([]);
 
+const sourceAccountOptions = [
+  { value: 'Yape', label: 'Yape' },
+  { value: 'Plin', label: 'Plin' },
+  { value: 'Banco de la Nación', label: 'Banco de la Nación' },
+  { value: 'BCP', label: 'BCP' },
+  { value: 'Interbank', label: 'Interbank' },
+  { value: 'BBVA', label: 'BBVA' }
+];
+
+const selectedSourceAccount = ref('');
 
 
 const props = defineProps({
@@ -515,6 +531,7 @@ const income = ref({
   provider_id: '',
   employee_id: '',
   accountbank_id: '',
+  source_account: '',
   date_movement: '',
   amount: '',
   text_amount: '',
@@ -784,6 +801,7 @@ const saveIngreso = () => {
   // Asigna el ID del concepto seleccionado al campo concept_id de income.value
   income.value.provider_id = selectedConceptIdProvider;
   // También puedes asignar la descripción del concepto seleccionado al campo concept
+  income.value.source_account = selectedSourceAccount.value;
 
   // Accede al ID del concepto seleccionado desde conceptSelected
   const selectedConceptIdEmployee = selectedEmployee.value;
@@ -995,19 +1013,19 @@ const handleProvinceChange = async () => {
 
 const fetchRucData = () => {
 
-axios.post(`${import.meta.env.VITE_API_URL}/getRucData`, {
+  axios.post(`${import.meta.env.VITE_API_URL}/getRucData`, {
     ruc: provider.value.document
   })
-  .then(response => {
-    // console.log('Respuesta de la API RUC:', response.data);
-    
-    provider.value.fullname = response.data.data.nombre_o_razon_social;
-    provider.value.address = response.data.data.direccion;
-  })
-  .catch(error => {
-    console.error('Error al obtener datos del RUC:', error);
-    // Aquí puedes manejar errores, como mostrar un mensaje al usuario
-  });
+    .then(response => {
+      // console.log('Respuesta de la API RUC:', response.data);
+
+      provider.value.fullname = response.data.data.nombre_o_razon_social;
+      provider.value.address = response.data.data.direccion;
+    })
+    .catch(error => {
+      console.error('Error al obtener datos del RUC:', error);
+      // Aquí puedes manejar errores, como mostrar un mensaje al usuario
+    });
 };
 
 
@@ -1015,8 +1033,8 @@ axios.post(`${import.meta.env.VITE_API_URL}/getRucData`, {
 
 const fetchDniData = () => {
   axios.post(`${import.meta.env.VITE_API_URL}/getDniData`, {
-      dni: client.value.document
-    })
+    dni: client.value.document
+  })
     .then(response => {
       // console.log('Respuesta de la API DNI:', response.data.nombre_completo);
       // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
@@ -1511,6 +1529,11 @@ watch(() => props.ingresoData, (newData) => {
     income.value.id = newData.id;
     income.value.gloss = newData.gloss;
     income.value.reference_operation = newData.reference_operation;
+
+    selectedSourceAccount.value = newData.source_account || '';
+
+    income.value.source_account = newData.source_account || '';
+
     conceptSelected.value = newData.concept_id;
     selectedPaymentType.value = newData.paymentmethod_id;
     selectedAccount.value = newData.accountbank_id;
@@ -1524,4 +1547,5 @@ watch(() => props.ingresoData, (newData) => {
 </script>
 
 <style lang="scss">
-// Estilos específicos si es necesario</style>
+// Estilos específicos si es necesario
+</style>

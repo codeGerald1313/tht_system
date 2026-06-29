@@ -29,14 +29,14 @@
         <div class="grid lg:grid-cols-1 gap-4 grid-cols-1">
           <div v-if="selected === 'clients'" class="flex items-center">
             <FromGroup label="Clientes" class="flex-1">
-              <Select :options="limitedCustomerOptions" v-model="selectedCustomer" class="client-select" />
+              <Select :options="customerOptions" v-model="selectedCustomer" class="client-select" searchable />
             </FromGroup>
 
             <button @click="openModal" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
           </div>
           <div v-else-if="selected === 'providers'" class="flex items-center">
             <FromGroup label="Proveedores" class="flex-1">
-              <Select :options="providerOptions" v-model="selectedProvider" class="provider-select" />
+              <Select :options="providerOptions" v-model="selectedProvider" class="provider-select" searchable />
             </FromGroup>
             <button @click="openModalProvider" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
           </div>
@@ -167,10 +167,10 @@
                 <FromGroup label="Fecha de nacimiento">
                   <flat-pickr v-model="client.date_birthday" class="form-control" id="date_birthday"
                     placeholder="yyyy, dd M" :config="{
-      altInput: true,
-      altFormat: 'F j, Y',
-      dateFormat: 'Y-m-d',
-    }" />
+                      altInput: true,
+                      altFormat: 'F j, Y',
+                      dateFormat: 'Y-m-d',
+                    }" />
                 </FromGroup>
               </div>
               <div>
@@ -549,7 +549,7 @@ const fetchDepartments = async () => {
 
 const fetchClients = async () => {
   try {
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/clients/list`, headers); // Cambia la ruta '/api/departments' por la ruta real de tu API
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/clients/list?origin=collaborator`, headers);// Cambia la ruta '/api/departments' por la ruta real de tu API
     customerOptions.value = response.data.data.map(customer => ({
       value: customer.id, // Cambiamos id por value
       label: customer.fullname // Cambiamos name por label
@@ -720,7 +720,7 @@ const openModal = () => {
   show.value = !show.value;
 };
 
-const limitedCustomerOptions = computed(() => customerOptions.value.slice(0, 6));
+
 
 const includeReceipt = ref(false);
 
@@ -848,25 +848,25 @@ const saveIngreso = () => {
       toast.success(response.data.message);
 
       setTimeout(() => {
-      router.go(0);
-    }, 1500); 
+        router.go(0);
+      }, 1500);
     })
     .catch(error => {
-  console.error('Error al guardar los datos:', error);
-  if (error.response && error.response.data && error.response.data.message) {
-    // cancel();
+      console.error('Error al guardar los datos:', error);
+      if (error.response && error.response.data && error.response.data.message) {
+        // cancel();
 
-    const errorMessage = error.response.data.message;
-    toast.error(errorMessage);
-    isLoading.value = false;
+        const errorMessage = error.response.data.message;
+        toast.error(errorMessage);
+        isLoading.value = false;
 
-  } else {
-    // Si no se puede acceder al mensaje de error específico, muestra un mensaje genérico
-    toast.error('Ha ocurrido un error al guardar los datos. Por favor, inténtalo de nuevo.');
-    isLoading.value = false;
+      } else {
+        // Si no se puede acceder al mensaje de error específico, muestra un mensaje genérico
+        toast.error('Ha ocurrido un error al guardar los datos. Por favor, inténtalo de nuevo.');
+        isLoading.value = false;
 
-  }
-});
+      }
+    });
 
 
 };
@@ -1039,27 +1039,27 @@ const handleProvinceChange = async () => {
 
 const fetchRucData = () => {
 
-axios.post(`${import.meta.env.VITE_API_URL}/getRucData`, {
+  axios.post(`${import.meta.env.VITE_API_URL}/getRucData`, {
     ruc: provider.value.document
   })
-  .then(response => {
-    // console.log('Respuesta de la API RUC:', response.data);
-    
-    provider.value.fullname = response.data.data.nombre_o_razon_social;
-    provider.value.address = response.data.data.direccion;
-  })
-  .catch(error => {
-    console.error('Error al obtener datos del RUC:', error);
-    // Aquí puedes manejar errores, como mostrar un mensaje al usuario
-  });
+    .then(response => {
+      // console.log('Respuesta de la API RUC:', response.data);
+
+      provider.value.fullname = response.data.data.nombre_o_razon_social;
+      provider.value.address = response.data.data.direccion;
+    })
+    .catch(error => {
+      console.error('Error al obtener datos del RUC:', error);
+      // Aquí puedes manejar errores, como mostrar un mensaje al usuario
+    });
 };
 
 
 
 const fetchDniData = () => {
   axios.post(`${import.meta.env.VITE_API_URL}/getDniData`, {
-      dni: client.value.document
-    })
+    dni: client.value.document
+  })
     .then(response => {
       // console.log('Respuesta de la API DNI:', response.data.nombre_completo);
       // Asignar nombres, apellidoPaterno y apellidoMaterno a clientFullname
@@ -1528,4 +1528,5 @@ onMounted(async () => {
 </script>
 
 <style lang="scss">
-// Estilos específicos si es necesario</style>
+// Estilos específicos si es necesario
+</style>

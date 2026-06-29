@@ -384,36 +384,44 @@
 
 
         <div class="grid lg:grid-cols-2 gap-4 grid-cols-1">
-          <FromGroup name="d5" class="mt-1" v-if="conceptSelected !== '16'">
-  <label for="payment-type" class="block text-sm font-medium text-gray-700 flex items-center">
-    Método de pago
-    <span class="text-red-500 ml-1">*</span>
-  </label>
-  <Select id="payment-type" :options="paymentMethods" v-model="selectedPaymentType" class="pago-select mt-2" />
-</FromGroup>
 
-
-
-          <!-- Si se selecciona "Depósito a cuenta", se muestra el VueSelect y el FormGroup -->
+          <div class="lg:col-span-2" v-if="conceptSelected !== '16'">
+            <FromGroup name="d5" class="mt-1">
+              <label for="payment-type" class="block text-sm font-medium text-gray-700 flex items-center">
+                Método de pago
+                <span class="text-red-500 ml-1">*</span>
+              </label>
+              <Select id="payment-type" :options="paymentMethods" v-model="selectedPaymentType"
+                class="pago-select mt-2" />
+            </FromGroup>
+          </div>
 
           <template v-if="selectedPaymentType === 'account_deposit'">
+
+            <FromGroup label="Cuenta Origen">
+              <Select :options="sourceAccountOptions" v-model="selectedSourceAccount" class="cuentaorigen-select"
+                placeholder="(Ej: Yape, Plin, BCP)" />
+            </FromGroup>
+
             <div class="flex items-center">
               <FromGroup label="Cuenta destino" class="flex-1">
                 <Select :options="accountOptions" v-model="selectedAccount" class="cuentadestino-select"
                   placeholder="Seleccione" />
               </FromGroup>
-
-              <button @click="openModaalBanckAccount" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
+              <button type="button" @click="openModaalBanckAccount" class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
             </div>
+
             <FromGroup label="N° de Operación">
               <Textinput type="text" v-model.trim="income.reference_operation" placeholder="Ingrese N° de Operación" />
             </FromGroup>
+
           </template>
 
           <FromGroup label="Monto" name="d6">
             <Textinput type="text" placeholder="Monto" v-model.trim="income.amount" />
-            <span v-if="!isValidField('amount')" class="text-red-500">Por favor ingrese monto</span>
+            <span v-if="!isValidField('amount')" class="text-red-500 text-sm mt-1 block">Por favor ingrese monto</span>
           </FromGroup>
+
         </div>
         <!-- Botones -->
         <div class="form-group col-lg-12 form__footerBtn mt-4">
@@ -469,11 +477,19 @@ const districts = ref([]);
 
 const provinces = ref([]);
 
+const sourceAccountOptions = [
+  { value: 'Yape', label: 'Yape' },
+  { value: 'Plin', label: 'Plin' },
+  { value: 'Banco de la Nación', label: 'Banco de la Nación' },
+  { value: 'BCP', label: 'BCP' },
+  { value: 'Interbank', label: 'Interbank' },
+  { value: 'BBVA', label: 'BBVA' }
+];
 
 const cancel = () => {
   store.closeModal(); // Cierra el modal al hacer clic en el botón "Cancelar"
 };
-
+const selectedSourceAccount = ref('');
 
 const income = ref({
   receptor_module: '',
@@ -491,6 +507,7 @@ const income = ref({
   provider_id: '',
   employee_id: '',
   accountbank_id: '',
+  source_account: '',
   date_movement: '',
   amount: '',
   text_amount: '',
@@ -736,26 +753,26 @@ const saveIngreso = () => {
 
   const selectElement2 = document.querySelector('.pago-select select');
 
-// Verifica si el elemento select existe
-if (selectElement2 && selectElement2.options.length > 0) {
-  // Obtiene el índice del option seleccionado
-  const selectedIndex = selectElement2.selectedIndex;
+  // Verifica si el elemento select existe
+  if (selectElement2 && selectElement2.options.length > 0) {
+    // Obtiene el índice del option seleccionado
+    const selectedIndex = selectElement2.selectedIndex;
 
-  // Verifica si el índice es válido (mayor o igual a 0)
-  if (selectedIndex >= 0) {
-    // Obtiene el texto del label seleccionado usando el índice
-    const selectedLabel = selectElement2.options[selectedIndex].text;
+    // Verifica si el índice es válido (mayor o igual a 0)
+    if (selectedIndex >= 0) {
+      // Obtiene el texto del label seleccionado usando el índice
+      const selectedLabel = selectElement2.options[selectedIndex].text;
 
-    income.value.paymentmethod_id = selectedIndex;
-    income.value.paymethod = selectedLabel;
+      income.value.paymentmethod_id = selectedIndex;
+      income.value.paymethod = selectedLabel;
 
-    // console.log('Label seleccionado:', selectedIndex, selectedLabel);
+      // console.log('Label seleccionado:', selectedIndex, selectedLabel);
+    } else {
+
+    }
   } else {
-  
-  }
-} else {
 
-}
+  }
 
 
   // Accede al ID del concepto seleccionado desde conceptSelected
@@ -771,7 +788,7 @@ if (selectElement2 && selectElement2.options.length > 0) {
   // Asigna el ID del concepto seleccionado al campo concept_id de income.value
   income.value.provider_id = selectedConceptIdProvider;
   // También puedes asignar la descripción del concepto seleccionado al campo concept
-
+  income.value.source_account = selectedSourceAccount.value;
   // Accede al ID del concepto seleccionado desde conceptSelected
   const selectedConceptIdEmployee = selectedEmployee.value;
 
@@ -1486,7 +1503,10 @@ onMounted(async () => {
 });
 
 
+
+
 </script>
 
 <style lang="scss">
-// Estilos específicos si es necesario</style>
+// Estilos específicos si es necesario
+</style>

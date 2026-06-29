@@ -30,6 +30,7 @@
 
                 <!-- Segunda fila -->
                 <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+
                     <div>
                         <FromGroup label="Método de pago">
                             <Select v-model="income.paymentmethod_id" :options="paymentMethods"
@@ -38,45 +39,51 @@
                         <span v-if="!income.paymentmethod_id" class="text-red-600">¡Selecciona un método de pago!</span>
                     </div>
 
-
                     <template v-if="income.paymentmethod_id === 4">
-                        <div class="flex items-center">
-                            <FromGroup label="Cuenta destino" class="flex-1">
-                                <Select :options="accountOptions" v-model="income.accountbank_id"
-                                    class="cuentadestino-select" placeholder="Seleccione" />
+                        <div
+                            class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:col-span-4 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg my-1">
+
+                            <FromGroup label="Cuenta Origen">
+                                <Select :options="sourceAccountOptions" v-model="selectedSourceAccount"
+                                    class="cuentaorigen-select" placeholder="Seleccione origen" />
                             </FromGroup>
 
-                            <button @click.prevent="openModaalBanckAccount"
-                                class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
+                            <div class="flex items-center">
+                                <FromGroup label="Cuenta destino" class="flex-1">
+                                    <Select :options="accountOptions" v-model="income.accountbank_id"
+                                        class="cuentadestino-select" placeholder="Seleccione" />
+                                </FromGroup>
+                                <button @click.prevent="openModaalBanckAccount"
+                                    class="ml-2 mt-7 p-2 btn-outline-dark">+</button>
+                            </div>
+
+                            <FromGroup label="N° de Operación">
+                                <Textinput type="text" v-model="income.nro_voucher_external"
+                                    placeholder="Ingrese N° de Operación" />
+                            </FromGroup>
+
                         </div>
-                        <FromGroup label="N° de Operación">
-                            <Textinput type="text" v-model="income.nro_voucher_external"
-                                placeholder="Ingrese N° de Operación" />
-                        </FromGroup>
                     </template>
+
                     <div>
                         <FromGroup label="TOTAL A PAGAR" class=" text-center">
                             <span class="text-[32px] leading-10 font-medium text-blue-800">S/ {{ income.totalAPagar
-                                }}</span>
+                            }}</span>
                         </FromGroup>
-
-
                     </div>
+
                     <div>
                         <FromGroup label="Monto">
                             <Textinput v-model="income.amount" type="text" placeholder="Comisión Tours" />
                         </FromGroup>
                         <span v-if="!income.amount" class="text-red-600">¡Ingresa un monto!</span>
-                        <!-- Mostrar el botón solo si el método de pago es en dólares -->
-                        <template v-if="income.paymentmethod_id === 5">
 
+                        <template v-if="income.paymentmethod_id === 5">
                             <Button @click.prevent="convertToSoles" text="Convertir a soles"
                                 btnClass="btn-dark btn-md" />
-
                         </template>
-
                     </div>
-                    <!-- Aquí se muestra el valor convertido a soles -->
+
                     <div v-if="amountInSoles">
                         <FromGroup label="Monto en soles" class="text-center">
                             <span class="text-[32px] leading-10 font-medium text-green-800">
@@ -88,10 +95,10 @@
                     <div>
                         <FromGroup label="TOTAL RESTANTE" class=" text-center">
                             <span class="text-[32px] leading-10 font-medium text-red-800">S/ {{ income.totalRestante
-                                }}</span>
+                            }}</span>
                         </FromGroup>
-
                     </div>
+
                 </div>
 
                 <!-- Tercera fila -->
@@ -265,6 +272,7 @@ export default {
                 client_id: null,
                 provider_id: null,
                 employee_id: null,
+                source_account: '',
                 accountbank_id: null,
                 date_movement: null,
                 amount: null,
@@ -295,6 +303,15 @@ export default {
                 { value: 3, label: "Cheque" },
                 { value: 4, label: "Depósito a cuenta" },
                 { value: 5, label: "Dólar" }
+            ],
+            selectedSourceAccount: '',
+            sourceAccountOptions: [     // <-- Alimenta las opciones estáticas del componente
+                { value: 'Yape', label: 'Yape' },
+                { value: 'Plin', label: 'Plin' },
+                { value: 'Banco de la Nación', label: 'Banco de la Nación' },
+                { value: 'BCP', label: 'BCP' },
+                { value: 'Interbank', label: 'Interbank' },
+                { value: 'BBVA', label: 'BBVA' }
             ],
             amountInSoles: null,
 
@@ -347,7 +364,8 @@ export default {
             valorCode: '', // Variable para almacenar el valor del código
 
             accountOptions: [],
-            customerOptions: []
+            customerOptions: [],
+
 
         }
     },
@@ -454,7 +472,7 @@ export default {
                 this.income.amount = this.amountInSoles;
             }
             this.income.paymentmethod_id = parseInt(this.income.paymentmethod_id);
-
+            this.income.source_account = this.selectedSourceAccount;
 
             // console.log(this.income);
 
